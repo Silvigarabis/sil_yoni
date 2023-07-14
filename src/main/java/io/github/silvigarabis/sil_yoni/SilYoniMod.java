@@ -1,4 +1,4 @@
-package com.example;
+package io.github.silvigarabis.sil_yoni;
 
 import net.fabricmc.api.ModInitializer;
 
