@@ -1,0 +1,11 @@
+{
+  "entity.fairy.fly": {
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.chime",
+        "volume": 0.5
+      }
+    ],
+    "subtitle": "touhouorigins.subtitles.entity.fairy.fly"
+  }
+}

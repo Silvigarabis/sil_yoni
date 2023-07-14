@@ -1,0 +1,32 @@
+{
+    "type": "origins:action_over_time",
+    "interval": 1,
+    "condition": {
+        "type": "origins:riding",
+        "inverted": true
+    },
+    "entity_action": { "type": "origins:and", "actions": [
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/ride_target_look_forward",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/ctrl_forward",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/ctrl_up",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/ctrl_down",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/ctrl_left",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/ctrl_right",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:revoke_power",
+            "power": "sil_yoni:bee_rider/on_dismount",
+            "source": "sil_yoni:bee_rider" }
+        ]
+    }
+}

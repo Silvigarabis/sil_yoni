@@ -1,0 +1,127 @@
+{
+    "type": "apoli:multiple",
+    "flight": {
+        "type": "apoli:active_self",
+        "key": {
+            "key": "key.jump",
+            "continuous": true
+        },
+        "condition": {
+            "type": "apoli:and",
+            "conditions": [
+                { "type": "origins:food_level",
+                    "comparison": ">", "compare_to": 0 }
+                ]
+        },
+        "entity_action": { "type": "origins:and", "actions": [
+            { "type": "apoli:exhaust", "amount": 0.05 },
+            { "type": "apoli:apply_effect",
+                "effect": {
+                    "effect": "minecraft:levitation",
+                    "duration": 3, "amplifier": 4,
+                    "show_particles": false, "show_icon": false } }
+            ]
+        }
+    },
+    "loop": {
+        "type": "apoli:action_over_time",
+        "interval": 1,
+        "condition": { "type": "origins:and", "conditions": [
+        {   "type": "apoli:command",
+            "command": "data get entity @s OnGround",
+            "comparison": "!=", "compare_to": 1 },
+        {   "type": "apoli:command",
+            "command": "data get entity @s RootVehicle",
+            "comparison": "==", "compare_to": 0 },
+        {   "type": "apoli:command",
+            "command": "data get entity @s SleepTimer",
+            "comparison": "==", "compare_to": 0 }
+        ] },
+        "entity_action": { "type": "origins:and", "actions": [
+            {   "type": "origins:if_else",
+                "condition": { "type": "origins:and", "conditions": [
+                    {   "type": "apoli:status_effect",
+                        "effect": "minecraft:levitation", "min_amplifier": 4 }
+                    ]
+                },
+                "else_action": { "type": "origins:and", "actions": [
+                    {   "type": "apoli:apply_effect",
+                        "effect": {
+                            "effect": "minecraft:slow_falling",
+                            "duration": 2,
+                            "show_particles": false, "show_icon": false } },
+                    {   "type": "origins:if_else",
+                        "condition": {
+                            "type": "origins:resource",
+                            "resource": "sil_yoni:fluttering_wings_cooldown_5_ticks",
+                            "comparison": "==", "compare_to": 0 },
+                        "if_action": { "type": "origins:and", "actions": [
+                            {   "type": "origins:trigger_cooldown", "power": "sil_yoni:fluttering_wings_cooldown_5_ticks" },
+                            {   "type": "apoli:execute_command", "command": "particle minecraft:dust 1 1 0.25 1 ~ ~0.8 ~ 0.2 0.2 0.2 1 15 force" },
+                            {   "type": "apoli:choice", "actions": [
+                                    {   "weight": 5,
+                                        "element": {
+                                            "type": "apoli:play_sound",
+                                            "sound": "sil_yoni:entity.fairy.fly",
+                                            "pitch": 1.7 } },
+                                    {   "weight": 5,
+                                        "element": {
+                                            "type": "apoli:play_sound",
+                                            "sound": "sil_yoni:entity.fairy.fly",
+                                            "pitch": 1.6 } },
+                                    {   "weight": 5,
+                                        "element": {
+                                            "type": "apoli:play_sound",
+                                            "sound": "sil_yoni:entity.fairy.fly",
+                                            "pitch": 1.5 } },
+                                    {   "weight": 8,
+                                        "element": { "type": "apoli:nothing" } }
+                                ] }
+                            ]
+                        } }
+                    ]
+                },
+                "if_action": { "type": "origins:and", "actions": [
+                    {   "type": "origins:if_else",
+                        "condition": {
+                            "type": "origins:resource",
+                            "resource": "sil_yoni:fluttering_wings_cooldown_4_ticks",
+                            "comparison": "==", "compare_to": 0 },
+                        "if_action": { "type": "origins:and", "actions": [
+                            {   "type": "origins:trigger_cooldown", "power": "sil_yoni:fluttering_wings_cooldown_4_ticks" },
+                            {   "type": "apoli:execute_command", "command": "particle minecraft:dust 1 1 0.25 1 ~ ~0.8 ~ 0.2 0.2 0.2 1 15 force" },
+                            {   "type": "apoli:choice", "actions": [
+                                    {   "weight": 5,
+                                        "element": {
+                                            "type": "apoli:play_sound",
+                                            "sound": "sil_yoni:entity.fairy.fly",
+                                            "pitch": 2 } },
+                                    {   "weight": 5,
+                                        "element": {
+                                            "type": "apoli:play_sound",
+                                            "sound": "sil_yoni:entity.fairy.fly",
+                                            "pitch": 1.9 } },
+                                    {   "weight": 5,
+                                        "element": {
+                                            "type": "apoli:play_sound",
+                                            "sound": "sil_yoni:entity.fairy.fly",
+                                            "pitch": 1.8 } },
+                                    {   "weight": 8,
+                                        "element": { "type": "apoli:nothing" } }
+                                ] }
+                            ]
+                        } }
+                    ]
+                }
+            } ]
+        }
+    },
+    "cooldown_5_ticks": {
+        "type": "origins:cooldown",
+        "cooldown": 5
+    },
+    "cooldown_4_ticks": {
+        "type": "origins:cooldown",
+        "cooldown": 4
+    }
+}

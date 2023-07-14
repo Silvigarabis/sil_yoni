@@ -1,0 +1,43 @@
+{
+    "origin.sil_yoni.fairy.name":"绿色仙子",
+    "origin.sil_yoni.fairy.description":"他们是森林的珍宝。经常会在空中进行快速冲刺，不过总是会因为他们脆弱的身体而停下。他们还擅长和自然打交道。",
+    
+    "power.sil_yoni.physique/weak_body.name": "软弱的身体",
+    "power.sil_yoni.physique/weak_body.description": "你身体虚弱，行为能力受到限制。",
+    
+    "power.sil_yoni.physique/weak_arms.name": "虚弱的手臂",
+    "power.sil_yoni.physique/weak_arms.description": "在没有足够力量的情况下，虚弱的手臂没有砸碎大石头从中获取物品的能力（无法开采周围拥有3个或更多自然类坚硬方块的同类型方块，除非使用了力量药水）。",
+
+    "power.sil_yoni.physique/tiny_body.name": "微小珍宝",
+    "power.sil_yoni.physique/tiny_body.description": "你的身体很小，不像一般的人类，一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。",
+    
+    "power.sil_yoni.forager.name": "土地耕耘大师",
+    "power.sil_yoni.forager.description": "在自然中耕种使你了解到如何从作物中获取更高的产出",
+    
+    "power.sil_yoni.bee_rider.name": "蜜蜂骑乘者",
+    "power.sil_yoni.bee_rider.description": "蜜蜂愿意成为你的坐骑！只要你不伤害他们……",
+    
+    "power.sil_yoni.glowing_vision.name": "光明视野",
+    "power.sil_yoni.glowing_vision.description": "在让自己发光的同时，你也能清晰的看到周围的一切（使用能力时免疫黑暗效果，并获得发光效果。）",
+
+    "power.sil_yoni.glow_lighter.name": "发光",
+    "power.sil_yoni.glow_lighter.description": "你的身体会发光",
+    
+    "power.sil_yoni.forest_s_giving.name": "森林的馈赠",
+    "power.sil_yoni.forest_s_giving.description": "处于森林中时，你的各项属性小幅提高，并且可以快速恢复生命。",
+    
+    "power.sil_yoni.fluttering_wings.name": "魔法的翅膀",
+    "power.sil_yoni.fluttering_wings.description": "你有一双魔法般的翅膀，它可以带你飞上天空。",
+    
+    "power.sil_yoni.fairy/fairy_wings.name": "仙灵的翅膀",
+    "power.sil_yoni.fairy/fairy_wings.description": "你可以用你的翅膀飞行！不过不能飞太久，因为那可能让你的身体受伤。穿戴重甲也会加剧飞行时你的体力消耗。",
+    
+    "power.sil_yoni.fairy/heal_magic.name": "治愈魔法",
+    "power.sil_yoni.fairy/heal_magic.description": "让你周围带上你的治疗魔法，并为自己增加临时的防护！",
+    
+    "power.sil_yoni.fairy/fairy_physique.name": "仙子体质",
+    "power.sil_yoni.fairy/fairy_physique.description": "仙子的体质决定了你不能承受更多的伤害。",
+    
+    "touhouorigins.subtitles.entity.fairy.fly": "妖精飞起来"
+    
+}

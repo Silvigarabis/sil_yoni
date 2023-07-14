@@ -1,0 +1,13 @@
+{
+    "type": "origins:action_over_time",
+    "interval": 16,
+    "entity_action": {
+        "type": "origins:apply_effect",
+        "effect": {
+            "effect": "minecraft:glowing",
+            "duration": 18,
+            "show_particles": true,
+            "show_icon": false
+        }
+    }
+}

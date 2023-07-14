@@ -1,0 +1,157 @@
+{
+    "type": "origins:multiple",
+    "callbacks": {
+        "type": "origins:action_on_callback",
+        "execute_chosen_when_orb": true,
+        "entity_action_gained": {
+            "type": "origins:and", "actions": [ 
+            {   "type": "origins:execute_command",
+                "command": "function sil_yoni:origin_power/physique/tiny_body/gain"  },
+            
+            {   "type": "origins:grant_power",
+                "power": "sil_yoni:condition/condition_wear_light_armor",
+                "source": "sil_yoni:physique/tiny_body" },
+            
+            {   "type": "origins:grant_power",
+                "power": "sil_yoni:condition/condition_wear_heavy_armor",
+                "source": "sil_yoni:physique/tiny_body" }
+            ]
+        },
+        "entity_action_respawned": {
+            "type": "origins:and", "actions": [ 
+            {   "type": "origins:execute_command",
+                "command": "function sil_yoni:origin_power/physique/tiny_body/respawn"  }
+            ]
+        },
+        "entity_action_lost": {
+            "type": "origins:and", "actions": [ 
+            {   "type": "origins:execute_command",
+                "command": "function sil_yoni:origin_power/physique/tiny_body/lost"  },
+                
+            {   "type": "origins:revoke_power",
+                "power": "sil_yoni:condition/condition_wear_light_armor",
+                "source": "sil_yoni:physique/tiny_body" },
+            
+            {   "type": "origins:revoke_power",
+                "power": "sil_yoni:condition/condition_wear_heavy_armor",
+                "source": "sil_yoni:physique/tiny_body" }
+            ]
+        }
+    },
+    "lower_jumping": {
+        "type": "origins:modify_jump",
+        "modifier": {
+            "operation": "multiply_total_multiplicative",
+            "value": -0.25,
+            "name": "sil_yoni:physique/tiny_body"
+        }
+    },
+    "wear_normal_armor": {
+        "type": "origins:conditioned_attribute",
+        "tick_rate": 30,
+        "condition": { "type": "origins:and", "conditions": [
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_light_armor_result",
+                "comparison": "==",
+                "compare_to": 0
+            },
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_heavy_armor_result",
+                "comparison": "==",
+                "compare_to": 0
+            }
+        ] },
+        "modifiers": [
+            {
+                "attribute": "generic.armor",
+                "operation": "multiply_total",
+                "value": -0.2,
+                "name": "sil_yoni:physique/tiny_body"
+            }
+        ],
+        "update_health": false
+    },
+    "wear_only_light_armor": {
+        "type": "origins:conditioned_attribute",
+        "tick_rate": 30,
+        "condition": { "type": "origins:and", "conditions": [
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_light_armor_result",
+                "comparison": "==",
+                "compare_to": 1
+            },
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_heavy_armor_result",
+                "comparison": "==",
+                "compare_to": 0
+            }
+        ] },
+        "modifiers": [
+            {
+                "attribute": "generic.armor",
+                "operation": "multiply_total",
+                "value": -0.4,
+                "name": "sil_yoni:physique/tiny_body"
+            }
+        ],
+        "update_health": false
+    },
+    "wear_light_and_heavy_armor": {
+        "type": "origins:conditioned_attribute",
+        "tick_rate": 30,
+        "condition": { "type": "origins:and", "conditions": [
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_light_armor_result",
+                "comparison": "==",
+                "compare_to": 1
+            },
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_heavy_armor_result",
+                "comparison": "==",
+                "compare_to": 1
+            }
+        ] },
+        "modifiers": [
+            {
+                "attribute": "generic.armor",
+                "operation": "multiply_total",
+                "value": -0.15,
+                "name": "sil_yoni:physique/tiny_body"
+            }
+        ],
+        "update_health": false
+    },
+    "wear_only_heavy_armor": {
+        "type": "origins:conditioned_attribute",
+        "tick_rate": 30,
+        "condition": { "type": "origins:and", "conditions": [
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_light_armor_result",
+                "comparison": "==",
+                "compare_to": 0
+            },
+            {
+                "type": "origins:resource",
+                "resource": "sil_yoni:condition/condition_wear_heavy_armor_result",
+                "comparison": "==",
+                "compare_to": 1
+            }
+        ] },
+        "modifiers": [
+            {
+                "attribute": "generic.armor",
+                "operation": "multiply_total",
+                "value": 0.2,
+                "name": "sil_yoni:physique/tiny_body"
+            }
+        ],
+        "update_health": false
+    }
+}
