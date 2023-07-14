@@ -1,0 +1,39 @@
+{
+    "type": "origins:action_on_entity_use",
+    "bientity_condition": {
+        "type": "origins:target_condition",
+        "condition": {
+            "type": "origins:entity_type",
+            "entity_type": "minecraft:bee"
+        }
+    },
+    "bientity_action": {
+        "type": "origins:mount"
+    },
+    "entity_action": { "type": "origins:and", "actions": [
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/ride_target_look_forward",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/ctrl_forward",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/ctrl_up",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/ctrl_down",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/ctrl_left",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/ctrl_right",
+            "source": "sil_yoni:bee_rider" },
+        {   "type": "origins:grant_power",
+            "power": "sil_yoni:bee_rider/on_dismount",
+            "source": "sil_yoni:bee_rider" }
+        ]
+    },
+    "action_result": "success",
+    "priority": 5
+}
