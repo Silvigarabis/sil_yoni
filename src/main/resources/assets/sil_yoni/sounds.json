@@ -2,7 +2,7 @@
   "entity.fairy.fly": {
     "sounds": [
       {
-        "name": "minecraft:block.note_block.chime",
+        "name": "note/icechime",
         "volume": 0.5
       }
     ],

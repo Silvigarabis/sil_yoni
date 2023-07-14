@@ -1,4 +1,4 @@
-package com.example.mixin;
+package io.github.silvigarabis.sil_yoni.mixin;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

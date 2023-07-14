@@ -494,7 +494,7 @@
             "key": "key.jump",
             "continuous": true
         },
-        "cooldown": 13,
+        "cooldown": 6,
         "hud_render": {
             "should_render": false
         },
