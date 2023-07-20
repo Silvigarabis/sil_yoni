@@ -1,75 +1,33 @@
 {
     "type": "origins:multiple",
-    "effect_glowing": {
-        "type": "origins:stacking_status_effect",
-        "min_stacks": 0,
-        "max_stacks": 1,
-        "duration_per_stack": 280,
-        "condition": {
-            "type": "origins:power", 
-            "power": "sil_yoni:glowing_vision_on_trigger",
-            "source": "sil_yoni:glowing_vision" 
-        },
-        "effects": [
-            {
-                "effect": "minecraft:glowing",
-                "show_particles": false, "show_icon": false }
-        ]
-    },
-    "effect_night_vision": {
-        "type": "origins:stacking_status_effect",
-        "min_stacks": 0,
-        "max_stacks": 1,
-        "duration_per_stack": 280,
-        "condition": { "type": "origins:and", "conditions": [
-            {   "type": "origins:status_effect",
-                "effect": "minecraft:blindness",
-                "inverted": true }, 
-            {   "type": "origins:power", "power": "sil_yoni:glowing_vision_on_trigger", "source": "sil_yoni:glowing_vision" }
-            ]
-        },
-        "effects": [
-            {   "effect": "minecraft:night_vision",
-                "duration": -1,
-                "show_particles": false, "show_icon": false }
-        ]
-    },
-    "no_darkness": {
-        "condition": {
-            "type": "origins:power_active",
-            "power": "sil_yoni:glowing_vision_flag"
-        },
-        "type": "origins:effect_immunity",
-        "effect": "minecraft:darkness"
-    },
     "trigger": {
         "type": "origins:active_self",
         "key": { "key": "key.origins.secondary_active" },
         "entity_action": {
             "type": "origins:if_else", "condition": {
-                 "type": "origins:power", "power": "sil_yoni:glowing_vision_on_trigger", "source": "sil_yoni:glowing_vision" },
+                 "type": "origins:power", "power": "sil_yoni:glowing_vision/triggers", "source": "sil_yoni:glowing_vision" },
                  "if_action": {
                      "type": "origins:revoke_power",
-                     "power": "sil_yoni:glowing_vision_on_trigger",
+                     "power": "sil_yoni:glowing_vision/triggers",
                      "source": "sil_yoni:glowing_vision" 
                  }, "else_action": {
                      "type": "origins:grant_power",
-                     "power": "sil_yoni:glowing_vision_on_trigger",
+                     "power": "sil_yoni:glowing_vision/triggers",
                      "source": "sil_yoni:glowing_vision" 
                  }
         }
     },
-    "auto_remove_trigger": {
+    "auto_remove_triggers": {
         "type": "origins:action_on_callback",
         "execute_chosen_when_orb": true,
         "entity_action_lost": { "type": "origins:and", "actions": [
             {   "type": "origins:revoke_power",
-                "power": "sil_yoni:glowing_vision_on_trigger",
+                "power": "sil_yoni:glowing_vision/triggers",
                 "source": "sil_yoni:glowing_vision" }
             ]
         }
     },
-    "useless_flag": {
+    "useless_flag_to_show_badge": {
         "type": "origins:toggle",
         "active_by_default": false,
         "key": { "key": "key.origins.secondary_active" }

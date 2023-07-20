@@ -72,7 +72,7 @@
                 {
                     "type": "origins:revoke_power",
                     "power": "sil_yoni:fluttering_wings",
-                    "source": "sil_yoni:fairy/fairy_wings"
+                    "source": "sil_yoni:fairy/fairy_wings" 
                 },
                 {
                     "type": "origins:revoke_power",
@@ -92,6 +92,26 @@
         "condition": {
             "type": "apoli:and",
             "conditions": [
+                {
+                    "type": "origins:in_block",
+                    "block_condition": {
+                        "type": "origins:fluid",
+                        "fluid_condition": {
+                            "type": "origins:or",
+                            "conditions": [
+                            {
+                            "type": "origins:in_tag",
+                            "tag": "minecraft:water"
+                            },
+                            {
+                            "type": "origins:in_tag",
+                            "tag": "minecraft:lava"
+                            }
+                            ]
+                        }
+                    },
+                    "inverted": true
+                },
                 {
                     "type": "origins:resource",
                     "resource": "sil_yoni:fairy/fairy_wings_energy",
@@ -166,18 +186,6 @@
         "condition": {
             "type": "origins:and",
             "conditions": [
-                {
-                    "type": "origins:resource",
-                    "resource": "sil_yoni:fairy/fairy_wings_energy",
-                    "comparison": ">",
-                    "compare_to": -5
-                },
-                {
-                    "type": "origins:resource",
-                    "resource": "sil_yoni:fairy/fairy_wings_energy",
-                    "comparison": "<",
-                    "compare_to": 24
-                },
                 {
                     "type": "origins:ability",
                     "ability": "minecraft:mayfly"
@@ -313,10 +321,21 @@
                 {
                     "type": "origins:if_else",
                     "condition": {
-                        "type": "origins:resource",
-                        "resource": "sil_yoni:fairy/fairy_wings_energy",
-                        "comparison": ">",
-                        "compare_to": -5
+                        "type": "origins:and",
+                        "conditions": [
+                            {
+                                "type": "origins:resource",
+                                "resource": "sil_yoni:fairy/fairy_wings_energy",
+                                "comparison": "==",
+                                "compare_to": -5
+                            },
+                            {
+                                "type": "origins:resource",
+                                "resource": "sil_yoni:fairy/fairy_wings_broken_wings_recover_timer",
+                                "comparison": "==",
+                                "compare_to": 0
+                            }
+                        ]
                     },
                     "if_action": {
                         "type": "origins:trigger_cooldown",
@@ -373,7 +392,7 @@
     },
     "tired_wings": {
         "type": "origins:action_over_time",
-        "interval": 10,
+        "interval": 15,
         "condition": {
             "type": "origins:resource",
             "resource": "sil_yoni:fairy/fairy_wings_energy",
@@ -401,7 +420,7 @@
     },
     "particle_effect": {
         "type": "origins:action_over_time",
-        "interval": 5,
+        "interval": 12,
         "condition": {
             "type": "origins:and",
             "conditions": [
@@ -420,7 +439,7 @@
             },
             "spread": {
                 "x": 0.1,
-                "y": 0.1,
+                "y": 0.09,
                 "z": 0.1
             },
             "offset_y": 0.17,
@@ -429,63 +448,58 @@
             "force": true
         }
     },
-    "wings_mix_off": {
+    "wings_mix": {
         "type": "origins:action_over_time",
-        "interval": 20,
-        "condition": {
-            "type": "origins:and",
-            "conditions": [
-                {
-                    "type": "origins:power",
-                    "power": "sil_yoni:fluttering_wings",
-                    "source": "sil_yoni:fairy/fairy_wings"
-                },
-                {
-                    "type": "origins:ability",
-                    "ability": "minecraft:flying"
-                }
-            ]
-        },
+        "interval": 15,
         "entity_action": {
-            "type": "origins:and",
-            "actions": [
+            "type": "origins:if_else",
+            "condition": { "type": "origins:and", "conditions": [
+                {   "type": "origins:riding", "inverted": true },
                 {
-                    "type": "origins:revoke_power",
-                    "power": "sil_yoni:fluttering_wings",
-                    "source": "sil_yoni:fairy/fairy_wings"
-                }
-            ]
-        }
-    },
-    "wings_mix_on": {
-        "type": "origins:action_over_time",
-        "interval": 20,
-        "condition": {
-            "type": "origins:and",
-            "conditions": [
+                    "type": "origins:ability", "inverted": true,
+                    "ability": "minecraft:flying"
+                },
                 {
                     "type": "origins:resource",
                     "resource": "sil_yoni:fairy/fairy_wings_energy",
-                    "comparison": ">=",
-                    "compare_to": 0
-                },
-                {
+                    "comparison": "!=",
+                    "compare_to": -5
+                }
+            ] },
+            "else_action": {
+                "type": "origins:if_else",
+                "condition": {
                     "type": "origins:power",
-                    "inverted": true,
                     "power": "sil_yoni:fluttering_wings",
                     "source": "sil_yoni:fairy/fairy_wings"
                 },
-                {
-                    "inverted": true,
-                    "type": "origins:ability",
-                    "ability": "minecraft:flying"
+                 "if_action": {
+                     "type": "origins:revoke_power",
+                     "power": "sil_yoni:fluttering_wings",
+                     "source": "sil_yoni:fairy/fairy_wings" 
                 }
-            ]
-        },
-        "entity_action": {
-            "type": "origins:grant_power",
-            "power": "sil_yoni:fluttering_wings",
-            "source": "sil_yoni:fairy/fairy_wings"
+            },
+            "if_action": {
+                "type": "origins:if_else",
+                "condition": { "type": "origins:and", "conditions": [
+                    {
+                        "type": "origins:resource",
+                        "resource": "sil_yoni:fairy/fairy_wings_energy",
+                        "comparison": ">=",
+                        "compare_to": 0
+                    },
+                    {
+                        "type": "origins:power",
+                        "power": "sil_yoni:fluttering_wings", "inverted": true,
+                        "source": "sil_yoni:fairy/fairy_wings"
+                    }
+                ] },
+                 "if_action": {
+                     "type": "origins:grant_power",
+                     "power": "sil_yoni:fluttering_wings",
+                     "source": "sil_yoni:fairy/fairy_wings" 
+                }
+            }
         }
     },
     "decreaseing_energy_when_direct_fly": {
@@ -494,7 +508,7 @@
             "key": "key.jump",
             "continuous": true
         },
-        "cooldown": 6,
+        "cooldown": 7,
         "hud_render": {
             "should_render": false
         },
@@ -502,22 +516,50 @@
             "type": "apoli:and",
             "conditions": [
                 {
-                    "type": "origins:food_level",
-                    "comparison": ">",
-                    "compare_to": 0
+                    "type": "origins:power",
+                    "power": "sil_yoni:fluttering_wings",
+                    "source": "sil_yoni:fairy/fairy_wings"
                 },
                 {
                     "inverted": true,
-                    "type": "origins:ability",
-                    "ability": "minecraft:flying"
-                }
+                    "type": "origins:gamemode",
+                    "gamemode": "creative"
+                },
+                {   "type": "apoli:command",
+                    "command": "data get entity @s SleepTimer",
+                    "comparison": "==", "compare_to": 0 }
             ]
         },
-        "entity_action": {
-            "type": "origins:change_resource",
-            "resource": "sil_yoni:fairy/fairy_wings_energy",
-            "operation": "add",
-            "change": -1
-        }
+        "entity_action": { "type": "origins:and", "actions": [
+            {
+                "type": "origins:change_resource",
+                "resource": "sil_yoni:fairy/fairy_wings_energy",
+                "operation": "add",
+                "change": -1 },
+            {
+                "type": "origins:if_else",
+                "condition": {
+                    "type": "origins:and",
+                    "conditions": [
+                        {
+                            "type": "origins:resource",
+                            "resource": "sil_yoni:fairy/fairy_wings_energy",
+                            "comparison": "==",
+                            "compare_to": -5
+                        },
+                        {
+                            "type": "origins:resource",
+                            "resource": "sil_yoni:fairy/fairy_wings_broken_wings_recover_timer",
+                            "comparison": "==",
+                            "compare_to": 0
+                        }
+                    ]
+                },
+                "if_action": {
+                    "type": "origins:trigger_cooldown",
+                    "power": "sil_yoni:fairy/fairy_wings_broken_wings_recover_timer"
+                }
+            }
+        ] }
     }
 }
