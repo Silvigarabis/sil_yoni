@@ -1,0 +1,56 @@
+{ "hidden": true,
+    "type": "origins:multiple",
+    "attribute_while_no_energy": {
+        "type": "origins:action_over_time",
+        "internal": 30,
+        "entity_action": {
+            "type": "origins:if_else", 
+            "condition": { "type": "origins:and", "conditions": [
+            {
+                "type": "origins:relative_health",
+                "comparison": "<=", "compare_to": 0.12 },
+            {
+                "type": "origins:power", "inverted": true,
+                "power": "sil_yoni:guxi/no_energy",
+                "source": "sil_yoni:guxi/triggers" }
+            ] },
+            "if_action": { "type": "origins:and", "actions": [
+                {
+                    "type": "origins:revoke_power",
+                    "power": "sil_yoni:guxi/boost_to_sky",
+                    "source": "sil_yoni:guxi/triggers" },
+                {
+                    "type": "origins:grant_power",
+                    "power": "sil_yoni:guxi/no_energy",
+                    "source": "sil_yoni:guxi/triggers" }
+                ]
+            },
+            "else_action": { "type": "origins:and", "actions": [
+                {
+                    "type": "origins:grant_power",
+                    "power": "sil_yoni:guxi/boost_to_sky",
+                    "source": "sil_yoni:guxi/triggers" },
+                {
+                    "type": "origins:revoke_power",
+                    "power": "sil_yoni:guxi/no_energy",
+                    "source": "sil_yoni:guxi/triggers" }
+                ]
+            }
+        }
+    },
+    "auto_remove_triggers": {
+        "type": "origins:action_on_callback",
+        "execute_chosen_when_orb": true,
+        "entity_action_lost": { "type": "origins:and", "actions": [
+                {
+                    "type": "origins:revoke_power",
+                    "power": "sil_yoni:guxi/boost_to_sky",
+                    "source": "sil_yoni:guxi/guxi_physique" },
+                {
+                    "type": "origins:revoke_power",
+                    "power": "sil_yoni:guxi/no_energy",
+                    "source": "sil_yoni:guxi/guxi_physique" }
+            ]
+        }
+    }
+}

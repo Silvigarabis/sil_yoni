@@ -1,0 +1,30 @@
+{
+    "type": "origins:multiple",
+    "attribute_modifiers": {
+        "type": "origins:attribute",
+        "modifiers": [
+            {
+                "attribute": "generic.armor",
+                "operation": "multiply_total",
+                "value": -1,
+                "name": "sil_yoni:guxi/guxi_physique"
+            },
+            {
+                "attribute": "generic.max_health",
+                "operation": "addition",
+                "value": 30,
+                "name": "sil_yoni:guxi/guxi_physique"
+            }
+        ]
+    },
+    "no_regen": {
+        "type": "origins:disable_regen"
+    },
+    "no_food_require": {
+        "type": "origins:modify_exhaustion",
+        "modifier": {
+            "operation": "set_total",
+            "value": 0
+        }
+    }
+}
