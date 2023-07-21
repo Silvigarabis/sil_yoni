@@ -8,12 +8,12 @@
             "condition": { "type": "origins:and", "conditions": [
             {
                 "type": "origins:relative_health",
-                "comparison": "<=", "compare_to": 0.12 },
-            {
+                "comparison": "<=", "compare_to": 0.12 }
+            ] },
+            "if_action": { "type": "origins:if_else", "condition": {
                 "type": "origins:power", "inverted": true,
                 "power": "sil_yoni:guxi/no_energy",
-                "source": "sil_yoni:guxi/triggers" }
-            ] },
+                "source": "sil_yoni:guxi/triggers" },
             "if_action": { "type": "origins:and", "actions": [
                 {
                     "type": "origins:revoke_power",
@@ -24,8 +24,12 @@
                     "power": "sil_yoni:guxi/no_energy",
                     "source": "sil_yoni:guxi/triggers" }
                 ]
-            },
-            "else_action": { "type": "origins:and", "actions": [
+            } },
+            "else_action": { "type": "origins:if_else", "condition": {
+                "type": "origins:power",
+                "power": "sil_yoni:guxi/no_energy",
+                "source": "sil_yoni:guxi/triggers" },
+            "if_action": { "type": "origins:and", "actions": [
                 {
                     "type": "origins:grant_power",
                     "power": "sil_yoni:guxi/boost_to_sky",
@@ -35,7 +39,7 @@
                     "power": "sil_yoni:guxi/no_energy",
                     "source": "sil_yoni:guxi/triggers" }
                 ]
-            }
+            } }
         }
     },
     "auto_remove_triggers": {
