@@ -1,0 +1,6 @@
+{
+    "type": "origins:multiple",
+    "fire": {
+        "type": "origins:fire_immunity"
+    }
+}

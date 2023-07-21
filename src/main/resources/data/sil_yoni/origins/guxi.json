@@ -1,0 +1,27 @@
+{
+    "powers": [
+        "sil_yoni:guxi/effects",
+        "sil_yoni:guxi/boost_to_sky_power_desc",
+        "sil_yoni:guxi/fire_light",
+        "sil_yoni:guxi/guxi_physique",
+        "sil_yoni:guxi/triggers",
+
+        "sil_yoni:forager",
+        "sil_yoni:sun_s_helping",
+
+        "sil_yoni:physique/small_body",
+        "sil_yoni:physique/weak_arms",
+
+        "sil_yoni:vision/less_color_shader",
+        "sil_yoni:vision/seeing_entity_quote_gold",
+        "sil_yoni:vision/no_bad_vision",   
+        "sil_yoni:vision/night_vision_always",   
+
+        "sil_yoni:misc/normalized_air_mining_speed"
+    ],
+    "icon": {
+        "item": "minecraft:music_disc_11"
+    },
+    "unchoosable": false,
+    "impact": 3
+}

@@ -1,0 +1,10 @@
+{ "hidden": true,
+    "type": "origins:entity_glow",
+    "bientity_condition": {
+        "type": "origins:can_see"
+    },
+    "use_teams": false,
+    "red": 1.0,
+    "green": 0.95703125,
+    "blue": 0.0
+}
