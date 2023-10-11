@@ -1,0 +1,6 @@
+type: origins:active_self
+key:
+  key: key.use
+  continuous: true
+entity_action:
+  type: origins:nothing

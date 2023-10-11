@@ -1,0 +1,6 @@
+hidden: true
+type: origins:effect_immunity
+effects:
+  - minecraft:blindness
+  - minecraft:darkness
+  - minecraft:nausea

@@ -1,0 +1,390 @@
+type: origins:multiple
+energy:
+  type: origins:resource
+  min: -5
+  max: 24
+  start_value: 24
+  hud_render:
+    should_render: true
+    condition:
+      type: origins:or
+      conditions:
+        - type: origins:ability
+          ability: minecraft:flying
+        - type: origins:resource
+          resource: sil_yoni:fairy/fairy_wings_energy
+          comparison: <
+          compare_to: 24
+    sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
+    bar_index: 12
+callbacks:
+  type: origins:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_gained:
+    type: origins:and
+    actions:
+      - type: origins:change_resource
+        resource: sil_yoni:fairy/fairy_wings_energy
+        operation: set
+        change: 24
+      - type: origins:grant_power
+        power: sil_yoni:fluttering_wings
+        source: sil_yoni:fairy/fairy_wings
+      - type: origins:grant_power
+        power: sil_yoni:condition/condition_wear_light_armor
+        source: sil_yoni:fairy/fairy_wings
+      - type: origins:grant_power
+        power: sil_yoni:condition/condition_wear_heavy_armor
+        source: sil_yoni:fairy/fairy_wings
+  entity_action_respawned:
+    type: origins:and
+    actions:
+      - type: origins:change_resource
+        resource: sil_yoni:fairy/fairy_wings_energy
+        operation: set
+        change: 24
+  entity_action_lost:
+    type: origins:and
+    actions:
+      - type: origins:revoke_power
+        power: sil_yoni:fluttering_wings
+        source: sil_yoni:fairy/fairy_wings
+      - type: origins:revoke_power
+        power: sil_yoni:condition/condition_wear_light_armor
+        source: sil_yoni:fairy/fairy_wings
+      - type: origins:revoke_power
+        power: sil_yoni:condition/condition_wear_heavy_armor
+        source: sil_yoni:fairy/fairy_wings
+wings_ability_mayfly:
+  type: origins:creative_flight
+  condition:
+    type: apoli:and
+    conditions:
+      - type: origins:in_block
+        block_condition:
+          type: origins:fluid
+          fluid_condition:
+            type: origins:or
+            conditions:
+              - type: origins:in_tag
+                tag: minecraft:water
+              - type: origins:in_tag
+                tag: minecraft:lava
+        inverted: true
+      - type: origins:resource
+        resource: sil_yoni:fairy/fairy_wings_energy
+        comparison: '>'
+        compare_to: -5
+wings_health:
+  type: origins:conditioned_attribute
+  tick_rate: 50
+  condition:
+    type: origins:ability
+    ability: minecraft:mayfly
+  modifiers:
+    - attribute: generic.max_health
+      operation: addition
+      value: 10
+      name: sil_yoni:fairy/fairy_wings
+fly_no_falling_damage:
+  type: origins:invulnerability
+  condition:
+    type: origins:ability
+    ability: minecraft:mayfly
+  damage_condition:
+    type: origins:name
+    name: fall
+hurted_wings_no_move:
+  type: origins:conditioned_attribute
+  tick_rate: 30
+  condition:
+    type: origins:resource
+    resource: sil_yoni:fairy/fairy_wings_energy
+    comparison: '=='
+    compare_to: -5
+  modifiers:
+    - attribute: generic.movement_speed
+      operation: multiply_total
+      value: -0.95
+      name: sil_yoni:fairy/fairy_wings
+hurted_wings_no_move_jumping:
+  type: origins:modify_jump
+  condition:
+    type: origins:resource
+    resource: sil_yoni:fairy/fairy_wings_energy
+    comparison: '=='
+    compare_to: -5
+  modifier:
+    operation: multiply_total_multiplicative
+    value: -0.95
+    name: sil_yoni:physique/fairy_wings
+restoring_energy:
+  type: origins:action_over_time
+  interval: 30
+  condition:
+    type: origins:and
+    conditions:
+      - type: origins:ability
+        ability: minecraft:mayfly
+  entity_action:
+    type: origins:and
+    actions:
+      - type: origins:if_else
+        condition:
+          type: origins:biome
+          condition:
+            type: origins:category
+            category: forest
+        if_action:
+          type: origins:change_resource
+          resource: sil_yoni:fairy/fairy_wings_energy
+          operation: add
+          change: 1
+      - type: origins:if_else
+        condition:
+          type: origins:or
+          conditions:
+            - type: origins:ability
+              inverted: true
+              ability: minecraft:flying
+            - type: origins:gamemode
+              gamemode: creative
+        if_action:
+          type: origins:if_else
+          condition:
+            type: origins:or
+            conditions:
+              - type: origins:resource
+                resource: sil_yoni:fairy/fairy_wings_energy
+                comparison: <
+                compare_to: 0
+              - type: origins:health
+                comparison: '>='
+                compare_to: 3
+          if_action:
+            type: origins:if_else
+            condition:
+              type: origins:attribute
+              attribute: minecraft:generic.armor
+              comparison: '>'
+              compare_to: 9
+            if_action:
+              type: origins:chance
+              chance: 0.4
+              action:
+                type: origins:change_resource
+                resource: sil_yoni:fairy/fairy_wings_energy
+                operation: add
+                change: 1
+              fail_action:
+                type: origins:nothing
+            else_action:
+              type: origins:chance
+              chance: 0.66
+              action:
+                type: origins:change_resource
+                resource: sil_yoni:fairy/fairy_wings_energy
+                operation: add
+                change: 1
+              fail_action:
+                type: origins:nothing
+        else_action:
+          type: origins:and
+          actions:
+            - type: origins:chance
+              chance: 0.33
+              action:
+                type: origins:change_resource
+                resource: sil_yoni:fairy/fairy_wings_energy
+                operation: add
+                change: -2
+              fail_action:
+                type: origins:change_resource
+                resource: sil_yoni:fairy/fairy_wings_energy
+                operation: add
+                change: -1
+            - type: origins:if_else
+              condition:
+                type: origins:attribute
+                attribute: minecraft:generic.armor
+                comparison: '>'
+                compare_to: 9
+              if_action:
+                type: origins:change_resource
+                resource: sil_yoni:fairy/fairy_wings_energy
+                operation: add
+                change: -1
+      - type: origins:if_else
+        condition:
+          type: origins:and
+          conditions:
+            - type: origins:resource
+              resource: sil_yoni:fairy/fairy_wings_energy
+              comparison: '=='
+              compare_to: -5
+            - type: origins:resource
+              resource: sil_yoni:fairy/fairy_wings_broken_wings_recover_timer
+              comparison: '=='
+              compare_to: 0
+        if_action:
+          type: origins:trigger_cooldown
+          power: sil_yoni:fairy/fairy_wings_broken_wings_recover_timer
+broken_wings_recover_timer:
+  type: origins:cooldown
+  cooldown: 1000
+broken_wings_recover:
+  type: origins:action_over_time
+  interval: 1
+  condition:
+    type: origins:and
+    conditions:
+      - type: origins:resource
+        resource: sil_yoni:fairy/fairy_wings_energy
+        comparison: '=='
+        compare_to: -5
+      - type: origins:resource
+        resource: sil_yoni:fairy/fairy_wings_broken_wings_recover_timer
+        comparison: '=='
+        compare_to: 0
+  entity_action:
+    type: origins:and
+    actions:
+      - type: origins:change_resource
+        resource: sil_yoni:fairy/fairy_wings_energy
+        operation: set
+        change: 0
+      - type: origins:apply_effect
+        effect:
+          effect: minecraft:blindness
+          duration: 800
+          show_particles: false
+          show_icon: false
+tired_wings:
+  type: origins:action_over_time
+  interval: 15
+  condition:
+    type: origins:resource
+    resource: sil_yoni:fairy/fairy_wings_energy
+    comparison: <
+    compare_to: 0
+  entity_action:
+    type: origins:apply_effect
+    effects:
+      - effect: minecraft:slowness
+        duration: 60
+        amplifier: 2
+        show_particles: false
+        show_icon: false
+      - effect: minecraft:blindness
+        duration: 30
+        show_particles: false
+        show_icon: false
+particle_effect:
+  type: origins:action_over_time
+  interval: 12
+  condition:
+    type: origins:and
+    conditions:
+      - type: origins:ability
+        ability: minecraft:flying
+  entity_action:
+    type: origins:spawn_particles
+    frequency: 5
+    particle:
+      type: minecraft:dust
+      params: 1 1 0.25 1
+    spread:
+      x: 0.1
+      'y': 0.09
+      z: 0.1
+    offset_y: 0.17
+    speed: 1
+    count: 10
+    force: true
+wings_mix:
+  type: origins:action_over_time
+  interval: 15
+  entity_action:
+    type: origins:if_else
+    condition:
+      type: origins:and
+      conditions:
+        - type: origins:riding
+          inverted: true
+        - type: origins:ability
+          inverted: true
+          ability: minecraft:flying
+        - type: origins:resource
+          resource: sil_yoni:fairy/fairy_wings_energy
+          comparison: '!='
+          compare_to: -5
+    else_action:
+      type: origins:if_else
+      condition:
+        type: origins:power
+        power: sil_yoni:fluttering_wings
+        source: sil_yoni:fairy/fairy_wings
+      if_action:
+        type: origins:revoke_power
+        power: sil_yoni:fluttering_wings
+        source: sil_yoni:fairy/fairy_wings
+    if_action:
+      type: origins:if_else
+      condition:
+        type: origins:and
+        conditions:
+          - type: origins:resource
+            resource: sil_yoni:fairy/fairy_wings_energy
+            comparison: '>='
+            compare_to: 0
+          - type: origins:power
+            power: sil_yoni:fluttering_wings
+            inverted: true
+            source: sil_yoni:fairy/fairy_wings
+      if_action:
+        type: origins:grant_power
+        power: sil_yoni:fluttering_wings
+        source: sil_yoni:fairy/fairy_wings
+decreaseing_energy_when_direct_fly:
+  type: apoli:active_self
+  key:
+    key: key.jump
+    continuous: true
+  cooldown: 7
+  hud_render:
+    should_render: false
+  condition:
+    type: apoli:and
+    conditions:
+      - type: origins:power
+        power: sil_yoni:fluttering_wings
+        source: sil_yoni:fairy/fairy_wings
+      - inverted: true
+        type: origins:gamemode
+        gamemode: creative
+      - type: apoli:command
+        command: data get entity @s SleepTimer
+        comparison: '=='
+        compare_to: 0
+  entity_action:
+    type: origins:and
+    actions:
+      - type: origins:change_resource
+        resource: sil_yoni:fairy/fairy_wings_energy
+        operation: add
+        change: -1
+      - type: origins:if_else
+        condition:
+          type: origins:and
+          conditions:
+            - type: origins:resource
+              resource: sil_yoni:fairy/fairy_wings_energy
+              comparison: '=='
+              compare_to: -5
+            - type: origins:resource
+              resource: sil_yoni:fairy/fairy_wings_broken_wings_recover_timer
+              comparison: '=='
+              compare_to: 0
+        if_action:
+          type: origins:trigger_cooldown
+          power: sil_yoni:fairy/fairy_wings_broken_wings_recover_timer

@@ -1,0 +1,13 @@
+powers:
+  - sil_yoni:fuyu/all
+  - sil_yoni:forager
+  - sil_yoni:physique/small_body
+  - sil_yoni:vision/less_color_shader
+  - sil_yoni:vision/seeing_entity_quote_gold
+  - sil_yoni:vision/no_bad_vision
+  - sil_yoni:vision/night_vision_always
+  - sil_yoni:misc/normalized_air_mining_speed
+icon:
+  item: minecraft:music_disc_13
+unchoosable: false
+impact: 3

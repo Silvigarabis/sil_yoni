@@ -1,0 +1,7 @@
+type: origins:night_vision
+condition:
+  type: origins:and
+  conditions:
+    - type: origins:status_effect
+      effect: minecraft:blindness
+      inverted: true

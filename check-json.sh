@@ -7,6 +7,10 @@ find -name \*.json | while read -r f; do
 } &
 done
 
+: << 'EOM'
 for wpid in `jobs -p`; do
 	wait $wpid
 done
+EOM
+
+wait -f

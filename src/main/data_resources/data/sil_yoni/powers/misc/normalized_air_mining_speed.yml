@@ -1,0 +1,9 @@
+name: mining speed in air
+hidden: true
+condition:
+  inverted: true
+  type: origins:on_block
+type: origins:modify_break_speed
+modifier:
+  operation: multiply_total
+  value: 4
