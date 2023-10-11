@@ -20,6 +20,14 @@
     "no_regen": {
         "type": "origins:disable_regen"
     },
+    "no_breath": {
+        "type": "origins:invulnerability",
+        "damage_condition": {
+            "type": "origins:or", "conditions": [
+            { "type": "origins:name", "name": "drown" }
+            ]
+        }
+    },
     "no_food_require": {
         "type": "origins:modify_exhaustion",
         "modifier": {

@@ -1,6 +1,6 @@
 {
     "type": "origins:action_over_time",
-    "interval": 5,
+    "interval": 1,
     "condition": {
         "type": "origins:riding",
         "inverted": true

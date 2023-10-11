@@ -50,6 +50,9 @@
     "power.sil_yoni.vision/pencil_shader.name": "铅笔素描视角",
     "power.sil_yoni.vision/pencil_shader.description": "你以一种独特的视角观察世界",
     
+    "power.sil_yoni.vision/less_color_shader.name": "黯淡视角",
+    "power.sil_yoni.vision/less_color_shader.description": "你以一种独特的视角观察世界",
+    
     "power.sil_yoni.vision/night_vision.name": "清晰的视野",
     "power.sil_yoni.vision/night_vision.description": "视野之内，没有黑暗的地方",
     
@@ -58,6 +61,9 @@
     
     "power.sil_yoni.guxi/boost_to_sky_power_desc.name": "特殊能力：跳跃、飞行、滑翔",
     "power.sil_yoni.guxi/boost_to_sky_power_desc.description": "你可以消耗能量来将你送上天空或者滑翔。",
+    
+    "power.sil_yoni.guxi/fire_light_power_desc.name": "特殊能力：能量发送",
+    "power.sil_yoni.guxi/fire_light_power_desc.description": "你可以将组成你的能量发送到外界。手持剑或镐使用。",
     
     "touhouorigins.subtitles.entity.fairy.fly": "妖精飞起来",
     
