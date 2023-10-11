@@ -1,0 +1,70 @@
+type: apoli:multiple
+flight:
+  type: apoli:active_self
+  key:
+    key: key.jump
+    continuous: true
+  condition:
+    type: apoli:and
+    conditions:
+      - type: origins:food_level
+        comparison: '>'
+        compare_to: 0
+  entity_action:
+    type: origins:and
+    actions:
+      - type: apoli:exhaust
+        amount: 0.05
+      - type: apoli:apply_effect
+        effect:
+          effect: minecraft:levitation
+          duration: 3
+          amplifier: 4
+          show_particles: false
+          show_icon: false
+auto_setup_triggers:
+  type: apoli:action_over_time
+  interval: 2
+  entity_action:
+    type: origins:if_else
+    condition:
+      type: origins:and
+      conditions:
+        - type: origins:on_block
+          inverted: true
+        - type: origins:riding
+          inverted: true
+        - type: apoli:command
+          command: data get entity @s SleepTimer
+          comparison: '=='
+          compare_to: 0
+    if_action:
+      type: origins:if_else
+      condition:
+        type: origins:power
+        inverted: true
+        power: sil_yoni:fluttering_wings/triggers
+        source: sil_yoni:fluttering_wings
+      if_action:
+        type: origins:grant_power
+        power: sil_yoni:fluttering_wings/triggers
+        source: sil_yoni:fluttering_wings
+    else_action:
+      type: origins:if_else
+      condition:
+        type: origins:power
+        power: sil_yoni:fluttering_wings/triggers
+        source: sil_yoni:fluttering_wings
+      if_action:
+        type: origins:revoke_power
+        power: sil_yoni:fluttering_wings/triggers
+        source: sil_yoni:fluttering_wings
+auto_remove_triggers:
+  type: origins:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_lost:
+    type: origins:and
+    actions:
+      - type: origins:revoke_power
+        power: sil_yoni:fluttering_wings/triggers
+        source: sil_yoni:fluttering_wings

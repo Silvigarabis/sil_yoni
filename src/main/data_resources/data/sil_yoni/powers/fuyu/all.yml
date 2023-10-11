@@ -1,0 +1,101 @@
+type: origins:multiple
+auto_setup_triggers:
+  type: apoli:action_over_time
+  interval: 3
+  entity_action:
+    type: origins:if_else
+    condition:
+      type: origins:and
+      conditions:
+        - type: origins:on_block
+          inverted: true
+        - type: origins:riding
+          inverted: true
+        - type: apoli:command
+          command: data get entity @s SleepTimer
+          comparison: '=='
+          compare_to: 0
+    if_action:
+      type: origins:if_else
+      condition:
+        type: origins:power
+        inverted: true
+        power: sil_yoni:fuyu/elytra
+        source: sil_yoni:fuyu/all
+      if_action:
+        type: origins:and
+        actions:
+          - type: origins:grant_power
+            power: sil_yoni:fuyu/elytra
+            source: sil_yoni:fuyu/all
+    else_action:
+      type: origins:if_else
+      condition:
+        type: origins:power
+        power: sil_yoni:fuyu/elytra
+        source: sil_yoni:fuyu/all
+      if_action:
+        type: origins:and
+        actions:
+          - type: origins:revoke_power
+            power: sil_yoni:fuyu/elytra
+            source: sil_yoni:fuyu/all
+xlimc:
+  type: origins:climbing
+  condition:
+    type: origins:collided_horizontally
+  allow_holding: false
+body_while_no_energy:
+  type: origins:model_color
+  alpha: 0.7
+no_strength:
+  type: origins:modify_break_speed
+  modifier:
+    operation: multiply_base
+    value: -0.74
+attribute_modifiers:
+  type: origins:attribute
+  modifiers:
+    - attribute: generic.attack_damage
+      operation: multiply_total
+      value: -0.8
+    - attribute: generic.armor
+      operation: multiply_total
+      value: -1
+    - attribute: generic.movement_speed
+      operation: multiply_total
+      value: -0.15
+    - attribute: generic.max_health
+      operation: addition
+      value: 30
+no_regen:
+  type: origins:disable_regen
+  condition:
+    type: apoli:and
+    conditions:
+      - type: origins:exposed_to_sun
+        inverted: true
+no_breath:
+  type: origins:invulnerability
+  damage_condition:
+    type: origins:or
+    conditions:
+      - type: origins:name
+        name: drown
+immu_energy:
+  type: origins:modify_damage_taken
+  damage_condition:
+    type: origins:or
+    conditions:
+      - type: origins:in_tag
+        tag: is_fire
+      - type: origins:in_tag
+        tag: is_lightning
+  modifier:
+    operation: multiply_total_multiplicative
+    value: -1
+no_food_require:
+  type: origins:modify_exhaustion
+  modifier:
+    operation: set_total
+    value: 0

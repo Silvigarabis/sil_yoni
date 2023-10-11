@@ -1,0 +1,25 @@
+type: origins:multiple
+timeout:
+  type: origins:cooldown
+  cooldown: 10
+loop:
+  type: origins:action_over_time
+  interval: 20
+  condition:
+    type: origins:and
+    conditions:
+      - type: origins:resource
+        resource: sil_yoni:void_space_timer
+        comparison: '>'
+        compare_to: 0
+      - type: origins:resource
+        resource: sil_yoni:void_space/on_pressing_timeout
+        comparison: '=='
+        compare_to: 0
+  entity_action:
+    type: origins:and
+    actions:
+      - type: origins:change_resource
+        resource: sil_yoni:void_space_timer
+        operation: set
+        change: 0

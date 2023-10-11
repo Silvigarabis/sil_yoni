@@ -1,0 +1,12 @@
+type: origins:active_self
+key:
+  key: key.jump
+  continuous: true
+entity_action:
+  type: origins:riding_action
+  action:
+    type: origins:add_velocity
+    space: world
+    'y': 0.1
+    client: true
+    server: true

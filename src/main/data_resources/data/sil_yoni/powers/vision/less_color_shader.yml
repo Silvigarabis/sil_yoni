@@ -1,0 +1,2 @@
+type: origins:shader
+shader: minecraft:shaders/post/desaturate.json
