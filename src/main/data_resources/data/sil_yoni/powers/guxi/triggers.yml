@@ -9,7 +9,7 @@ loop_energy:
       type: origins:and
       conditions:
         - type: origins:relative_health
-          comparison: <=
+          comparison: "<="
           compare_to: 0.12
     if_action:
       type: origins:if_else
