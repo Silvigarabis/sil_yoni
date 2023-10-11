@@ -1,1 +1,0 @@
-{"required":true,"package":"io.github.silvigarabis.sil_yoni.mixin","compatibilityLevel":"JAVA_17","mixins":["MixinSounds"],"injectors":{"defaultRequire":1}}

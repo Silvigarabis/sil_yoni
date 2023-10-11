@@ -43,10 +43,15 @@ power.sil_yoni.guxi/boost_to_sky_power_desc.name: 特殊能力：跳跃、飞行
 power.sil_yoni.guxi/boost_to_sky_power_desc.description: 你可以消耗能量来将你送上天空或者滑翔。
 power.sil_yoni.guxi/fire_light_power_desc.name: 特殊能力：能量发送
 power.sil_yoni.guxi/fire_light_power_desc.description: 你可以将组成你的能量发送到外界。手持剑或镐使用。
+
+power.sil_yoni.void_space.cooldown_deny_switch: 由于传送通道尚不稳定，无法切换空间。
+
 touhouorigins.subtitles.entity.fairy.fly: 妖精飞起来
+
 death.attack.guxi_starve_energy: '%1$s没能保持能量充足'
 death.attack.guxi_starve_energy.player: '%1$s在与%2$s战斗时没能保持能量充足'
 death.attack.energy_dense_explosion: '%1$s被注入了太多的能量'
 death.attack.hurt_by_water.player: '%1$s被%2$s注入了太多的能量'
+
 sil_yoni.gui.badge.long_press_active: 长按 %s 以使用
 sil_yoni.gui.badge.long_press_toggle: 长按 %s 以切换

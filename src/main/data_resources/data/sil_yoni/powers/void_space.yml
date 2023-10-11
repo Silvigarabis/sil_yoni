@@ -1,90 +1,106 @@
 # timer 和 switch_cooldown_seconds 是你需要关注的
 type: origins:multiple
 trigger:
-  type: origins:active_self
-  key:
-    key: key.origins.secondary_active
-  entity_action:
-    type: origins:if_else
-    condition:
-      type: origins:power
-      power: sil_yoni:void_space/on_pressing
-      source: sil_yoni:void_space
-    if_action:
-      type: origins:tirgger_cooldown
-      power: sil_yoni:void_space/on_pressing_timeout
-    else_action:
-      type: origins:grant_power
-      power: sil_yoni:void_space/on_pressing
-      source: sil_yoni:void_space
+    type: origins:active_self
+    key:
+        key: key.origins.secondary_active
+    entity_action:
+        type: origins:if_else
+        condition:
+          type: origins:and
+          conditions:
+            -   type: origins:resource
+                resource: sil_yoni:void_space_switch_cooldown_seconds
+                comparison: '=='
+                compare_to: 0
+            -   type: origins:power
+                power: sil_yoni:void_space/on_pressing
+                source: sil_yoni:void_space
+        if_action:
+            type: origins:tirgger_cooldown
+            power: sil_yoni:void_space/on_pressing_timeout
+        else_action:
+            type: origins:grant_power
+            power: sil_yoni:void_space/on_pressing
+            source: sil_yoni:void_space
 switch_cooldown_timer:
-  type: origins:action_over_time
-  interval: 20
-  condition:
-    type: origins:resource
-    resource: sil_yoni:void_space_switch_cooldown_seconds
-    comparison: '>'
-    compare_to: 0
-  action:
-    type: origins:change_resource
-    resource: sil_yoni:void_space_switch_cooldown_seconds
-    operation: add
-    change: -1
+    type: origins:action_over_time
+    interval: 20
+    condition:
+        type: origins:resource
+        resource: sil_yoni:void_space_switch_cooldown_seconds
+        comparison: '>'
+        compare_to: 0
+    action:
+        type: origins:change_resource
+        resource: sil_yoni:void_space_switch_cooldown_seconds
+        operation: add
+        change: -1
 # 注意，这不是一个cooldown，这是一个cooldown时间
 switch_cooldown_seconds:
-  type: origins:cooldown
-  min: 0
-  max: 1800
+    type: origins:cooldown
+    min: 0
+    max: 1800
 timer:
-  type: origins:resource
-  min: 0
-  max: 1
-  start_value: 0
-  min_action:
-    type: origins:revoke_power
-    power: sil_yoni:void_space/on_pressing
-    source: sil_yoni:void_space
-  max_action:
-    type: origins:and
-    actions:
-      - type: origins:revoke_power
+    type: origins:resource
+    min: 0
+    max: 1
+    start_value: 0
+    min_action:
+        type: origins:revoke_power
         power: sil_yoni:void_space/on_pressing
         source: sil_yoni:void_space
-      - type: origins:if_else
-        condition:
-          type: origins:resource
-          resource: sil_yoni:void_space_switch_cooldown_seconds
-          comparison: '>'
-          compare_to: 0
-        if_action:
-          type: origins:execute_command
-          command: ''
-        else_action:
-          type: origins:if_else
-          condition:
-            type: origins:resource
-            resource: sil_yoni:void_space/in_void_space
-            comparison: '=='
-            compare_to: 0
-          if_action:
-            type: origins:grant_power
-            power: sil_yoni:void_space/data
-            source: sil_yoni:void_space
-          else_action:
-            type: origins:revoke_power
-            power: sil_yoni:void_space/data
-            source: sil_yoni:void_space
+    max_action:
+        type: origins:and
+        actions:
+            - type: origins:change_resource
+              resource: sil_yoni:void_space_switch_cooldown_seconds
+              operation: set
+              change: 0
+            - type: origins:revoke_power
+              power: sil_yoni:void_space/on_pressing
+              source: sil_yoni:void_space
+            - type: origins:if_else
+              condition:
+                  type: origins:resource
+                  resource: sil_yoni:void_space_switch_cooldown_seconds
+                  comparison: '>'
+                  compare_to: 0
+              if_action:
+                  type: origins:execute_command
+                  command: 'function sil_yoni:origin_power/void_space/cooldown_deny_switch'
+              else_action:
+                  type: origins:and
+                  actions:
+                  -   type: origins:change_resource
+                      resource: sil_yoni:void_space_switch_cooldown_seconds
+                      operation: set
+                      change: 100
+                  -   type: origins:if_else
+                      condition:
+                          type: origins:resource
+                          resource: sil_yoni:void_space/in_void_space
+                          comparison: '=='
+                          compare_to: 0
+                      if_action:
+                          type: origins:grant_power
+                          power: sil_yoni:void_space/data
+                          source: sil_yoni:void_space
+                      else_action:
+                          type: origins:revoke_power
+                          power: sil_yoni:void_space/data
+                          source: sil_yoni:void_space
 callbacks:
-  type: origins:action_on_callback
-  execute_chosen_when_orb: true
-  entity_action_lost:
-    type: origins:and
-    actions:
-      - type: origins:revoke_power
-        power: sil_yoni:void_space/data
-        source: sil_yoni:void_space
-      - type: origins:revoke_power
-        power: sil_yoni:void_space/on_pressing
-        source: sil_yoni:void_space
+    type: origins:action_on_callback
+    execute_chosen_when_orb: true
+    entity_action_lost:
+        type: origins:and
+        actions:
+            - type: origins:revoke_power
+              power: sil_yoni:void_space/data
+              source: sil_yoni:void_space
+            - type: origins:revoke_power
+              power: sil_yoni:void_space/on_pressing
+              source: sil_yoni:void_space
 badges:
-  - sil_yoni:long_press_active
+    - sil_yoni:long_press_active
