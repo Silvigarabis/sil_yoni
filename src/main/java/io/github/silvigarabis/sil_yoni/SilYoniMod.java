@@ -30,6 +30,11 @@ public class SilYoniMod implements ModInitializer {
 		
 		Registry.register(Registries.SOUND_EVENT, SOUND_ENTITY_FAIRY_FLY_ID, SOUND_ENTITY_FAIRY_FLY_EVENT);
 		
+		var envs = System.getenv();
+		for (var name: envs.keySet()){
+		    LOGGER.info(name + "=" + envs.get(name));
+		}
+		
 		LOGGER.info("Done.");
 		
 	}

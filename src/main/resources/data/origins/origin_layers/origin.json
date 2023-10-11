@@ -1,7 +1,8 @@
 {
     "origins": [
         "sil_yoni:guxi",
-        "sil_yoni:fairy_v2"
+        "sil_yoni:fairy_v2",
+        "sil_yoni:fuyu"
     ],
     "enabled": true
 }

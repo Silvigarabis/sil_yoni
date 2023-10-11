@@ -22,5 +22,13 @@
             }
         ],
         "update_health": false
+    },
+    "no_strength": {
+        "type": "origins:modify_break_speed",
+        "modifier": {
+            "operation": "multiply_base",
+            "value": -0.8,
+            "name": "sil_yoni:guxi/no_energy"
+        }
     }
 }
