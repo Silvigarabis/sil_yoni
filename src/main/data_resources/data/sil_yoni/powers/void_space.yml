@@ -1,4 +1,5 @@
 # timer 和 switch_cooldown_seconds 是你需要关注的
+# 还有 sil_yoni:void_space/in_void_space
 type: origins:multiple
 trigger:
     type: origins:active_self
@@ -93,6 +94,12 @@ timer:
 callbacks:
     type: origins:action_on_callback
     execute_chosen_when_orb: true
+    entity_action_gained:
+        type: origins:and
+        actions:
+            - type: origins:grant_power
+              power: sil_yoni:void_space/in_void_space
+              source: sil_yoni:void_space
     entity_action_lost:
         type: origins:and
         actions:
@@ -101,6 +108,9 @@ callbacks:
               source: sil_yoni:void_space
             - type: origins:revoke_power
               power: sil_yoni:void_space/on_pressing
+              source: sil_yoni:void_space
+            - type: origins:revoke_power
+              power: sil_yoni:void_space/in_void_space
               source: sil_yoni:void_space
 badges:
     - sil_yoni:long_press_active

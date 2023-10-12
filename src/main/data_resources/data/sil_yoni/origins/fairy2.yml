@@ -1,0 +1,6 @@
+powers:
+  - sil_yoni:fairy2/base
+icon:
+  item: minecraft:golden_apple
+unchoosable: false
+impact: 3
