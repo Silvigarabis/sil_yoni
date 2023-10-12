@@ -5,21 +5,22 @@ trigger:
     type: origins:active_self
     key:
         key: key.origins.secondary_active
+        continuous: true
     entity_action:
         type: origins:if_else
         condition:
-          type: origins:and
-          conditions:
-            -   type: origins:resource
-                resource: sil_yoni:void_space_switch_cooldown_seconds
-                comparison: '=='
-                compare_to: 0
-            -   type: origins:power
-                power: sil_yoni:void_space/on_pressing
-                source: sil_yoni:void_space
+            type: origins:power
+            power: sil_yoni:void_space/on_pressing
+            source: sil_yoni:void_space
         if_action:
-            type: origins:trigger_cooldown
-            power: sil_yoni:void_space/on_pressing_timeout
+            type: origins:and
+            actions:
+              - type: origins:trigger_cooldown
+                power: sil_yoni:void_space/on_pressing_timeout
+              - type: origins:change_resource
+                resource: sil_yoni:void_space_timer
+                operation: add
+                change: 1
         else_action:
             type: origins:grant_power
             power: sil_yoni:void_space/on_pressing
@@ -32,7 +33,7 @@ switch_cooldown_timer:
         resource: sil_yoni:void_space_switch_cooldown_seconds
         comparison: '>'
         compare_to: 0
-    action:
+    entity_action:
         type: origins:change_resource
         resource: sil_yoni:void_space_switch_cooldown_seconds
         operation: add
@@ -41,12 +42,27 @@ switch_cooldown_timer:
 switch_cooldown_seconds:
     type: origins:resource
     min: 0
-    max: 1800
+    max: 600
     start_value: 0
+    hud_render:
+        condition:
+            type: origins:resource
+            resource: sil_yoni:void_space_switch_cooldown_seconds
+            comparison: '>'
+            compare_to: 0
+        should_render: true
+        bar_index: 1
 timer:
+    hud_render:
+        condition:
+            type: origins:resource
+            resource: sil_yoni:void_space_timer
+            comparison: '>'
+            compare_to: 0
+        should_render: true
     type: origins:resource
     min: 0
-    max: 1
+    max: 100
     start_value: 0
     min_action:
         type: origins:revoke_power
@@ -55,10 +71,6 @@ timer:
     max_action:
         type: origins:and
         actions:
-            - type: origins:change_resource
-              resource: sil_yoni:void_space_switch_cooldown_seconds
-              operation: set
-              change: 0
             - type: origins:revoke_power
               power: sil_yoni:void_space/on_pressing
               source: sil_yoni:void_space
@@ -77,7 +89,7 @@ timer:
                   -   type: origins:change_resource
                       resource: sil_yoni:void_space_switch_cooldown_seconds
                       operation: set
-                      change: 100
+                      change: 60
                   -   type: origins:if_else
                       condition:
                           type: origins:resource
@@ -113,5 +125,24 @@ callbacks:
             - type: origins:revoke_power
               power: sil_yoni:void_space/in_void_space
               source: sil_yoni:void_space
+death_callback:
+    type: origins:prevent_death
+    condition:
+        type: origins:resource
+        resource: sil_yoni:void_space/in_void_space
+        comparison: '=='
+        compare_to: 1
+    entity_action:
+        type: origins:and
+        actions:
+          - type: origins:revoke_power
+            power: sil_yoni:void_space/data
+            source: sil_yoni:void_space
+          - type: origins:change_resource
+            resource: sil_yoni:void_space_switch_cooldown_seconds
+            operation: set
+            change: 300
+          - type: origins:execute_command
+            command: 'function sil_yoni:origin_power/void_space/live_keep'
 badges:
     - sil_yoni:long_press_active
