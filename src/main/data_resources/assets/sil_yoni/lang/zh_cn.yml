@@ -1,8 +1,13 @@
 origin.sil_yoni.guxi.name: 咕西
 origin.sil_yoni.guxi.description: >-
   兮芾的种族。看起来他们比较娇小，这是因为他们以能量组成了身体。由于是能量体，所以他们没有消化有机质的能力，但很明显他们不需要。他们无法抵御物理伤害，与此同时他们可以直接吸收热量。他们的眼睛与众不同。
-origin.sil_yoni.fairy_v2.name: 绿色仙子
-origin.sil_yoni.fairy_v2.description: 他们是森林的珍宝。经常会在空中进行快速冲刺，不过总是会因为他们脆弱的身体而停下。他们还擅长和自然打交道。
+origin.sil_yoni.fairy.name: 绿色仙子
+origin.sil_yoni.fairy.description: 他们是森林的珍宝。经常会在空中进行快速冲刺，不过总是会因为他们脆弱的身体而停下。他们还擅长和自然打交道。
+origin.sil_yoni.fairy2.name: 仙子
+origin.sil_yoni.fairy2.description: 世界的奇妙造物，也许在某一方面他们过于弱小，但他们也有着特殊的能力。
+origin.sil_yoni.silvigarabis.name: Silvigarabis
+origin.sil_yoni.silvigarabis.description: 这是作者写给自己玩的种族。
+
 power.sil_yoni.physique/weak_body.name: 软弱的身体
 power.sil_yoni.physique/weak_body.description: 你身体虚弱，行为能力受到限制。
 power.sil_yoni.physique/weak_arms.name: 虚弱的手臂
@@ -43,8 +48,9 @@ power.sil_yoni.guxi/boost_to_sky_power_desc.name: 特殊能力：跳跃、飞行
 power.sil_yoni.guxi/boost_to_sky_power_desc.description: 你可以消耗能量来将你送上天空或者滑翔。
 power.sil_yoni.guxi/fire_light_power_desc.name: 特殊能力：能量发送
 power.sil_yoni.guxi/fire_light_power_desc.description: 你可以将组成你的能量发送到外界。手持剑或镐使用。
-
 power.sil_yoni.void_space.cooldown_deny_switch: 由于传送通道尚不稳定，无法切换空间。
+power.sil_yoni.void_space.live_keep: 你在虚空空间里死亡了，被迫从中出来。
+power.sil_yoni.void_space.leave.failed.noentrypoint: 没有找到出口。
 
 touhouorigins.subtitles.entity.fairy.fly: 妖精飞起来
 
