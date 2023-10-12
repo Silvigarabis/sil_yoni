@@ -27,7 +27,7 @@ triggers:
     condition:
         type: origins:command
         command: spreadplayers ~ ~ 1 12 false @s
-        comparison: "=="
+        comparison: ">"
         compare_to: 0
     if_action:
         type: origins:change_resource

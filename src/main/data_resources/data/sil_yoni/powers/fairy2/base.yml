@@ -1,0 +1,18 @@
+type: origins:multiple
+hidden: true
+callbacks:
+    type: origins:action_on_callback
+    execute_chosen_when_orb: true
+    entity_action_gained:
+        type: origins:and
+        actions:
+            - type: origins:grant_power
+              power: sil_yoni:void_space
+              source: sil_yoni:fairy2_base
+    entity_action_lost:
+        type: origins:and
+        actions:
+            - type: origins:revoke_power
+              power: sil_yoni:void_space
+              source: sil_yoni:fairy2_base
+              
