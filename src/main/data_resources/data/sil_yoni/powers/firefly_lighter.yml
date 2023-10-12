@@ -1,8 +1,6 @@
 type: origins:action_over_time
 condition:
-    type: origins:brightness
-    comparison: "<="
-    compare_to: 0.14285715
+    type: origins:on_block
 interval: 16
 entity_action:
   type: origins:apply_effect
