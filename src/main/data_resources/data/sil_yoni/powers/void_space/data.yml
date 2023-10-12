@@ -3,6 +3,13 @@ noregen:
     type: origins:disable_regen
 nodamage:
     type: origins:invulnerability
+    damage_condition:
+        type: origins:and
+        conditions:
+        - type: origins:out_of_world
+          inverted: true
+        - type: origins:unblockable
+          inverted: true
 nofalldown:
     type: origins:modify_falling
     velocity: 0
@@ -39,6 +46,7 @@ triggers:
         type: origins:execute_command
         command: function sil_yoni:origin_powers/void_space/leave_failed_noentrypoint
   entity_action_gained:
+    type: origins:and
     actions:
       - type: origins:change_resource
         resource: sil_yoni:void_space/in_void_space

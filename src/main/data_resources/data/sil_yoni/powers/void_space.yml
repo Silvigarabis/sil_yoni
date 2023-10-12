@@ -18,7 +18,7 @@ trigger:
                 power: sil_yoni:void_space/on_pressing
                 source: sil_yoni:void_space
         if_action:
-            type: origins:tirgger_cooldown
+            type: origins:trigger_cooldown
             power: sil_yoni:void_space/on_pressing_timeout
         else_action:
             type: origins:grant_power
@@ -39,9 +39,10 @@ switch_cooldown_timer:
         change: -1
 # 注意，这不是一个cooldown，这是一个cooldown时间
 switch_cooldown_seconds:
-    type: origins:cooldown
+    type: origins:resource
     min: 0
     max: 1800
+    start_value: 0
 timer:
     type: origins:resource
     min: 0
