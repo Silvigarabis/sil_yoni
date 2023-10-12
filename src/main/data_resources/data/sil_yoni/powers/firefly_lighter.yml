@@ -1,6 +1,7 @@
 type: origins:action_over_time
 condition:
     type: origins:on_block
+    inverted: true
 interval: 16
 entity_action:
   type: origins:apply_effect
