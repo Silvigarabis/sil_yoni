@@ -1,0 +1,17 @@
+type: origins:multiple
+badges:
+    - sil_yoni:active_in_void_space
+container_data:
+    type: origins:inventory
+    title: container.sil_yoni:void_inventory
+    recoverable: false
+    drop_on_death: false
+    condition:
+        type: origins:resource
+        resource: sil_yoni:void_space/in_void_space
+        comparison: '=='
+        compare_to: 1
+    key:
+       key: key.inventory
+    container_type: double_chest
+    

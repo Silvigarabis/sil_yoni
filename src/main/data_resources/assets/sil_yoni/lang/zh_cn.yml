@@ -16,18 +16,22 @@ power.sil_yoni.physique/tiny_body.name: 微小珍宝
 power.sil_yoni.physique/tiny_body.description: 你的身体很小，不像一般的人类，一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
 power.sil_yoni.physique/small_body.name: 较小体型
 power.sil_yoni.physique/small_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能无法完成，比如够到更远的东西，又或者跳上一个完整的方块。
+
 power.sil_yoni.forager.name: 土地耕耘大师
 power.sil_yoni.forager.description: 在自然中耕种使你了解到如何从作物中获取更高的产出
 power.sil_yoni.bee_rider.name: 蜜蜂骑乘者
 power.sil_yoni.bee_rider.description: 蜜蜂愿意成为你的坐骑！只要你不伤害他们……
 power.sil_yoni.glowing_vision.name: 光明视野
 power.sil_yoni.glowing_vision.description: 在让自己发光的同时，你也能清晰的看到周围的一切（使用能力时免疫黑暗效果，并获得发光效果。）
+power.sil_yoni.dark_lighter.name: 夜光体
+power.sil_yoni.dark_lighter.description: 在暗处，你的身体会发光
 power.sil_yoni.glow_lighter.name: 发光
 power.sil_yoni.glow_lighter.description: 你的身体会发光
 power.sil_yoni.forest_s_giving.name: 森林的馈赠
 power.sil_yoni.forest_s_giving.description: 处于森林中时，你的各项属性小幅提高，并且可以快速恢复生命。
 power.sil_yoni.sun_s_helping.name: 日光的帮助
 power.sil_yoni.sun_s_helping.description: 处于阳光中，你的各项属性小幅提高，并且可以缓慢恢复生命。
+
 power.sil_yoni.fluttering_wings.name: 魔法的翅膀
 power.sil_yoni.fluttering_wings.description: 你有一双魔法般的翅膀，它可以带你飞上天空。
 power.sil_yoni.fairy/fairy_wings.name: 仙灵的翅膀
@@ -36,18 +40,26 @@ power.sil_yoni.fairy/heal_magic.name: 治愈魔法
 power.sil_yoni.fairy/heal_magic.description: 让你周围带上你的治疗魔法，并为自己增加临时的防护！
 power.sil_yoni.fairy/fairy_physique.name: 仙子体质
 power.sil_yoni.fairy/fairy_physique.description: 仙子的体质决定了你不能承受更多的伤害。
+
 power.sil_yoni.vision/pencil_shader.name: 铅笔素描视角
 power.sil_yoni.vision/pencil_shader.description: 你以一种独特的视角观察世界
 power.sil_yoni.vision/less_color_shader.name: 黯淡视角
 power.sil_yoni.vision/less_color_shader.description: 你以一种独特的视角观察世界
 power.sil_yoni.vision/night_vision.name: 清晰的视野
 power.sil_yoni.vision/night_vision.description: 视野之内，没有黑暗的地方
+
 power.sil_yoni.guxi/guxi_physique.name: 咕西的体质
 power.sil_yoni.guxi/guxi_physique.description: 盔甲无法为你抵挡伤害；你没有进食的需求，因为你的身体并不与常人一致。
 power.sil_yoni.guxi/boost_to_sky_power_desc.name: 特殊能力：跳跃、飞行、滑翔
 power.sil_yoni.guxi/boost_to_sky_power_desc.description: 你可以消耗能量来将你送上天空或者滑翔。
 power.sil_yoni.guxi/fire_light_power_desc.name: 特殊能力：能量发送
 power.sil_yoni.guxi/fire_light_power_desc.description: 你可以将组成你的能量发送到外界。手持剑或镐使用。
+
+power.sil_yoni.fairy2/void_inventory.name: 虚空存储
+power.sil_yoni.fairy2/void_inventory.description: 你可以利用虚空空间存储你的物品。
+
+power.sil_yoni.void_space.name: 进入到虚空的能力
+power.sil_yoni.void_space.description: 你可以进入虚空空间。
 power.sil_yoni.void_space.cooldown_deny_switch: 由于传送通道尚不稳定，无法切换空间。
 power.sil_yoni.void_space.live_keep: 你在虚空空间里死亡了，被迫从中出来。
 power.sil_yoni.void_space.leave.failed.noentrypoint: 没有找到出口。
@@ -61,3 +73,6 @@ death.attack.hurt_by_water.player: '%1$s被%2$s注入了太多的能量'
 
 sil_yoni.gui.badge.long_press_active: 长按 %s 以使用
 sil_yoni.gui.badge.long_press_toggle: 长按 %s 以切换
+sil_yoni.gui.badge.active_in_void_space: 在虚空空间当中使用 %s
+
+container.sil_yoni:void_inventory: 虚空存储
