@@ -89,7 +89,7 @@ timer:
                   -   type: origins:change_resource
                       resource: sil_yoni:void_space_switch_cooldown_seconds
                       operation: set
-                      change: 60
+                      change: 20
                   -   type: origins:if_else
                       condition:
                           type: origins:resource
@@ -142,6 +142,8 @@ death_callback:
             resource: sil_yoni:void_space_switch_cooldown_seconds
             operation: set
             change: 300
+          - type: origins:clear_effect
+          - type: origins:extinguish
           - type: origins:execute_command
             command: 'function sil_yoni:origin_power/void_space/live_keep'
 badges:
