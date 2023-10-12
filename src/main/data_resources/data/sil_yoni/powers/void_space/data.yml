@@ -4,12 +4,7 @@ noregen:
 nodamage:
     type: origins:invulnerability
     damage_condition:
-        type: origins:and
-        conditions:
-        - type: origins:out_of_world
-          inverted: true
-        - type: origins:unblockable
-          inverted: true
+      type: origins:out_of_world
 nofalldown:
     type: origins:modify_falling
     velocity: 0
@@ -26,6 +21,10 @@ no_action_5:
     type: origins:prevent_entity_use
 no_action_6:
     type: origins:prevent_block_use
+glowing:
+    type: origins:self_glow
+vision_0:
+    type: origins:night_vision
 triggers:
   type: origins:action_on_callback
   execute_chosen_when_orb: true
