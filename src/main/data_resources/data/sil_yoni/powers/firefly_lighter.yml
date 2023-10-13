@@ -1,12 +1,6 @@
-type: origins:action_over_time
-condition:
+type: origins:self_glow
+entity_condition:
     type: origins:on_block
     inverted: true
-interval: 16
-entity_action:
-  type: origins:apply_effect
-  effect:
-    effect: minecraft:glowing
-    duration: 18
-    show_particles: true
-    show_icon: false
+bientity_condition:
+    type: origins:can_see

@@ -5,5 +5,5 @@ entity_action:
   effect:
     effect: minecraft:glowing
     duration: 18
-    show_particles: true
+    show_particles: false
     show_icon: false
