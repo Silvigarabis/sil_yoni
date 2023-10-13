@@ -11,6 +11,14 @@ switch_action_timer:
    min: 0
    max: 100
    start_value: 0
+   hud_render:
+       condition:
+          type: origins:resource
+          resource: sil_yoni:void_space_switch_action_timer
+          comparison: '>'
+          compare_to: 0
+       should_render: true
+       bar_index: 2
    max_action:
       type: origins:and
       actions:

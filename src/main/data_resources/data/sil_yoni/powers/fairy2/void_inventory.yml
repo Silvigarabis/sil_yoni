@@ -34,8 +34,13 @@ opening_timer:
    min: 0
    max: 40
    hud_render:
-      should_render: true
-      bar_index: 5
+       condition:
+          type: origins:resource
+          resource: sil_yoni:fairy2/void_inventory_opening_timer
+          comparison: '>'
+          compare_to: 0
+       should_render: true
+       bar_index: 5
    max_action:
       type: origins:and
       actions:
