@@ -29,5 +29,5 @@ small_step:
   modifier:
     attribute: generic.movement_speed
     operation: multiply_base
-    value: -0.2
+    value: -0.5
     name: sil_yoni:physique/tiny_body

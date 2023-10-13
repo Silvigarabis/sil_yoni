@@ -1,0 +1,21 @@
+type: origins:multiple
+hidden: true
+# 通用攀爬能力，允许攀登一般方块（正确硬度小于50）
+ability:
+   type: origins:climbing
+   condition:
+      type: origins:and
+      conditions:
+      -  type: origins:collided_horizontally
+      -  type: origins:block_collision
+         offset_x: 0.1
+         offset_y: 0.1
+         block_condition:
+            type: origins:and
+            conditions:
+            -  type: origins:hardness
+               comparison: "<"
+               compare_to: 50
+            -  type: origins:hardness
+               comparison: ">="
+               compare_to: 0

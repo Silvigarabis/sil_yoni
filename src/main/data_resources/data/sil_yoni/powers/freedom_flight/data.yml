@@ -1,0 +1,64 @@
+type: origins:multiple
+nofalldamage:
+    type: origins:invulnerability
+    damage_condition:
+       type: origins:in_tag
+       tag: is_fall
+nofalldown:
+    type: origins:modify_falling
+    velocity: 0.1
+    take_fall_damage: false
+noaction_1:
+    type: origins:prevent_elytra_flight
+on_land:
+  type: origins:action_on_land
+  interval: 5
+  entity_action:
+     type: origins:change_resource
+     resource: sil_yoni:freedom_flight
+     operation: set
+     change: 0
+boost_forward:
+   type: origins:active_self
+   condition:
+   key:
+      key: key.forward
+      continuous: true
+   entity_action:
+     type: origins:change_resource
+     resource: sil_yoni:freedom_flight/data_boosting_with_sprint
+     operation: set
+     change: 1
+boosting_with_sprint:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 0
+   max_action:
+      type: origin:and
+      actions:
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_boosting_with_sprint
+         operation: set
+         change: 0
+      -  type: origins:if_else
+         condition:
+            type: origins:sprinting
+         if_action:
+            type: origins:add_velocity
+            space: local
+            z: 1
+         else_action:
+            type: origins:add_velocity
+            space: local
+            z: 0.4
+go_back:
+   type: origins:active_self
+   condition:
+   key:
+      key: key.back
+      continuous: true
+   entity_action:
+      type: origins:add_velocity
+      space: local
+      z: -0.35
