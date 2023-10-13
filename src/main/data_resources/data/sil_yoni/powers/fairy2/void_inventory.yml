@@ -86,7 +86,7 @@ opening_condition:
          if_action:
             type: origins:and
             actions:
-            -  type: origins:command
+            -  type: origins:execute_command
                command: function sil_yoni:origin_power/fairy2/void_inventory/could_not_open_no_void_space
             -  type: origins:change_resource
                resource: sil_yoni:fairy2/void_inventory_opening_timer
