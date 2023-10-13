@@ -10,10 +10,6 @@ attribute_modifiers:
       operation: multiply_total
       value: -0.15
       name: sil_yoni:physique/weak_body
-    - attribute: generic.max_health
-      operation: addition
-      value: -2
-      name: sil_yoni:physique/weak_body
     - attribute: generic.movement_speed
       operation: addition
       value: -0.02

@@ -1,17 +1,95 @@
 type: origins:multiple
+# 这逻辑太乱了，可能的话我会重写一次
 badges:
-    - sil_yoni:active_in_void_space
+- sil_yoni:active_in_void_space
 container_data:
-    type: origins:inventory
-    title: container.sil_yoni:void_inventory
-    recoverable: false
-    drop_on_death: false
-    condition:
-        type: origins:resource
-        resource: sil_yoni:void_space/in_void_space
-        comparison: '=='
-        compare_to: 1
-    key:
-       key: key.inventory
-    container_type: double_chest
-    
+   type: origins:inventory
+   title: container.sil_yoni:void_inventory
+   recoverable: false
+   drop_on_death: false
+   condition:
+      type: origins:and
+      conditions:
+      -  type: origins:resource
+         resource: sil_yoni:fairy2/void_inventory_opening_timer
+         comparison: '=='
+         compare_to: 40
+      -  type: origins:resource
+         resource: sil_yoni:void_space/in_void_space
+         comparison: '=='
+         compare_to: 1
+   key:
+      key: key.inventory
+      continuous: true
+   container_type: double_chest
+opening_timeout:
+   type: origins:cooldown
+   cooldown: 5
+   hud_render:
+      should_render: true
+      bar_index: 6
+opening_timer:
+   type: origins:resource
+   min: 0
+   max: 40
+   hud_render:
+      should_render: true
+      bar_index: 5
+   max_action:
+      type: origins:delay
+      ticks: 40
+      action:
+         type: origins:change_resource
+         resource: sil_yoni:fairy2/void_inventory_opening_timer
+         operation: set
+         change: 0
+opening_condition:
+   type: origins:active_self
+   key:
+      key: key.inventory
+      continuous: true
+   entity_action:
+      type: origins:and
+      actions:
+      -  type: origins:change_resource
+         resource: sil_yoni:fairy2/void_inventory_opening_timer
+         operation: add
+         change: 1
+      -  type: origins:trigger_cooldown
+         power: sil_yoni:fairy2/void_inventory_opening_timeout
+      -  type: origins:delay
+         ticks: 10
+         action:
+            type: origins:if_else
+            condition:
+               type: origins:resource
+               resource: sil_yoni:fairy2/void_inventory_opening_timeout
+               comparison: '=='
+               compare_to: 0
+            if_action:
+               type: origins:change_resource
+               resource: sil_yoni:fairy2/void_inventory_opening_timer
+               operation: set
+               change: 0
+      -  type: origins:if_else
+         condition:
+            type: origins:and
+            conditions:
+            -  type: origins:resource
+               resource: sil_yoni:void_space/in_void_space
+               comparison: '=='
+               compare_to: 0
+            -  type: origins:resource
+               resource: sil_yoni:fairy2/void_inventory_opening_timer
+               comparison: '>'
+               compare_to: 30
+         if_action:
+            type: origins:and
+            actions:
+            -  type: origins:command
+               command: function sil_yoni:origin_power/fairy2/void_inventory/could_not_open_no_void_space
+            -  type: origins:change_resource
+               resource: sil_yoni:fairy2/void_inventory_opening_timer
+               operation: set
+               change: 0
+   
