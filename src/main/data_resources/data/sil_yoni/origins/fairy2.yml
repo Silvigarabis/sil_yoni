@@ -2,7 +2,7 @@ powers:
   - sil_yoni:void_space
   - sil_yoni:fairy2/void_inventory
   - sil_yoni:fairy/heal_magic
-  - sil_yoni:fairy2/no_enouth_inventory
+  - sil_yoni:freedom_flight
   
   - sil_yoni:fairy2/general
   - sil_yoni:fairy/fairy_physique
@@ -13,6 +13,7 @@ powers:
   - sil_yoni:vision/night_vision
   - sil_yoni:firefly_lighter
   
+  - sil_yoni:fairy2/no_enouth_inventory
   - sil_yoni:misc/general_climbable
   - sil_yoni:misc/normalized_air_mining_speed
 icon:
