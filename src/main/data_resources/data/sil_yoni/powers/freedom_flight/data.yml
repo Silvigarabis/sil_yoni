@@ -13,10 +13,16 @@ noaction_1:
 on_land:
   type: origins:action_on_land
   entity_action:
-     type: origins:change_resource
-     resource: sil_yoni:freedom_flight_is_flying
-     operation: set
-     change: 0
+     type: origins:and
+     actions:
+     -
+        type: origins:execute_command
+        command: say 降落！
+     -
+        type: origins:change_resource
+        resource: sil_yoni:freedom_flight_is_flying
+        operation: set
+        change: 0
 boost_forward:
    type: origins:active_self
    key:
