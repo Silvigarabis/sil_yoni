@@ -24,7 +24,7 @@ slower_falldown_when_floating:
     take_fall_damage: false
 fly_lasting:
     type: origins:cooldown
-    cooldown: 40
+    cooldown: 400
     hud_render:
         should_render: true
         bar_index: 3
