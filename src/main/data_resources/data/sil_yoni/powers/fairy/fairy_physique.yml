@@ -1,16 +1,31 @@
 type: origins:multiple
-attribute_modifiers:
+# 总体来说这将各项属性设置为基础的40%
+set_default_health:
+  type: origins:modify_attribute
+  identifier: generic.max_health
+  modifiers:
+  # 希望这有效
+  # 这样写的目的是在最早的时候把基础血量设置为 8
+  - operation: add_base_early
+    value: -999999
+    name: sil_yoni:fairy/fairy_physique_initiation
+  - operation: add_base_early
+    value: 8
+    name: sil_yoni:fairy/fairy_physique
+set_default_move_speed:
+  type: origins:modify_attribute
+  identifier: generic.movement_speed
+  modifiers:
+  - operation: add_base_early
+    value: -999999
+    name: sil_yoni:fairy/fairy_physique_initiation
+  - operation: add_base_early
+    value: 0.04
+    name: sil_yoni:fairy/fairy_physique
+modify_attributes:
   type: origins:attribute
   modifiers:
-    - attribute: generic.max_health
-      operation: multiply_base
-      value: -0.7
-      name: sil_yoni:fairy/fairy_physique
-    - attribute: generic.attack_speed
-      operation: multiply_base
-      value: 1.8
-      name: sil_yoni:fairy/fairy_physique
-    - attribute: generic.movement_speed
-      operation: multiply_base
-      value: 0.3
-      name: sil_yoni:fairy/fairy_physique
+  - attribute: generic.attack_speed
+    operation: multiply_base
+    value: -0.6
+    name: sil_yoni:fairy/fairy_physique
