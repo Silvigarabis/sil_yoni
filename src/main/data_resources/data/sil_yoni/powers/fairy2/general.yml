@@ -14,5 +14,12 @@ recover_exhaustion_in_void_space:
   type: origins:modify_exhaustion
   modifier:
     operation: set_total
-    value: -0.01
+    #value: -0.01
+    # 测试用
+    value: -1
     name: sil_yoni:fairy2/base
+less_food_require:
+  type: origins:modify_exhaustion
+  modifier:
+    operation: multiply_total_multiplicative
+    value: -0.5
