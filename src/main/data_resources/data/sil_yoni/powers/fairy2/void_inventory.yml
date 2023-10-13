@@ -21,7 +21,6 @@ can_open_inventory_flag:
    max: 1
    start_value: 0
    max_action:
-   max_action:
       type: origins:delay
       ticks: 1
       action:
@@ -63,7 +62,6 @@ on_press_inv_key:
    key:
       key: key.inventory
       continuous: true
-   condition:
    entity_action:
       type: origins:and
       actions:
