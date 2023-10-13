@@ -32,30 +32,14 @@ callbacks:
 lower_jumping:
   type: origins:modify_jump
   modifier:
-    operation: multiply_total_multiplicative
-    value: -0.25
+    operation: multiply_base_additive
+    value: -0.2
     name: sil_yoni:physique/small_body
-wear_heavy_armor:
-  type: origins:conditioned_attribute
-  tick_rate: 30
-  condition:
-    type: origins:and
-    conditions:
-      - type: origins:resource
-        resource: sil_yoni:condition/condition_wear_heavy_armor_result
-        comparison: '=='
-        compare_to: 1
-  modifiers:
-    - attribute: generic.movement_speed
-      operation: multiply_total
-      value: -0.16
-      name: sil_yoni:physique/small_body
-  update_health: false
 small_step:
   type: origins:attribute
+  update_health: false
   modifiers:
     - attribute: generic.movement_speed
-      operation: multiply_total
+      operation: multiply_base
       value: -0.2
       name: sil_yoni:physique/small_body
-  update_health: false

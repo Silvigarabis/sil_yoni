@@ -1,0 +1,13 @@
+type: origins:multiple
+attribute_modifiers:
+  type: origins:attribute
+  modifiers:
+    - attribute: generic.armor
+      operation: multiply_base
+      value: -0.4
+      name: sil_yoni:physique/fragile_body
+    - attribute: generic.max_health
+      operation: multiply_base
+      value: -0.6
+      name: sil_yoni:physique/fragile_body
+  update_health: false

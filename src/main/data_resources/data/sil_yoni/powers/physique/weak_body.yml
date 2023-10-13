@@ -3,27 +3,17 @@ attribute_modifiers:
   type: origins:attribute
   modifiers:
     - attribute: generic.attack_speed
-      operation: addition
-      value: -0.2
-      name: sil_yoni:physique/weak_body
-    - attribute: generic.armor
-      operation: multiply_total
-      value: -0.15
+      operation: multiply_base
+      value: -0.5
       name: sil_yoni:physique/weak_body
     - attribute: generic.movement_speed
-      operation: addition
-      value: -0.02
+      operation: multiply_base
+      value: -0.5
       name: sil_yoni:physique/weak_body
   update_health: false
-jump_modifier:
-  type: origins:modify_jump
-  modifier:
-    operation: multiply_total_multiplicative
-    value: -0.17
-    name: sil_yoni:physique/weak_body
 mining_modifier:
   type: origins:modify_break_speed
   modifier:
     operation: multiply_base
-    value: -0.3
+    value: -0.6
     name: sil_yoni:physique/weak_body
