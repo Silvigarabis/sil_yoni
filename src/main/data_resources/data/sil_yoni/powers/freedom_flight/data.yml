@@ -6,12 +6,15 @@ nofalldamage:
        tag: is_fall
 nofalldown:
     type: origins:modify_falling
-    velocity: 0.1
+    velocity: 0.004
     take_fall_damage: false
 noaction_1:
     type: origins:prevent_elytra_flight
 on_land:
-  type: origins:action_on_land
+  type: origins:action_over_time
+  interval: 20
+  condition:
+     type: origins:on_block
   entity_action:
      type: origins:and
      actions:
