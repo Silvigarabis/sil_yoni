@@ -4,7 +4,7 @@ nofalldamage:
     damage_condition:
        type: origins:in_tag
        tag: is_fall
-nofalldown:
+nofalldown_0:
     type: origins:modify_falling
     condition:
        type: origins:moving
