@@ -55,10 +55,10 @@ boost_forward:
       key: key.forward
       continuous: true
    entity_action:
-     type: origins:change_resource
-     resource: sil_yoni:freedom_flight/data_boosting_with_sprint
-     operation: set
-     change: 1
+      type: origins:change_resource
+      resource: sil_yoni:freedom_flight/data_boosting_with_sprint
+      operation: set
+      change: 1
 boosting_with_sprint:
    type: origins:resource
    min: 0
@@ -67,6 +67,8 @@ boosting_with_sprint:
    max_action:
       type: origins:and
       actions:
+      -  type: origins:trigger_cooldown
+         power: sil_yoni:freedom_flight/data_fly_lasting
       -  type: origins:change_resource
          resource: sil_yoni:freedom_flight/data_boosting_with_sprint
          operation: set
@@ -88,6 +90,12 @@ go_back:
       key: key.back
       continuous: true
    entity_action:
-      type: origins:add_velocity
-      space: local
-      z: -0.03
+     type: origins:and
+     actions:
+     -
+        type: origins:trigger_cooldown
+        power: sil_yoni:freedom_flight/data_fly_lasting
+     -
+        type: origins:add_velocity
+        space: local
+        z: -0.03
