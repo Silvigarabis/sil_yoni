@@ -25,6 +25,9 @@ slower_falldown_when_floating:
 fly_lasting:
     type: origins:cooldown
     cooldown: 40
+    hud_render:
+        should_render: true
+        bar_index: 3
 no_elytra:
     type: origins:prevent_elytra_flight
 on_land:
