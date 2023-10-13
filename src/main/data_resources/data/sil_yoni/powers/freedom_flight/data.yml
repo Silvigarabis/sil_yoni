@@ -61,6 +61,8 @@ fly_lasting:
           power: sil_yoni:freedom_flight/no_falldown
           source: sil_yoni:freedom_flight/data
     max_action:
+       type: origins:and
+       actions:
        -
           type: origins:grant_power
           power: sil_yoni:freedom_flight/no_falldown
