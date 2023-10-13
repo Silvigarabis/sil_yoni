@@ -4,26 +4,40 @@ nofalldamage:
     damage_condition:
        type: origins:in_tag
        tag: is_fall
-nofalldown_0:
+no_falldown_when_moving:
     type: origins:modify_falling
     condition:
-       type: origins:moving
-       inverted: true
+       type: origins:resource
+       resource: sil_yoni:freedom_flight/data_fly_lasting
+       comparison: "!="
+       compare_to: 0
     velocity: 0
     take_fall_damage: false
-nofalldown:
+slower_falldown_when_floating:
     type: origins:modify_falling
     condition:
-       type: origins:moving
-    velocity: 0.002
+       type: origins:resource
+       resource: sil_yoni:freedom_flight/data_fly_lasting
+       comparison: "=="
+       compare_to: 0
+    velocity: 0.0017
     take_fall_damage: false
-noaction_1:
+fly_lasting:
+    type: origins:cooldown
+    cooldown: 40
+no_elytra:
     type: origins:prevent_elytra_flight
 on_land:
   type: origins:action_over_time
   interval: 20
   condition:
-     type: origins:on_block
+     type: origins:and
+     conditions:
+     -  type: origins:on_block
+     -  type: origins:resource
+        resource: sil_yoni:freedom_flight/data_fly_lasting
+        comparison: "=="
+        compare_to: 0
   entity_action:
      type: origins:and
      actions:
