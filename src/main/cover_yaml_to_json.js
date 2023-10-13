@@ -34,7 +34,7 @@ for (const f of files){
    console.log(`${f} -> ${newJsonFile}`);
    const yamlText = fs.readFileSync(f, "utf8") ?? "";
    const object = jsYaml.load(yamlText);
-   const jsonText = JSON.stringify(object) ?? "";
+   const jsonText = JSON.stringify(object) ?? "{}";
    fs.mkdirSync(path.dirname(newJsonFile), { recursive: true });
    fs.writeFileSync(newJsonFile, jsonText, { flag: 'w+' });
    //console.log(jsonText);
