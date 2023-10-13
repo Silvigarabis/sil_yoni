@@ -1,9 +1,9 @@
 powers:
   - sil_yoni:fairy/heal_magic
   - sil_yoni:fairy/effects
-  - sil_yoni:fairy/fairy_wings
+  - sil_yoni:freedom_flight
 
-  - origins:vegetarian #awa
+  - origins:vegetarian
 
   - sil_yoni:glowing_vision
   - sil_yoni:bee_rider

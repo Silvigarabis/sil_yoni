@@ -4,4 +4,4 @@ mining_modifier:
   modifier:
     operation: multiply_base
     value: -0.6
-    name: sil_yoni:physique/weak_body
+    name: sil_yoni:fairy/fairy_physique

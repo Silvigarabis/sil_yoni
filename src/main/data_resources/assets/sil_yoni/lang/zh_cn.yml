@@ -3,24 +3,28 @@ origin.sil_yoni.guxi.description: >-
   兮芾的种族。看起来他们比较娇小，这是因为他们以能量组成了身体。由于是能量体，所以他们没有消化有机质的能力，但很明显他们不需要。他们无法抵御物理伤害，与此同时他们可以直接吸收热量。他们的眼睛与众不同。
 origin.sil_yoni.fairy.name: 绿色仙子
 origin.sil_yoni.fairy.description: 他们是森林的珍宝。经常会在空中进行快速冲刺，不过总是会因为他们脆弱的身体而停下。他们还擅长和自然打交道。
-origin.sil_yoni.fairy2.name: 仙子
+origin.sil_yoni.fairy2.name: 虚空仙子
 origin.sil_yoni.fairy2.description: 世界的奇妙造物，也许在某一方面他们过于弱小，但他们也有着特殊的能力。
 origin.sil_yoni.silvigarabis.name: Silvigarabis
 origin.sil_yoni.silvigarabis.description: 这是作者写给自己玩的种族。
 
-power.sil_yoni.physique/weak_body.name: 软弱的身体
+power.sil_yoni.physique/fragile_body.name: 软弱的身体
+power.sil_yoni.physique/fragile_body.description: 你身体虚弱，生命力下降，同时盔甲难以帮助你防御
+power.sil_yoni.physique/weak_body.name: 无力的躯体
 power.sil_yoni.physique/weak_body.description: 你身体虚弱，行为能力受到限制。
 power.sil_yoni.physique/weak_arms.name: 虚弱的手臂
 power.sil_yoni.physique/weak_arms.description: 在没有足够力量的情况下，虚弱的手臂没有砸碎大石头从中获取物品的能力（无法开采周围拥有3个或更多自然类坚硬方块的同类型方块，除非使用了力量药水）。
 power.sil_yoni.physique/tiny_body.name: 微小珍宝
 power.sil_yoni.physique/tiny_body.description: 你的身体很小，不像一般的人类，一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
 power.sil_yoni.physique/small_body.name: 较小体型
-power.sil_yoni.physique/small_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能无法完成，比如够到更远的东西，又或者跳上一个完整的方块。
+power.sil_yoni.physique/small_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
 
 power.sil_yoni.forager.name: 土地耕耘大师
 power.sil_yoni.forager.description: 在自然中耕种使你了解到如何从作物中获取更高的产出
 power.sil_yoni.bee_rider.name: 蜜蜂骑乘者
 power.sil_yoni.bee_rider.description: 蜜蜂愿意成为你的坐骑！只要你不伤害他们……
+power.sil_yoni.freedom_flight.name: 自由飞行
+power.sil_yoni.freedom_flight.description: 有什么事情比你能自由地翱翔于天空更让人开心呢！
 power.sil_yoni.glowing_vision.name: 光明视野
 power.sil_yoni.glowing_vision.description: 在让自己发光的同时，你也能清晰的看到周围的一切（使用能力时免疫黑暗效果，并获得发光效果。）
 power.sil_yoni.firefly_lighter.name: 萤火虫发光体
@@ -31,15 +35,20 @@ power.sil_yoni.forest_s_giving.name: 森林的馈赠
 power.sil_yoni.forest_s_giving.description: 处于森林中时，你的各项属性小幅提高，并且可以快速恢复生命。
 power.sil_yoni.sun_s_helping.name: 日光的帮助
 power.sil_yoni.sun_s_helping.description: 处于阳光中，你的各项属性小幅提高，并且可以缓慢恢复生命。
-
 power.sil_yoni.fluttering_wings.name: 魔法的翅膀
 power.sil_yoni.fluttering_wings.description: 你有一双魔法般的翅膀，它可以带你飞上天空。
+power.sil_yoni.void_space.name: 进入到虚空的能力
+power.sil_yoni.void_space.description: 你可以进入虚空空间。
+power.sil_yoni.void_space.cooldown_deny_switch: 由于传送通道尚不稳定，无法切换空间。
+power.sil_yoni.void_space.live_keep: 你在虚空空间里死亡了，被迫从中出来。
+power.sil_yoni.void_space.leave.failed.noentrypoint: 没有找到出口。
+
 power.sil_yoni.fairy/fairy_wings.name: 仙灵的翅膀
 power.sil_yoni.fairy/fairy_wings.description: 你可以用你的翅膀飞行！不过不能飞太久，因为那可能让你的身体受伤。穿戴重甲也会加剧飞行时你的体力消耗。
 power.sil_yoni.fairy/heal_magic.name: 治愈魔法
 power.sil_yoni.fairy/heal_magic.description: 让你周围带上你的治疗魔法，并为自己增加临时的防护！
 power.sil_yoni.fairy/fairy_physique.name: 仙子体质
-power.sil_yoni.fairy/fairy_physique.description: 仙子的体质决定了你不能承受更多的伤害。
+power.sil_yoni.fairy/fairy_physique.description: 仙子的体质在各个方面都不算优秀……
 
 power.sil_yoni.vision/pencil_shader.name: 铅笔素描视角
 power.sil_yoni.vision/pencil_shader.description: 你以一种独特的视角观察世界
@@ -58,12 +67,6 @@ power.sil_yoni.guxi/fire_light_power_desc.description: 你可以将组成你的�
 power.sil_yoni.fairy2/void_inventory.name: 虚空存储
 power.sil_yoni.fairy2/void_inventory.description: 你可以利用虚空空间存储你的物品。
 
-power.sil_yoni.void_space.name: 进入到虚空的能力
-power.sil_yoni.void_space.description: 你可以进入虚空空间。
-power.sil_yoni.void_space.cooldown_deny_switch: 由于传送通道尚不稳定，无法切换空间。
-power.sil_yoni.void_space.live_keep: 你在虚空空间里死亡了，被迫从中出来。
-power.sil_yoni.void_space.leave.failed.noentrypoint: 没有找到出口。
-
 touhouorigins.subtitles.entity.fairy.fly: 妖精飞起来
 
 death.attack.guxi_starve_energy: '%1$s没能保持能量充足'
@@ -74,5 +77,6 @@ death.attack.hurt_by_water.player: '%1$s被%2$s注入了太多的能量'
 sil_yoni.gui.badge.long_press_active: 长按 %s 以使用
 sil_yoni.gui.badge.long_press_toggle: 长按 %s 以切换
 sil_yoni.gui.badge.active_in_void_space: 在虚空空间当中使用 %s
+sil_yoni.gui.badge.long_press_active_in_void_space: 在虚空空间当中长按 %s 使用
 
 container.sil_yoni:void_inventory: 虚空存储

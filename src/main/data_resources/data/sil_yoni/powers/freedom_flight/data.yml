@@ -47,7 +47,7 @@ boosting_with_sprint:
          if_action:
             type: origins:add_velocity
             space: local
-            z: 1
+            z: 5
          else_action:
             type: origins:add_velocity
             space: local

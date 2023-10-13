@@ -1,7 +1,7 @@
 type: origins:multiple
 # 这逻辑太乱了，可能的话我会重写一次
 badges:
-- sil_yoni:active_in_void_space
+- sil_yoni:long_press_active_in_void_space
 container_data:
    type: origins:inventory
    title: container.sil_yoni:void_inventory

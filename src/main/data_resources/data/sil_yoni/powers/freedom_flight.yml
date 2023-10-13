@@ -36,8 +36,7 @@ trigger_on_flying:
    type: origins:active_self
    key:
       key: key.jump
-      continuous: true
-   cooldown: 20
+      continuous: false
    hud_render:
       should_render: true
       bar_index: 3
@@ -55,6 +54,8 @@ trigger_on_flying:
             comparison: '=='
             compare_to: 0
          -  type: origins:creative_flying
+            inverted: true
+         -  type: origins:fall_flying
             inverted: true
       if_action:
          type: origins:change_resource
