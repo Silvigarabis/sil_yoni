@@ -6,7 +6,16 @@ nofalldamage:
        tag: is_fall
 nofalldown:
     type: origins:modify_falling
-    velocity: 0.004
+    condition:
+       type: origins:moving
+       inverted: true
+    velocity: 0
+    take_fall_damage: false
+nofalldown:
+    type: origins:modify_falling
+    condition:
+       type: origins:moving
+    velocity: 0.002
     take_fall_damage: false
 noaction_1:
     type: origins:prevent_elytra_flight
@@ -54,11 +63,11 @@ boosting_with_sprint:
          if_action:
             type: origins:add_velocity
             space: local
-            z: 0.06
+            z: 0.09
          else_action:
             type: origins:add_velocity
             space: local
-            z: 0.02
+            z: 0.03
 go_back:
    type: origins:active_self
    key:
@@ -67,4 +76,4 @@ go_back:
    entity_action:
       type: origins:add_velocity
       space: local
-      z: -0.35
+      z: -0.03
