@@ -1,35 +1,74 @@
 type: origins:multiple
-nofalldamage:
+no_elytra:
+    type: origins:prevent_elytra_flight
+no_fall_damage:
     type: origins:invulnerability
     damage_condition:
        type: origins:in_tag
        tag: is_fall
-no_falldown_when_moving:
-    type: origins:modify_falling
-    condition:
-       type: origins:resource
-       resource: sil_yoni:freedom_flight/data_fly_lasting
-       comparison: "!="
-       compare_to: 0
-    velocity: 0
-    take_fall_damage: false
-slower_falldown_when_floating:
-    type: origins:modify_falling
-    condition:
-       type: origins:resource
-       resource: sil_yoni:freedom_flight/data_fly_lasting
-       comparison: "=="
-       compare_to: 0
-    velocity: 0.0017
-    take_fall_damage: false
+fly_lasting_timer:
+  type: origins:action_over_time
+  interval: 1
+  condition:
+     type: origins:and
+     conditions:
+     -
+        type: origins:resource
+        resource: sil_yoni:freedom_flight/data_fly_lasting
+        comparison: ">"
+        compare_to: 0
+  entity_action:
+     type: origins:if_else_list
+     actions:
+     -
+        condition:
+           type: origins:on_block
+        action:
+           type: origins:change_resource
+           resource: sil_yoni:freedom_flight/data_fly_lasting
+           operation: add
+           change: -2
+     -
+        condition:
+           type: origins:moving
+           inverted: true
+        action:
+           type: origins:change_resource
+           resource: sil_yoni:freedom_flight/data_fly_lasting
+           operation: add
+           change: -1
 fly_lasting:
-    type: origins:cooldown
-    cooldown: 400
+    type: origins:resource
+    min: 0
+    max: 200
     hud_render:
         should_render: true
         bar_index: 3
-no_elytra:
-    type: origins:prevent_elytra_flight
+        condition:
+           type: origins:resource
+           resource: sil_yoni:freedom_flight/data_fly_lasting
+           comparison: ">"
+           compare_to: 0
+    min_action:
+       type: origins:and
+       actions:
+       -
+          type: origins:grant_power
+          power: sil_yoni:freedom_flight/slower_falldown
+          source: sil_yoni:freedom_flight/data
+       -
+          type: origins:revoke_power
+          power: sil_yoni:freedom_flight/no_falldown
+          source: sil_yoni:freedom_flight/data
+    max_action:
+       -
+          type: origins:grant_power
+          power: sil_yoni:freedom_flight/no_falldown
+          source: sil_yoni:freedom_flight/data
+       -
+          type: origins:revoke_power
+          power: sil_yoni:freedom_flight/slower_falldown
+          source: sil_yoni:freedom_flight/data
 on_land:
   type: origins:action_over_time
   interval: 20
@@ -58,25 +97,15 @@ boost_forward:
       key: key.forward
       continuous: true
    entity_action:
-      type: origins:change_resource
-      resource: sil_yoni:freedom_flight/data_boosting_with_sprint
-      operation: set
-      change: 1
-boosting_with_sprint:
-   type: origins:resource
-   min: 0
-   max: 1
-   start_value: 0
-   max_action:
       type: origins:and
       actions:
-      -  type: origins:trigger_cooldown
-         power: sil_yoni:freedom_flight/data_fly_lasting
-      -  type: origins:change_resource
-         resource: sil_yoni:freedom_flight/data_boosting_with_sprint
+      -
+         type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_fly_lasting
          operation: set
-         change: 0
-      -  type: origins:if_else
+         change: 200
+      -
+         type: origins:if_else
          condition:
             type: origins:sprinting
          if_action:
@@ -96,9 +125,29 @@ go_back:
      type: origins:and
      actions:
      -
-        type: origins:trigger_cooldown
-        power: sil_yoni:freedom_flight/data_fly_lasting
+        type: origins:change_resource
+        resource: sil_yoni:freedom_flight/data_fly_lasting
+        operation: set
+        change: 200
      -
         type: origins:add_velocity
         space: local
         z: -0.03
+callbacks:
+   type: origins:action_on_callback
+   execute_chosen_when_orb: true
+   entity_action_gained:
+      type: origins:revoke_power
+      power: sil_yoni:freedom_flight/no_falldown
+      source: sil_yoni:freedom_flight/data
+   entity_action_lost:
+      type: origins:and
+      actions:
+      -
+         type: origins:revoke_power
+         power: sil_yoni:freedom_flight/no_falldown
+         source: sil_yoni:freedom_flight/data
+      -
+         type: origins:revoke_power
+         power: sil_yoni:freedom_flight/slower_falldown
+         source: sil_yoni:freedom_flight/data
