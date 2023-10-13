@@ -23,15 +23,13 @@ callbacks:
    entity_action_lost:
       type: origins:if_else
       condition:
-         type: origins:resource
-         resource: sil_yoni:freedom_flight_is_flying
-         comparison: "=="
-         compare_to: 1
+         type: origins:power
+         power: sil_yoni:freedom_flight/data
+         source: sil_yoni:freedom_flight
       if_action:
-         type: origins:change_resource
-         resource: sil_yoni:freedom_flight_is_flying
-         change: 0
-         operation: set
+         type: origins:revoke_power
+         power: sil_yoni:freedom_flight/data
+         source: sil_yoni:freedom_flight
 trigger_on_flying:
    type: origins:active_self
    key:
