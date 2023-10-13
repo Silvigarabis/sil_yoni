@@ -19,6 +19,6 @@ attribute_while_no_energy:
 no_strength:
   type: origins:modify_break_speed
   modifier:
-    operation: multiply_base
+    operation: multiply_base_multiplicative
     value: -0.8
     name: sil_yoni:guxi/no_energy

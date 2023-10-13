@@ -2,6 +2,6 @@ type: origins:multiple
 mining_modifier:
   type: origins:modify_break_speed
   modifier:
-    operation: multiply_base
+    operation: multiply_base_multiplicative
     value: -0.6
     name: sil_yoni:fairy/fairy_physique
