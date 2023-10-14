@@ -30,33 +30,77 @@ callbacks:
          type: origins:revoke_power
          power: sil_yoni:freedom_flight/data
          source: sil_yoni:freedom_flight
-trigger_on_flying:
+
+double_clicked:
+   type: origins:cooldown
+   cooldown: 40
+first_clicked:
+   type: origins:cooldown
+   cooldown: 40
+
+on_press_jump:
    type: origins:active_self
    key:
       key: key.jump
       continuous: false
-   hud_render:
-      should_render: true
-      bar_index: 3
+   condition:
+      type: origins:and
+      conditions:
+      -  type: origins:resource
+         resource: sil_yoni:freedom_flight_is_flying
+         comparison: "=="
+         compare_to: 0
+      -  type: origins:riding
+         inverted: true
+      -  type: apoli:command
+         command: data get entity @s SleepTimer
+         comparison: '=='
+         compare_to: 0
+      -  type: origins:creative_flying
+         inverted: true
+      -  type: origins:fall_flying
+         inverted: true
    entity_action:
       type: origins:if_else
       condition:
-         type: origins:and
-         conditions:
-         -  type: origins:on_block
-            inverted: true
-         -  type: origins:riding
-            inverted: true
-         -  type: apoli:command
-            command: data get entity @s SleepTimer
-            comparison: '=='
-            compare_to: 0
-         -  type: origins:creative_flying
-            inverted: true
-         -  type: origins:fall_flying
-            inverted: true
+         type: origins:resource
+         resource: sil_yoni:freedom_flight_first_clicked
+         comparison: "=="
+         compare_to: 0
       if_action:
-         type: origins:change_resource
+         type: origins:trigger_cooldown
+         power: sil_yoni:freedom_flight_first_clicked
+      else_action:
+         type: origins:trigger_cooldown
+         power: sil_yoni:freedom_flight_double_clicked
+on_press_forward:
+   type: origins:active_self
+   condition:
+      type: origins:and
+      conditions:
+      -  type: origins:resource
+         resource: sil_yoni:freedom_flight_double_clicked
+         comparison: "!="
+         compare_to: 0
+      -  type: origins:resource
          resource: sil_yoni:freedom_flight_is_flying
-         change: 1
-         operation: set
+         comparison: "=="
+         compare_to: 0
+      -  type: origins:riding
+         inverted: true
+      -  type: apoli:command
+         command: data get entity @s SleepTimer
+         comparison: '=='
+         compare_to: 0
+      -  type: origins:creative_flying
+         inverted: true
+      -  type: origins:fall_flying
+         inverted: true
+   key:
+      key: key.forward
+      continuous: false
+   entity_action:
+      type: origins:change_resource
+      resource: sil_yoni:freedom_flight_is_flying
+      change: 1
+      operation: set
