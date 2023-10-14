@@ -194,31 +194,6 @@ move_lasting_time:
       space: world
       y: 0
       set: true
-   min_action:
-      # 抵消下坠速度
-      # 不知道为啥会有，明明已经在上边设置下坠速度为0了
-      # 只能额外加个速度来抵消了
-      # 不过如果要下降的话，这个速度会一直拉回来
-      # 所以又要降低
-      type: origins:if_else
-      condition:
-         type: origins:command
-         command: "execute if entity @s[x_rotation=0..90]"
-         comparison: "=="
-         compare_to: 1
-      if_action:
-         type: origins:and
-         actions:
-         -  type: origins:execute_command
-            command: 'title @s actionbar {"text": "下降中"}'
-      else_action:
-         type: origins:and
-         actions:
-         -  type: origins:execute_command
-            command: 'title @s actionbar {"text": "上升中"}'
-         -  type: origins:add_velocity
-            space: world
-            y: 0.06
 
 on_start_fly:
     type: origins:action_on_callback
@@ -276,23 +251,23 @@ boost_forward:
                type: origins:add_velocity
                space: local
                z: 0.06
-               y: 0.03
             -
                type: origins:add_velocity
                space: local_horizontal
                z: 0.02
+               y: 0.12
          else_action:
             type: origins:and
             actions:
             -
                type: origins:add_velocity
                space: local
-               z: 0.025
-               y: 0.017
+               z: 0.03
             -
                type: origins:add_velocity
                space: local_horizontal
-               z: 0.017
+               z: 0.015
+               y: 0.08
 go_back:
    type: origins:active_self
    key:
