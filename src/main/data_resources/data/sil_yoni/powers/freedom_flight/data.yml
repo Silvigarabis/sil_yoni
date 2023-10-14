@@ -1,76 +1,228 @@
 type: origins:multiple
 no_elytra:
-    type: origins:prevent_elytra_flight
+   type: origins:prevent_elytra_flight
 no_fall_damage:
-    type: origins:invulnerability
-    damage_condition:
-       type: origins:in_tag
-       tag: is_fall
-fly_lasting_timer:
-  type: origins:action_over_time
-  interval: 1
-  condition:
-     type: origins:and
-     conditions:
-     -
-        type: origins:resource
-        resource: sil_yoni:freedom_flight/data_fly_lasting
-        comparison: ">"
-        compare_to: 0
-  entity_action:
-     type: origins:if_else_list
-     actions:
-     -
-        condition:
-           type: origins:on_block
-        action:
-           type: origins:change_resource
-           resource: sil_yoni:freedom_flight/data_fly_lasting
-           operation: add
-           change: -2
-     -
-        condition:
-           type: origins:moving
-           inverted: true
-        action:
-           type: origins:change_resource
-           resource: sil_yoni:freedom_flight/data_fly_lasting
-           operation: add
-           change: -1
-fly_lasting:
-    type: origins:resource
-    min: 0
-    max: 200
-    hud_render:
-        should_render: true
-        bar_index: 3
-        condition:
-           type: origins:resource
-           resource: sil_yoni:freedom_flight/data_fly_lasting
-           comparison: ">"
-           compare_to: 0
-    min_action:
-       type: origins:and
-       actions:
-       -
-          type: origins:grant_power
-          power: sil_yoni:freedom_flight/slower_falldown
-          source: sil_yoni:freedom_flight/data
-       -
-          type: origins:revoke_power
-          power: sil_yoni:freedom_flight/no_falldown
-          source: sil_yoni:freedom_flight/data
-    max_action:
-       type: origins:and
-       actions:
-       -
-          type: origins:grant_power
-          power: sil_yoni:freedom_flight/no_falldown
-          source: sil_yoni:freedom_flight/data
-       -
-          type: origins:revoke_power
-          power: sil_yoni:freedom_flight/slower_falldown
-          source: sil_yoni:freedom_flight/data
+   type: origins:invulnerability
+   damage_condition:
+      type: origins:in_tag
+      tag: is_fall
+
+falldown_speed_mode:
+   type: origins:resource
+   min: 0
+   max: 3
+   start_value: 0
+   hud_render:
+      should_render: true
+      bar_index: 4
+falldown_speed_mode_0:
+   type: origins:modify_falling
+   velocity: 0
+   condition:
+      type: origins:resource
+      resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+      comparison: "=="
+      compare_to: 0
+falldown_speed_mode_1:
+   type: origins:modify_falling
+   velocity: 0.005
+   condition:
+      type: origins:resource
+      resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+      comparison: "=="
+      compare_to: 1
+falldown_speed_mode_2:
+   type: origins:modify_falling
+   velocity: 0.03
+   condition:
+      type: origins:resource
+      resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+      comparison: "=="
+      compare_to: 2
+
+fly_lasting_time:
+   type: origins:resource
+   min: 0
+   max: 400
+   start_value: 0
+   hud_render:
+      should_render: true
+      bar_index: 3
+      condition:
+         type: origins:resource
+         resource: sil_yoni:freedom_flight/data_fly_lasting_time
+         comparison: ">"
+         compare_to: 0
+
+event_loop:
+   type: origins:action_over_time
+   interval: 1
+   entity_action:
+      type: origins:and
+      actions:
+      -  type: origins:if_else_list
+         actions:
+         -
+            condition:
+               type: origins:and
+               conditions:
+               -  type: origins:moving
+               -  type: origins:on_block
+                  inverted: true
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_fly_lasting_time
+               operation: set
+               change: 0
+         -
+            condition:
+               type: origins:on_block
+               inverted: true
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_fly_lasting_time
+               operation: add
+               change: 1
+         -
+            condition:
+               type: origins:on_block
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_fly_lasting_time
+               operation: add
+               change: 3
+      -  type: origins:if_else_list
+         actions:
+         -
+            condition:
+               type: origins:and
+               conditions:
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+                  comparison: "!="
+                  compare_to: 3
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
+                  comparison: "=="
+                  compare_to: 400
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+               operation: set
+               change: 3
+         -
+            condition:
+               type: origins:and
+               conditions:
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+                  comparison: "!="
+                  compare_to: 2
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
+                  comparison: ">="
+                  compare_to: 333
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
+                  comparison: "<"
+                  compare_to: 400
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+               operation: set
+               change: 2
+         -
+            condition:
+               type: origins:and
+               conditions:
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+                  comparison: "!="
+                  compare_to: 1
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
+                  comparison: ">="
+                  compare_to: 166
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
+                  comparison: "<"
+                  compare_to: 333
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+               operation: set
+               change: 1
+         -
+            condition:
+               type: origins:and
+               conditions:
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+                  comparison: "!="
+                  compare_to: 0
+               -  type: origins:resource
+                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
+                  comparison: "<"
+                  compare_to: 166
+            action:
+               type: origins:change_resource
+               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+               operation: set
+               change: 0
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_action_lasting_time
+         operation: add
+         change: 1
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_move_lasting_time
+         operation: add
+         change: 1
+# 暂时无用
+action_lasting_time:
+   type: origins:resource
+   min: 0
+   max: 2
+   start_value: 0
+move_lasting_time:
+   type: origins:resource
+   min: 0
+   max: 2
+   start_value: 0
+   max_action:
+      # 停止移动之后将下坠速度设置为0
+      type: origins:add_velocity
+      space: world
+      y: 0
+      set: true
+   min_action:
+      # 抵消下坠速度
+      # 不知道为啥会有，明明已经在上边设置下坠速度为0了
+      # 只能额外加个速度来抵消了
+      # 不过如果要下降的话，这个速度会一直拉回来
+      # 所以又要降低
+      type: origins:if_else
+      condition:
+         type: origins:command
+         command: "execute if entity @s[rotation_x=0..]"
+         comparison: "=="
+         compare_to: 1
+      if_action:
+         type: origins:and
+         actions:
+         -  type: origins:execute_command
+            command: 'title @s actionbar {"text": "下降中"}'
+         -  type: origins:add_velocity
+            space: world
+            y: 0.02
+      else_action:
+         type: origins:and
+         actions:
+         -  type: origins:execute_command
+            command: 'title @s actionbar {"text": "上升中"}'
+         -  type: origins:add_velocity
+            space: world
+            y: 0.06
+
 on_land:
   type: origins:action_over_time
   interval: 20
@@ -79,9 +231,9 @@ on_land:
      conditions:
      -  type: origins:on_block
      -  type: origins:resource
-        resource: sil_yoni:freedom_flight/data_fly_lasting
+        resource: sil_yoni:freedom_flight/data_fly_lasting_time
         comparison: "=="
-        compare_to: 0
+        compare_to: 400
   entity_action:
      type: origins:and
      actions:
@@ -101,55 +253,101 @@ boost_forward:
    entity_action:
       type: origins:and
       actions:
-      -
-         type: origins:change_resource
-         resource: sil_yoni:freedom_flight/data_fly_lasting
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_action_lasting_time
          operation: set
-         change: 200
+         change: 0
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_move_lasting_time
+         operation: set
+         change: 0
       -
          type: origins:if_else
          condition:
             type: origins:sprinting
          if_action:
-            type: origins:add_velocity
-            space: local
-            z: 0.09
+            type: origins:and
+            actions:
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.06
+            -
+               type: origins:add_velocity
+               space: local_horizontal
+               z: 0.02
          else_action:
-            type: origins:add_velocity
-            space: local
-            z: 0.03
+            type: origins:and
+            actions:
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.02
+            -
+               type: origins:add_velocity
+               space: local_horizontal
+               z: 0.01
 go_back:
    type: origins:active_self
    key:
       key: key.back
       continuous: true
    entity_action:
-     type: origins:and
-     actions:
-     -
-        type: origins:change_resource
-        resource: sil_yoni:freedom_flight/data_fly_lasting
-        operation: set
-        change: 200
-     -
-        type: origins:add_velocity
-        space: local
-        z: -0.03
-callbacks:
-   type: origins:action_on_callback
-   execute_chosen_when_orb: true
-   entity_action_gained:
-      type: origins:revoke_power
-      power: sil_yoni:freedom_flight/no_falldown
-      source: sil_yoni:freedom_flight/data
-   entity_action_lost:
       type: origins:and
       actions:
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_action_lasting_time
+         operation: set
+         change: 0
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_move_lasting_time
+         operation: set
+         change: 0
       -
-         type: origins:revoke_power
-         power: sil_yoni:freedom_flight/no_falldown
-         source: sil_yoni:freedom_flight/data
+         type: origins:add_velocity
+         space: local_horizontal
+         z: -0.02
+down:
+   type: origins:active_self
+   key:
+      key: key.sneak
+      continuous: true
+   condition:
+      type: origins:moving
+      inverted: true
+   entity_action:
+      type: origins:and
+      actions:
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_action_lasting_time
+         operation: set
+         change: 0
       -
-         type: origins:revoke_power
-         power: sil_yoni:freedom_flight/slower_falldown
-         source: sil_yoni:freedom_flight/data
+         type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_fly_lasting_time
+         operation: set
+         change: 400
+up:
+   type: origins:active_self
+   key:
+      key: key.jump
+      continuous: true
+   condition:
+      type: origins:moving
+      inverted: true
+   entity_action:
+      type: origins:and
+      actions:
+      -  type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_action_lasting_time
+         operation: set
+         change: 0
+      -
+         type: origins:change_resource
+         resource: sil_yoni:freedom_flight/data_fly_lasting_time
+         operation: set
+         change: 0
+      -
+         type: origins:add_velocity
+         space: world
+         y: 0.06
