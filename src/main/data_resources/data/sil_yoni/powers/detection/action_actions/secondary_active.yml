@@ -1,3 +1,4 @@
+type: origins:multiple
 # 枚举
 # 0 无动作
 # 1 按下1次
@@ -15,22 +16,46 @@ action_active:
       should_render: true
       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
       bar_index: 1
-# status_reseter:
-   # type: origins:action_over_time
-   # interval: 1
-   # condition:
-      # type: origins:resource
-      # resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
-      # comparison: '!='
-      # compare_to: 0
-   # entity_action:
-      # type: origins:delay
-      # ticks: 1
-      # action:
-         # type: origins:change_resource
-         # resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
-         # operation: set
-         # change: 0
+action_active_last:
+   type: origins:resource
+   min: -3
+   max: 3
+   start_value: 0
+   hud_render:
+      should_render: true
+      sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
+      bar_index: 2
+status_recorder:
+   type: origins:action_over_time
+   interval: 1
+   condition:
+      type: origins:resource
+      resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
+      comparison: '!='
+      compare_to: 0
+   entity_action:
+      type: origins:modify_resource
+      resource: "sil_yoni:detection/action_actions/secondary_active_action_active_last"
+      modifier:
+         operation: set_total
+         value: -3 # 此值无效
+         resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
+status_reseter:
+   type: origins:action_over_time
+   interval: 1
+   condition:
+      type: origins:resource
+      resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
+      comparison: '!='
+      compare_to: 0
+   entity_action:
+      type: origins:delay
+      ticks: 1
+      action:
+         type: origins:change_resource
+         resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
+         operation: set
+         change: 0
 
 active_times:
    type: origins:resource
@@ -51,6 +76,16 @@ hold_time:
       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
       bar_index: 11
 
+long_press_previewer:
+   type: origins:resource
+   min: -3
+   max: 0
+   start_value: 0
+   hud_render:
+      inverted: true
+      should_render: true
+      sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
+      bar_index: 3
 deactive_timeout:
    type: origins:resource
    min: 0
@@ -64,41 +99,12 @@ deactive_timeout:
       type: origins:and
       actions:
       -
-         type: origins:if_else_list
-         actions:
-         -
-            condition:
-               type: origins:resource
-               resource: "sil_yoni:detection/action_actions/secondary_active_hold_time"
-               comparison: '>='
-               compare_to: 200 # 10sec
-            action:
-               type: origins:change_resource
-               resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
-               operation: set
-               change: -3
-         -
-            condition:
-               type: origins:resource
-               resource: "sil_yoni:detection/action_actions/secondary_active_hold_time"
-               comparison: '>='
-               compare_to: 80 # 8sec
-            action:
-               type: origins:change_resource
-               resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
-               operation: set
-               change: -2
-         -
-            condition:
-               type: origins:resource
-               resource: "sil_yoni:detection/action_actions/secondary_active_hold_time"
-               comparison: '>='
-               compare_to: 30 # 1.5sec
-            action:
-               type: origins:change_resource
-               resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
-               operation: set
-               change: -1
+         type: origins:modify_resource
+         resource: "sil_yoni:detection/action_actions/secondary_active_action_action_active"
+         modifier:
+            operation: set_total
+            value: -3 # 此值无效
+            resource: "sil_yoni:detection/action_actions/secondary_active_long_press_previewer"
       -
          type: origins:change_resource
          resource: "sil_yoni:detection/action_actions/secondary_active_active_times"
@@ -113,10 +119,54 @@ deactive_timeout_executor:
    type: origins:action_over_time
    interval: 1
    entity_action:
-      type: origins:change_resource
-      resource: "sil_yoni:detection/action_actions/secondary_active_deactive_timeout"
-      operation: add
-      change: 1
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: "sil_yoni:detection/action_actions/secondary_active_deactive_timeout"
+         operation: add
+         change: 1
+      -
+         type: origins:change_resource
+         resource: "sil_yoni:detection/action_actions/secondary_active_long_press_previewer"
+         operation: set
+         change: 0
+      -
+         type: origins:if_else_list
+         actions:
+         -
+            condition:
+               type: origins:resource
+               resource: "sil_yoni:detection/action_actions/secondary_active_hold_time"
+               comparison: '>='
+               compare_to: 200 # 10sec
+            action:
+               type: origins:change_resource
+               resource: "sil_yoni:detection/action_actions/secondary_active_long_press_previewer"
+               operation: set
+               change: -3
+         -
+            condition:
+               type: origins:resource
+               resource: "sil_yoni:detection/action_actions/secondary_active_hold_time"
+               comparison: '>='
+               compare_to: 90 # 4.5sec
+            action:
+               type: origins:change_resource
+               resource: "sil_yoni:detection/action_actions/secondary_active_long_press_previewer"
+               operation: set
+               change: -2
+         -
+            condition:
+               type: origins:resource
+               resource: "sil_yoni:detection/action_actions/secondary_active_hold_time"
+               comparison: '>='
+               compare_to: 30 # 1.5sec
+            action:
+               type: origins:change_resource
+               resource: "sil_yoni:detection/action_actions/secondary_active_long_press_previewer"
+               operation: set
+               change: -1
 
 on_press_key_hold:
    type: origins:active_self
@@ -166,6 +216,7 @@ active_delay:
          resource: "sil_yoni:detection/action_actions/secondary_active_action_active"
          modifier:
             operation: set_total
+            value: -3 # 此值无效
             resource: "sil_yoni:detection/action_actions/secondary_active_active_times"
 active_timeout_executor:
    type: origins:action_over_time
