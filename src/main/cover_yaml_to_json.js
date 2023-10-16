@@ -33,7 +33,16 @@ for (const f of files){
    newJsonFile = newJsonFile.replace(/data_resources/, "resources");
    console.log(`${f} -> ${newJsonFile}`);
    const yamlText = fs.readFileSync(f, "utf8") ?? "";
-   const object = jsYaml.load(yamlText);
+   let object
+   try {
+      object = jsYaml.load(yamlText);
+   } catch(e){
+      const reason = e.reason;
+      const { snippet, column, position, line } = e.mark;
+      console.log(`读取时出现错误: line ${line}, column ${column}\n${reason}\n${snippet}`);
+      process.exit(1);
+      break;
+   }
    const jsonText = JSON.stringify(object) ?? "{}";
    fs.mkdirSync(path.dirname(newJsonFile), { recursive: true });
    fs.writeFileSync(newJsonFile, jsonText, { flag: 'w+' });
