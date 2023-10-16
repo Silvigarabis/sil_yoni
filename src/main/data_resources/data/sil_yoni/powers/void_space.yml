@@ -1,6 +1,6 @@
 type: origins:multiple
 badges:
-    - sil_yoni:long_press_active
+    - sil_yoni:hold_on_active
 can_switch_space_flag:
    type: origins:resource
    min: 0
