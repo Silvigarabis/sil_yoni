@@ -8,7 +8,7 @@ export function fromJsonToYaml(inputDir, outputDir){
     const files = searchFile2(inputDir, (f) => f.endsWith(".json"));
     
     for (const f of files){
-        let newFile = path.join(outputDir, setPrefix(path.basename(f), "yml"));
+        let newFile = path.join(outputDir, path.relative(inputDir, setPrefix(f, "yml")));
         console.log(`${f} -> ${newFile}`);
         let data = readJsonFile(f);
         writeYamlFile(newFile, data);
@@ -19,15 +19,15 @@ export function fromYamlToJson(inputDir, outputDir){
     const files = searchFile2(inputDir, (f) => f.endsWith(".yml") || f.endsWith(".yaml"));
     
     for (const f of files){
-        let newFile = path.join(outputDir, setPrefix(path.basename(f), "json"));
+        let newFile = path.join(outputDir, path.relative(inputDir, setPrefix(f, "json")));
         console.log(`${f} -> ${newFile}`);
         let data = readYamlFile(f);
         writeJsonFile(newFile, data);
     }
 }
 
-function searchFile(path, filter){
-    const inputs = [path];
+function searchFile(searchPath, filter){
+    const inputs = [searchPath];
     const matches = [];
     while (inputs.length > 0){
         const file = inputs.pop();
@@ -43,8 +43,8 @@ function searchFile(path, filter){
     return matches;
 }
 
-function searchFile2(path, filter){
-    const inputs = [path];
+function searchFile2(searchPath, filter){
+    const inputs = [searchPath];
     const matches = [];
     while (inputs.length > 0){
         const file = inputs.pop();
@@ -53,15 +53,14 @@ function searchFile2(path, filter){
                 matches.push(file);
             }
         } else {
-            for (const fname of fs.readdirSync(file)){
-                const file = path.join(file, fname);
+            let dir = file;
+            for (const fname of fs.readdirSync(dir)){
+                const file = path.join(dir, fname);
                 const stat = fs.statSync(file);
-                if (stat.isDirectory()){
+                if (!stat.isDirectory()){
                     matches.push(file);
                 } else {
-                    if (filter(file)){
-                        matches.push(file);
-                    }
+                    inputs.push(file);
                 }
             }
         }
@@ -69,11 +68,14 @@ function searchFile2(path, filter){
     return matches;
 }
 
-function setPrefix(fileName, prefix){
-    let fileName = path.basename(f);
-    let fileDir = path.dirname(f);
-    let name = fileName.slice(0, f.lastIndexOf(".")) + "." + prefix;
-    return path.join(fileDir, fileName);
+function setPrefix(file, prefix){
+    let fileName = path.basename(file);
+    let fileDir = path.dirname(file);
+    let cutIdx = fileName.lastIndexOf(".");
+    if (cutIdx === -1)
+        cutIdx = fileName.length;
+    let name = fileName.slice(0, cutIdx) + "." + prefix;
+    return path.join(fileDir, name);
 }
 
 function readFile(file){
@@ -86,11 +88,11 @@ function writeFile(file, data){
 
 function readJsonFile(file){
     let json = readFile(file);
-    json = json.replace(/(?:\/\*[\s\S]*?\*\/|\/\/.*$/gm, (comment) => {
+    json = json.replace(/(?:\/\*[\s\S]*?\*\/|\/\/.*$)/gm, (comment) => {
         const spaces = new Array(comment.length);
         spaces.fill(" ");
         return spaces.join("");
-    ]);
+    });
     
     let data;
     try {
