@@ -1,4 +1,5 @@
 powers:
+  - sil_yoni:detection/action_actions/secondary_active
   - sil_yoni:fairy/heal_magic
   - sil_yoni:fairy/effects
   - sil_yoni:freedom_flight
