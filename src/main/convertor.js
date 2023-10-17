@@ -82,8 +82,18 @@ function readFile(file){
     return fs.readFileSync(file, "utf8");
 }
 function writeFile(file, data){
+    if (data == undefined)
+        data = "";
     fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, data, { flag: 'w+' });
+    let needWrite = true;
+    try {
+        let oldData = readFile(file);
+        needWrite = oldData !== data;
+    } catch {
+        // nothing
+    }
+    if (needWrite)
+        fs.writeFileSync(file, data, { flag: 'w+' });
 }
 
 function readJsonFile(file){
