@@ -1,7 +1,8 @@
 type: origins:multiple
 # 这逻辑太乱了，可能的话我会重写一次
 badges:
--  sil_yoni:long_press_active_in_void_space
+-  sil_yoni:long_press_active
+-  sil_yoni:only_usable_in_void_space
 container_data:
    type: origins:inventory
    title: container.sil_yoni:void_inventory
@@ -11,96 +12,31 @@ container_data:
       key: key.origins.secondary_active
       continuous: true
    condition:
-      type: origins:resource
-      resource: "*_action_active"
-      comparison: '=='
-      compare_to: 1
+      type: origins:and
+      conditions:
+      -  type: origins:resource
+         resource: "sil_yoni:detection/active_actions/secondary_active_tl"
+         comparison: '>='
+         compare_to: 80 # 4sec
+      -  type: origins:resource
+         resource: "sil_yoni:detection/active_actions/secondary_active_tl"
+         comparison: '<'
+         compare_to: 110 # 5.5sec
 
-action_active:
-   type: origins:resource
-   min: 0
-   max: 1
-   start_value: 0
-   hud_render:
-       should_render: true
-       condition:
-          type: origins:resource
-          resource: "*_action_active"
-          comparison: '>'
-          compare_to: 0
-       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
-       bar_index: 10
-   max_action:
-      type: origins:delay
-      ticks: 1
-      action:
-         type: origins:change_resource
-         resource: "*_action_active"
-         operation: set
-         change: 0
-action_timer:
-   type: origins:resource
-   min: 0
-   max: 80
-   start_value: 0
-   hud_render:
-       should_render: true
-       condition:
-          type: origins:resource
-          resource: "*_action_timer"
-          comparison: '>'
-          compare_to: 0
-       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
-       bar_index: 11
-   max_action:
-      type: origins:change_resource
-      resource: "*_action_active"
-      operation: set
-      change: 1
-timeout_counter:
-   type: origins:action_over_time
-   interval: 1
-   condition:
-      type: origins:resource
-      resource: "*_timeout_timer"
-      comparison: '>'
-      compare_to: 0
-   entity_action:
-      type: origins:change_resource
-      resource: "*_timeout_timer"
-      operation: add
-      change: -1
-timeout_timer:
-   type: origins:resource
-   min: 0
-   max: 2
-   start_value: 0
-   hud_render:
-       should_render: true
-       condition:
-          type: origins:resource
-          resource: "*_timeout_timer"
-          comparison: '>'
-          compare_to: 0
-       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
-       bar_index: 12
-   min_action:
-      type: origins:change_resource
-      resource: "*_action_timer"
-      operation: set
-      change: 0
-   max_action:
-      type: origins:change_resource
-      resource: "*_action_timer"
-      operation: add
-      change: 1
-on_press_key:
-   type: origins:active_self
-   key:
-      key: key.origins.secondary_active
-      continuous: true
-   entity_action:
-      type: origins:change_resource
-      resource: "*_timeout_timer"
-      operation: set
-      change: 2
+callbacks:
+    type: origins:action_on_callback
+    execute_chosen_when_orb: true
+    entity_action_gained:
+        type: origins:and
+        actions:
+        -
+            type: origins:grant_power
+            power: sil_yoni:detection/active_actions/secondary_active
+            source: sil_yoni:void_space
+    entity_action_lost:
+        type: origins:and
+        actions:
+        -
+            type: origins:revoke_power
+            power: sil_yoni:detection/active_actions/secondary_active
+            source: sil_yoni:void_space

@@ -74,9 +74,9 @@ death.attack.guxi_starve_energy.player: '%1$s在与%2$s战斗时没能保持能�
 death.attack.energy_dense_explosion: '%1$s被注入了太多的能量'
 death.attack.hurt_by_water.player: '%1$s被%2$s注入了太多的能量'
 
-sil_yoni.gui.badge.long_press_active: 长按 %s 以使用
-sil_yoni.gui.badge.long_press_toggle: 长按 %s 以切换
-sil_yoni.gui.badge.active_in_void_space: 在虚空空间当中使用 %s
-sil_yoni.gui.badge.long_press_active_in_void_space: 在虚空空间当中长按 %s 使用
+sil_yoni.gui.badge.hold_on_active: 按住 %s 不放（10秒）以使用
+sil_yoni.gui.badge.long_press_active: 长按 %s （4秒）以使用
+sil_yoni.gui.badge.long_press_toggle: 长按 %s （4秒）以切换
+sil_yoni.gui.badge.only_usable_in_void_space: 只在虚空空间当中可用
 
 container.sil_yoni:void_inventory: 虚空存储
