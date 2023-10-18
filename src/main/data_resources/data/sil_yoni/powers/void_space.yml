@@ -5,10 +5,12 @@ key0:
     type: origins:active_self
     key:
         key: key.origins.secondary_active
+    entity_action:
+        type: origins:nothing
 
 switch_cooldown:
     type: origins:cooldown
-    cooldown: 6000 # 300sec or 5min (max, usually set to 20sec or 400tick)
+    cooldown: 6000 # 300sec or 5min (max, usually set to 20sec or 400tick (-5600))
     hud_render:
         should_render: true
         bar_index: 1
@@ -38,7 +40,7 @@ wait_for_trigger:
             -  type: origins:change_resource
                resource: sil_yoni:void_space_switch_cooldown
                operation: set
-               change: 400
+               change: 5600
             -  type: origins:if_else
                condition:
                   type: origins:resource

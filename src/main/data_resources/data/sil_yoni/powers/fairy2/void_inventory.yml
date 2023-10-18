@@ -15,13 +15,13 @@ container_data:
       type: origins:and
       conditions:
       -  type: origins:resource
-         resource: "sil_yoni:detection/active_actions/secondary_active_tl"
-         comparison: '>='
-         compare_to: 80 # 4sec
+         resource: sil_yoni:void_space/in_void_space
+         comparison: '=='
+         compare_to: 1
       -  type: origins:resource
-         resource: "sil_yoni:detection/active_actions/secondary_active_tl"
-         comparison: '<'
-         compare_to: 110 # 5.5sec
+         resource: "sil_yoni:detection/active_actions/secondary_active_tc"
+         comparison: '=='
+         compare_to: 2
 
 callbacks:
     type: origins:action_on_callback

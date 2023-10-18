@@ -78,5 +78,6 @@ sil_yoni.gui.badge.hold_on_active: 按住 %s 不放（10秒）以使用
 sil_yoni.gui.badge.long_press_active: 长按 %s （4秒）以使用
 sil_yoni.gui.badge.long_press_toggle: 长按 %s （4秒）以切换
 sil_yoni.gui.badge.only_usable_in_void_space: 只在虚空空间当中可用
+sil_yoni.gui.badge.triple_click_active: 连按三次 %s 以使用
 
 container.sil_yoni:void_inventory: 虚空存储
