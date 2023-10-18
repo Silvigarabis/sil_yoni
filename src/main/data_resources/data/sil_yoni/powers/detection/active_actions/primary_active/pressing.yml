@@ -35,11 +35,11 @@ st_loop:
       comparison: "!="
       compare_to: 0
    entity_action:
-      type: origins:and
-      actions:
-      -  type: origins:delay
-         ticks: 1
-         action:
+      # type: origins:and
+      # actions:
+      # -  type: origins:delay
+         # ticks: 1
+         # action:
             type: origins:change_resource
             resource: "sil_yoni:detection/active_actions/primary_active_result"
             change: 0
