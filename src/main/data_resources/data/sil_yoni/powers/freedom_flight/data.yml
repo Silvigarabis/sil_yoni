@@ -201,8 +201,8 @@ on_land:
 stop_falldown_because_just_moving:
    type: origins:modify_velocity
    modifier:
-      value: 0,
       operation: set_total
+      value: 0
    condition:
       type: origins:and
       conditions:
