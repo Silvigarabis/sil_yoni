@@ -5,15 +5,9 @@ is_flying:
    max: 1
    start_value: 0
    min_action:
-      type: origins:if_else
-      condition:
-         type: origins:power
-         power: sil_yoni:freedom_flight/data
-         source: sil_yoni:freedom_flight
-      if_action:
-         type: origins:revoke_power
-         power: sil_yoni:freedom_flight/data
-         source: sil_yoni:freedom_flight
+      type: origins:revoke_power
+      power: sil_yoni:freedom_flight/data
+      source: sil_yoni:freedom_flight
    max_action:
       type: origins:grant_power
       power: sil_yoni:freedom_flight/data
@@ -21,22 +15,16 @@ is_flying:
 callbacks:
    type: origins:action_on_callback
    entity_action_lost:
-      type: origins:if_else
-      condition:
-         type: origins:power
-         power: sil_yoni:freedom_flight/data
-         source: sil_yoni:freedom_flight
-      if_action:
-         type: origins:revoke_power
-         power: sil_yoni:freedom_flight/data
-         source: sil_yoni:freedom_flight
+      type: origins:revoke_power
+      power: sil_yoni:freedom_flight/data
+      source: sil_yoni:freedom_flight
 
 double_clicked:
    type: origins:cooldown
-   cooldown: 40
+   cooldown: 20
 first_clicked:
    type: origins:cooldown
-   cooldown: 40
+   cooldown: 20
 
 on_press_jump:
    type: origins:active_self

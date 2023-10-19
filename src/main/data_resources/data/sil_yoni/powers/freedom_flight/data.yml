@@ -54,121 +54,97 @@ fly_lasting_time:
          comparison: ">"
          compare_to: 0
 
-event_loop:
+movement_event_loop:
+   type: origins:action_over_time
+   interval: 1
+   entity_action:
+      type: origins:if_else_list
+      actions:
+      -
+         condition:
+            type: origins:and
+            conditions:
+            -  type: origins:moving
+            -  type: origins:on_block
+               inverted: true
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_fly_lasting_time
+            operation: set
+            change: 0
+      -
+         condition:
+            type: origins:on_block
+            inverted: true
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_fly_lasting_time
+            operation: add
+            change: 1
+      -
+         condition:
+            type: origins:on_block
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_fly_lasting_time
+            operation: add
+            change: 3
+
+falling_event_loop:
+   type: origins:action_over_time
+   interval: 1
+   entity_action:
+      type: origins:if_else_list
+      actions:
+      -
+         condition:
+            type: origins:resource
+            resource: sil_yoni:freedom_flight/data_fly_lasting_time
+            comparison: "=="
+            compare_to: 400
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+            operation: set
+            change: 3
+      -
+         condition:
+            type: origins:resource
+            resource: sil_yoni:freedom_flight/data_fly_lasting_time
+            comparison: ">="
+            compare_to: 333
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+            operation: set
+            change: 2
+      -
+         condition:
+            type: origins:resource
+            resource: sil_yoni:freedom_flight/data_fly_lasting_time
+            comparison: ">="
+            compare_to: 166
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+            operation: set
+            change: 1
+      -
+         condition:
+            type: origins:constant
+            value: true
+         action:
+            type: origins:change_resource
+            resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+            operation: set
+            change: 0
+
+counter_loop:
    type: origins:action_over_time
    interval: 1
    entity_action:
       type: origins:and
       actions:
-      -  type: origins:if_else_list
-         actions:
-         -
-            condition:
-               type: origins:and
-               conditions:
-               -  type: origins:moving
-               -  type: origins:on_block
-                  inverted: true
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_fly_lasting_time
-               operation: set
-               change: 0
-         -
-            condition:
-               type: origins:on_block
-               inverted: true
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_fly_lasting_time
-               operation: add
-               change: 1
-         -
-            condition:
-               type: origins:on_block
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_fly_lasting_time
-               operation: add
-               change: 3
-      -  type: origins:if_else_list
-         actions:
-         -
-            condition:
-               type: origins:and
-               conditions:
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-                  comparison: "!="
-                  compare_to: 3
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
-                  comparison: "=="
-                  compare_to: 400
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-               operation: set
-               change: 3
-         -
-            condition:
-               type: origins:and
-               conditions:
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-                  comparison: "!="
-                  compare_to: 2
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
-                  comparison: ">="
-                  compare_to: 333
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
-                  comparison: "<"
-                  compare_to: 400
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-               operation: set
-               change: 2
-         -
-            condition:
-               type: origins:and
-               conditions:
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-                  comparison: "!="
-                  compare_to: 1
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
-                  comparison: ">="
-                  compare_to: 166
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
-                  comparison: "<"
-                  compare_to: 333
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-               operation: set
-               change: 1
-         -
-            condition:
-               type: origins:and
-               conditions:
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-                  comparison: "!="
-                  compare_to: 0
-               -  type: origins:resource
-                  resource: sil_yoni:freedom_flight/data_fly_lasting_time
-                  comparison: "<"
-                  compare_to: 166
-            action:
-               type: origins:change_resource
-               resource: sil_yoni:freedom_flight/data_falldown_speed_mode
-               operation: set
-               change: 0
       -  type: origins:change_resource
          resource: sil_yoni:freedom_flight/data_action_lasting_time
          operation: add
@@ -177,6 +153,7 @@ event_loop:
          resource: sil_yoni:freedom_flight/data_move_lasting_time
          operation: add
          change: 1
+
 # 暂时无用
 action_lasting_time:
    type: origins:resource
@@ -194,39 +171,41 @@ move_lasting_time:
       space: world
       y: 0
       set: true
-   min_action:
-      # 抵消下坠速度
-      # 不知道为啥会有，明明已经在上边设置下坠速度为0了
-      # 只能额外加个速度来抵消了
-      # 不过如果要下降的话，这个速度会一直拉回来
-      # 所以又要降低
-      type: origins:if_else
-      condition:
-         type: origins:command
-         command: "execute if entity @s[x_rotation=0..90]"
-         comparison: "=="
-         compare_to: 1
-      if_action:
-         type: origins:and
-         actions:
-         -  type: origins:execute_command
-            command: 'title @s actionbar {"text": "下降中"}'
-      else_action:
-         type: origins:and
-         actions:
-         -  type: origins:execute_command
-            command: 'title @s actionbar {"text": "上升中"}'
-         -  type: origins:add_velocity
-            space: world
-            y: 0.06
+   # min_action:
+      # # 抵消下坠速度
+      # # 不知道为啥会有，明明已经在上边设置下坠速度为0了
+      # # 只能额外加个速度来抵消了
+      # # 不过如果要下降的话，这个速度会一直拉回来
+      # # 所以又要降低
+      # type: origins:if_else
+      # condition:
+         # type: origins:command
+         # command: "execute if entity @s[x_rotation=0..90]"
+         # comparison: "=="
+         # compare_to: 1
+      # if_action:
+         # type: origins:and
+         # actions:
+         # -  type: origins:execute_command
+            # command: 'title @s actionbar {"text": "下降中"}'
+      # else_action:
+         # type: origins:and
+         # actions:
+         # -  type: origins:execute_command
+            # command: 'title @s actionbar {"text": "上升中"}'
+         # -  type: origins:add_velocity
+            # space: world
+            # y: 0.06
 
+# 这里给一个起步速度
 on_start_fly:
     type: origins:action_on_callback
     execute_chosen_when_orb: true
     entity_action_gained:
        type: origins:add_velocity
        space: local
-       y: 0.03
+       y: 0.1
+
 on_land:
   type: origins:action_over_time
   interval: 20
@@ -249,11 +228,56 @@ on_land:
         resource: sil_yoni:freedom_flight_is_flying
         operation: set
         change: 0
-boost_forward:
+
+slowly_float_up:
+   type: origins:modify_velocity
+   modifier:
+      value: 0.03,
+      operation: set_base
+   condition:
+      type: origins:and
+      conditions:
+      -
+         type: origins:on_block
+         inverted: true
+      -
+         type: origins:resource
+         resource: sil_yoni:freedom_flight/data_move_lasting_time
+         comparison: "=="
+         compare_to: 0
+      -
+         type: origins:command
+         command: "execute if entity @s[x_rotation=0..90]"
+         comparison: "=="
+         compare_to: 0
+   axes: [ y ]
+
+slowly_drop_down:
+   type: origins:modify_velocity
+   modifier:
+      value: -0.03,
+      operation: set_base
+   condition:
+      type: origins:and
+      conditions:
+      -
+         type: origins:on_block
+         inverted: true
+      -
+         type: origins:resource
+         resource: sil_yoni:freedom_flight/data_move_lasting_time
+         comparison: "=="
+         compare_to: 0
+      -
+         type: origins:command
+         command: "execute if entity @s[x_rotation=0..90]"
+         comparison: "=="
+         compare_to: 1
+   axes: [ y ]
+
+trigger_boost_forward:
    type: origins:active_self
-   key:
-      key: key.forward
-      continuous: true
+   key: { key: key.forward, continuous: true }
    entity_action:
       type: origins:and
       actions:
@@ -265,34 +289,55 @@ boost_forward:
          resource: sil_yoni:freedom_flight/data_move_lasting_time
          operation: set
          change: 0
-      -
+
+boost_forward_up_down:
+   type: origins:active_self
+   key:
+      key: key.forward
+      continuous: true
+   entity_action:
+      type: origins:if_else
+      condition:
+         type: origins:command
+         command: "execute if entity @s[x_rotation=0..90]"
+         comparison: "=="
+         compare_to: 1
+      if_action:
          type: origins:if_else
          condition:
             type: origins:sprinting
          if_action:
-            type: origins:and
-            actions:
-            -
-               type: origins:add_velocity
-               space: local
-               z: 0.06
-               y: 0.03
-            -
-               type: origins:add_velocity
-               space: local_horizontal
-               z: 0.02
+            type: origins:add_velocity
+            space: local
+            z: 0.08
+         #   y: -0.01
+         else_action:
+            type: origins:add_velocity
+            space: local
+            z: 0.04
+         #   y: -0.02
+      else_action:
+         type: origins:if_else
+         condition:
+            type: origins:sprinting
+         if_action:
+            type: origins:add_velocity
+            space: local
+            z: 0.08
+            y: 0.03
          else_action:
             type: origins:and
-            actions:
+            actions: 
+            # -
+               # type: origins:add_velocity
+               # space: world
+               # y: 0.03
             -
                type: origins:add_velocity
                space: local
-               z: 0.025
-               y: 0.017
-            -
-               type: origins:add_velocity
-               space: local_horizontal
-               z: 0.017
+               z: 0.04
+               y: 0.015
+
 go_back:
    type: origins:active_self
    key:
@@ -311,8 +356,13 @@ go_back:
          change: 0
       -
          type: origins:add_velocity
+         space: world
+         y: -0.017
+      -
+         type: origins:add_velocity
          space: local_horizontal
          z: -0.025
+
 down:
    type: origins:active_self
    key:
@@ -333,6 +383,7 @@ down:
          resource: sil_yoni:freedom_flight/data_fly_lasting_time
          operation: add
          change: 200
+
 up:
    type: origins:active_self
    key:
