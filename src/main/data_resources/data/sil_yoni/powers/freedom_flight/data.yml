@@ -163,39 +163,8 @@ action_lasting_time:
 move_lasting_time:
    type: origins:resource
    min: 0
-   max: 2
+   max: 3
    start_value: 0
-   max_action:
-      # 停止移动之后将下坠速度设置为0
-      type: origins:add_velocity
-      space: world
-      y: 0
-      set: true
-   # min_action:
-      # # 抵消下坠速度
-      # # 不知道为啥会有，明明已经在上边设置下坠速度为0了
-      # # 只能额外加个速度来抵消了
-      # # 不过如果要下降的话，这个速度会一直拉回来
-      # # 所以又要降低
-      # type: origins:if_else
-      # condition:
-         # type: origins:command
-         # command: "execute if entity @s[x_rotation=0..90]"
-         # comparison: "=="
-         # compare_to: 1
-      # if_action:
-         # type: origins:and
-         # actions:
-         # -  type: origins:execute_command
-            # command: 'title @s actionbar {"text": "下降中"}'
-      # else_action:
-         # type: origins:and
-         # actions:
-         # -  type: origins:execute_command
-            # command: 'title @s actionbar {"text": "上升中"}'
-         # -  type: origins:add_velocity
-            # space: world
-            # y: 0.06
 
 # 这里给一个起步速度
 on_start_fly:
@@ -229,11 +198,11 @@ on_land:
         operation: set
         change: 0
 
-slowly_float_up:
+stop_falldown_because_just_moving:
    type: origins:modify_velocity
    modifier:
-      value: 0.03,
-      operation: set_base
+      value: 0,
+      operation: set_total
    condition:
       type: origins:and
       conditions:
@@ -244,35 +213,7 @@ slowly_float_up:
          type: origins:resource
          resource: sil_yoni:freedom_flight/data_move_lasting_time
          comparison: "=="
-         compare_to: 0
-      -
-         type: origins:command
-         command: "execute if entity @s[x_rotation=0..90]"
-         comparison: "=="
-         compare_to: 0
-   axes: [ y ]
-
-slowly_drop_down:
-   type: origins:modify_velocity
-   modifier:
-      value: -0.03,
-      operation: set_base
-   condition:
-      type: origins:and
-      conditions:
-      -
-         type: origins:on_block
-         inverted: true
-      -
-         type: origins:resource
-         resource: sil_yoni:freedom_flight/data_move_lasting_time
-         comparison: "=="
-         compare_to: 0
-      -
-         type: origins:command
-         command: "execute if entity @s[x_rotation=0..90]"
-         comparison: "=="
-         compare_to: 1
+         compare_to: 2
    axes: [ y ]
 
 trigger_boost_forward:
@@ -290,11 +231,18 @@ trigger_boost_forward:
          operation: set
          change: 0
 
+gravity_againstment:
+   type: origins:active_self
+   key: { key: key.forward, continuous: true }
+   condition: { type: origins:on_block, inverted: true }
+   entity_action:
+      type: origins:add_velocity
+      space: world
+      y: 0.08
+
 boost_forward_up_down:
    type: origins:active_self
-   key:
-      key: key.forward
-      continuous: true
+   key: { key: key.forward, continuous: true }
    entity_action:
       type: origins:if_else
       condition:
@@ -307,36 +255,37 @@ boost_forward_up_down:
          condition:
             type: origins:sprinting
          if_action:
-            type: origins:add_velocity
-            space: local
-            z: 0.08
-         #   y: -0.01
+            type: origins:and
+            actions: 
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.08
          else_action:
-            type: origins:add_velocity
-            space: local
-            z: 0.04
-         #   y: -0.02
+            type: origins:and
+            actions:
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.04
       else_action:
          type: origins:if_else
          condition:
             type: origins:sprinting
          if_action:
-            type: origins:add_velocity
-            space: local
-            z: 0.08
-            y: 0.03
+            type: origins:and
+            actions:
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.08
          else_action:
             type: origins:and
             actions: 
-            # -
-               # type: origins:add_velocity
-               # space: world
-               # y: 0.03
             -
                type: origins:add_velocity
                space: local
                z: 0.04
-               y: 0.015
 
 go_back:
    type: origins:active_self
@@ -356,10 +305,6 @@ go_back:
          change: 0
       -
          type: origins:add_velocity
-         space: world
-         y: -0.017
-      -
-         type: origins:add_velocity
          space: local_horizontal
          z: -0.025
 
@@ -367,7 +312,7 @@ down:
    type: origins:active_self
    key:
       key: key.sneak
-      continuous: true
+      continuous: false
    condition:
       type: origins:moving
       inverted: true
