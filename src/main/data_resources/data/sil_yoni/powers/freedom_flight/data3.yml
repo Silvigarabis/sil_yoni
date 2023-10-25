@@ -6,58 +6,39 @@ no_fall_damage:
    damage_condition:
       type: origins:in_tag
       tag: is_fall
-fall_mode_static_float:
-   type: origins:modify_falling
-   velocity: 0
-   condition:
-      type: origins:and
-      conditions:
-      -
-         type: origins:resource
-         resource: '*_static_floating_time'
-         comparison: "<"
-         compare_to: 300 # 15sec
-fall_mode_slowly_dropdown:
-   type: origins:modify_falling
-   velocity: 0.01
-   condition:
-      type: origins:and
-      conditions:
-      -
-         type: origins:resource
-         resource: '*_static_floating_time'
-         comparison: ">="
-         compare_to: 300
-      -
-         type: origins:resource
-         resource: '*_static_floating_time'
-         comparison: "<"
-         compare_to: 400
-fall_mode_dropdown:
-   type: origins:modify_falling
-   velocity: 0.06
-   condition:
-      type: origins:and
-      conditions:
-      -
-         type: origins:resource
-         resource: '*_static_floating_time'
-         comparison: ">="
-         compare_to: 400
-      -
-         type: origins:resource
-         resource: '*_static_floating_time'
-         comparison: "<"
-         compare_to: 500
 
-static_floating_time:
+falldown_speed_mode:
    type: origins:resource
    min: 0
-   max: 500
+   max: 3
    start_value: 0
    hud_render:
       should_render: true
       bar_index: 4
+falldown_speed_mode_0:
+   type: origins:modify_falling
+   velocity: 0
+   condition:
+      type: origins:resource
+      resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+      comparison: "=="
+      compare_to: 0
+falldown_speed_mode_1:
+   type: origins:modify_falling
+   velocity: 0.005
+   condition:
+      type: origins:resource
+      resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+      comparison: "=="
+      compare_to: 1
+falldown_speed_mode_2:
+   type: origins:modify_falling
+   velocity: 0.03
+   condition:
+      type: origins:resource
+      resource: sil_yoni:freedom_flight/data_falldown_speed_mode
+      comparison: "=="
+      compare_to: 2
 
 fly_lasting_time:
    type: origins:resource
