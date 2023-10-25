@@ -25,6 +25,13 @@ glowing:
     type: origins:self_glow
 vision_0:
     type: origins:night_vision
+no_y_axis:
+   type: origins:modify_velocity
+   modifier:
+      operation: set_total
+      value: 0
+   axes: [ y ]
+
 triggers:
   type: origins:action_on_callback
   execute_chosen_when_orb: true
