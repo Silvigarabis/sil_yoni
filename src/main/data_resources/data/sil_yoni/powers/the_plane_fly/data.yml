@@ -1,0 +1,76 @@
+type: origins:multiple
+
+no_fall_damage:
+   type: origins:invulnerability
+   damage_condition:
+      type: origins:in_tag
+      tag: is_fall
+effects:
+   type: origins:action_over_time
+   interval: 1
+   entity_action:
+      type: origins:apply_effect
+      effects:
+      -
+         effect: minecraft:slow_falling
+         duration: 20
+         amplifier: 0
+         show_particles: false
+         show_icon: false
+
+# boost_forward:
+   # type: origins:active_self
+   # key:
+      # key: key.forward
+      # continuous: true
+   # entity_action:
+      # type: origins:and
+      # actions:
+      # -
+         # type: origins:if_else
+         # condition:
+            # type: origins:sprinting
+         # if_action:
+            # type: origins:and
+            # actions:
+            # -
+               # type: origins:add_velocity
+               # space: local
+               # z: 0.08
+         # else_action:
+            # type: origins:and
+            # actions:
+            # -
+               # type: origins:add_velocity
+               # space: local
+               # z: 0.02
+# down:
+   # type: origins:active_self
+   # key:
+      # key: key.sneak
+      # continuous: true
+   # condition:
+      # type: origins:moving
+      # inverted: true
+   # entity_action:
+      # type: origins:and
+      # actions:
+         # -
+            # type: origins:add_velocity
+            # space: world
+            # y: -0.02
+# up:
+   # type: origins:active_self
+   # key:
+      # key: key.jump
+      # continuous: true
+   # condition:
+      # type: origins:moving
+      # inverted: true
+   # entity_action:
+      # type: origins:and
+      # actions:
+         # -
+            # type: origins:add_velocity
+            # space: world
+            # y: 0.02
