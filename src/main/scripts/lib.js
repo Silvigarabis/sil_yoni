@@ -7,6 +7,9 @@ import * as jsYaml from "js-yaml";
 export function fromJsonToYaml(inputDir, outputDir){
     const files = searchFile2(inputDir, (f) => f.endsWith(".json"));
     
+    if (!fs.statSync(inputDir).isDirectory())
+        inputDir = path.dirname(inputDir);
+        
     for (const f of files){
         let newFile = path.join(outputDir, path.relative(inputDir, setPrefix(f, "yml")));
         console.log(`${f} -> ${newFile}`);
@@ -18,6 +21,9 @@ export function fromJsonToYaml(inputDir, outputDir){
 export function fromYamlToJson(inputDir, outputDir){
     const files = searchFile2(inputDir, (f) => f.endsWith(".yml") || f.endsWith(".yaml"));
     
+    if (!fs.statSync(inputDir).isDirectory())
+        inputDir = path.dirname(inputDir);
+        
     for (const f of files){
         let newFile = path.join(outputDir, path.relative(inputDir, setPrefix(f, "json")));
         console.log(`${f} -> ${newFile}`);
@@ -49,21 +55,24 @@ function searchFile2(searchPath, filter){
     while (inputs.length > 0){
         const file = inputs.pop();
         if (!fs.statSync(file).isDirectory()){
-            if (filter(file)){
+            if (test(file))
                 matches.push(file);
-            }
         } else {
             let dir = file;
             for (const fname of fs.readdirSync(dir)){
                 const file = path.join(dir, fname);
                 const stat = fs.statSync(file);
                 if (!stat.isDirectory()){
-                    matches.push(file);
+                    if (test(file))
+                        matches.push(file);
                 } else {
                     inputs.push(file);
                 }
             }
         }
+    }
+    function test(file){
+        return !filter || filter(file);
     }
     return matches;
 }
@@ -96,7 +105,7 @@ function writeFile(file, data){
         fs.writeFileSync(file, data, { flag: 'w+' });
 }
 
-function readJsonFile(file){
+export function readJsonFile(file){
     let json = readFile(file);
     json = json.replace(/(?:\/\*[\s\S]*?\*\/|\/\/.*$)/gm, (comment) => {
         const spaces = new Array(comment.length);
@@ -113,12 +122,12 @@ function readJsonFile(file){
     return data;
 }
 
-function writeJsonFile(file, data){
+export function writeJsonFile(file, data){
     let json = JSON.stringify(data, 4);
     writeFile(file, json);
 }
 
-function readYamlFile(file){
+export function readYamlFile(file){
     let yaml = readFile(file);
     let data;
     try {
@@ -131,7 +140,7 @@ function readYamlFile(file){
     return data;
 }
 
-function writeYamlFile(file, data){
+export function writeYamlFile(file, data){
     let yaml = jsYaml.dump(data);
     writeFile(file, yaml);
 }
