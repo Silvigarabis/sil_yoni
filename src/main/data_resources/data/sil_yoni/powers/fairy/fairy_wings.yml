@@ -345,6 +345,8 @@ wings_mix:
         type: origins:grant_power
         power: sil_yoni:fluttering_wings
         source: sil_yoni:fairy/fairy_wings
+
+
 decreaseing_energy_when_direct_fly:
   type: apoli:active_self
   key:

@@ -4,6 +4,8 @@ command=(bash build.sh)
 
 update_time_info(){
     time_info=$(find data_resources/ *.sh scripts/*.js -type f,d -print0 | xargs -0 stat -c %Y)
+    time_info+=" "
+    time_info+=$(find java/ -name *.java -type f -print0 | xargs -0 stat -c %Y)
 }
 
 save_old_time_info(){

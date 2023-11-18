@@ -1,53 +1,50 @@
 type: origins:multiple
-auto_setup_triggers:
-  type: apoli:action_over_time
-  interval: 3
-  entity_action:
-    type: origins:if_else
-    condition:
-      type: origins:and
-      conditions:
-        - type: origins:on_block
-          inverted: true
-        - type: origins:riding
-          inverted: true
-        - type: apoli:command
-          command: data get entity @s SleepTimer
-          comparison: '=='
-          compare_to: 0
-    if_action:
-      type: origins:if_else
-      condition:
-        type: origins:power
-        inverted: true
-        power: sil_yoni:fuyu/elytra
-        source: sil_yoni:fuyu/all
-      if_action:
-        type: origins:and
-        actions:
-          - type: origins:grant_power
-            power: sil_yoni:fuyu/elytra
-            source: sil_yoni:fuyu/all
-    else_action:
-      type: origins:if_else
-      condition:
-        type: origins:power
-        power: sil_yoni:fuyu/elytra
-        source: sil_yoni:fuyu/all
-      if_action:
-        type: origins:and
-        actions:
-          - type: origins:revoke_power
-            power: sil_yoni:fuyu/elytra
-            source: sil_yoni:fuyu/all
-xlimc:
-  type: origins:climbing
-  condition:
-    type: origins:collided_horizontally
-  allow_holding: false
-body_while_no_energy:
+# auto_setup_triggers:
+  # type: apoli:action_over_time
+  # interval: 3
+  # entity_action:
+    # type: origins:if_else
+    # condition:
+      # type: origins:and
+      # conditions:
+        # - type: origins:on_block
+          # inverted: true
+        # - type: origins:riding
+          # inverted: true
+        # - type: apoli:command
+          # command: data get entity @s SleepTimer
+          # comparison: '=='
+          # compare_to: 0
+    # if_action:
+      # type: origins:if_else
+      # condition:
+        # type: origins:power
+        # inverted: true
+        # power: sil_yoni:silvigarabis/elytra
+        # source: sil_yoni:silvigarabis/all
+      # if_action:
+        # type: origins:and
+        # actions:
+          # - type: origins:grant_power
+            # power: sil_yoni:silvigarabis/elytra
+            # source: sil_yoni:silvigarabis/all
+    # else_action:
+      # type: origins:if_else
+      # condition:
+        # type: origins:power
+        # power: sil_yoni:silvigarabis/elytra
+        # source: sil_yoni:silvigarabis/all
+      # if_action:
+        # type: origins:and
+        # actions:
+          # - type: origins:revoke_power
+            # power: sil_yoni:silvigarabis/elytra
+            # source: sil_yoni:silvigarabis/all
+body_color:
   type: origins:model_color
   alpha: 0.7
+
+
 no_strength:
   type: origins:modify_break_speed
   modifier:

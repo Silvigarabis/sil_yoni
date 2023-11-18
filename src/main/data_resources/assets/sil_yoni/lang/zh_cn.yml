@@ -12,6 +12,8 @@ power.sil_yoni.physique/fragile_body.name: 软弱的身体
 power.sil_yoni.physique/fragile_body.description: 你身体虚弱，生命力下降，同时盔甲难以帮助你防御
 power.sil_yoni.physique/weak_body.name: 无力的躯体
 power.sil_yoni.physique/weak_body.description: 你身体虚弱，行为能力受到限制。
+power.sil_yoni.physique/painly_weak_arms.name: 极度虚弱的手臂
+power.sil_yoni.physique/painly_weak_arms.description: 在没有足够力量（状态）的情况下，虚弱的手臂极大降低了破坏方块的能力，甚至于对深层矿石或者黑曜石无能为力。
 power.sil_yoni.physique/weak_arms.name: 虚弱的手臂
 power.sil_yoni.physique/weak_arms.description: 在没有足够力量的情况下，虚弱的手臂没有砸碎大石头从中获取物品的能力（无法开采周围拥有3个或更多自然类坚硬方块的同类型方块，除非使用了力量药水）。
 power.sil_yoni.physique/tiny_body.name: 微小珍宝
@@ -64,10 +66,13 @@ power.sil_yoni.guxi/boost_to_sky_power_desc.description: 你可以消耗能量�
 power.sil_yoni.guxi/fire_light_power_desc.name: 特殊能力：能量发送
 power.sil_yoni.guxi/fire_light_power_desc.description: 你可以将组成你的能量发送到外界。手持剑或镐使用。
 
+power.sil_yoni.fairy2/fairy_wings.name: 膜翅
+power.sil_yoni.fairy2/fairy_wings.description: 你的身体上生长着一对膜翅，你可以用它飞行一段时间，但是长时间的飞行会使你感到极度疲惫。
 power.sil_yoni.fairy2/void_inventory.name: 虚空存储
 power.sil_yoni.fairy2/void_inventory.description: 你可以利用虚空空间存储你的物品。
 
-touhouorigins.subtitles.entity.fairy.fly: 妖精飞起来
+sil_yoni.subtitles.entity.fairy.fly: 妖精飞起来
+sil_yoni.subtitles.entity.fairy2.fly: 膜翅震动
 
 death.attack.guxi_starve_energy: '%1$s没能保持能量充足'
 death.attack.guxi_starve_energy.player: '%1$s在与%2$s战斗时没能保持能量充足'

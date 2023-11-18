@@ -1,5 +1,7 @@
+name: internal power
+description: this power should never be added to origin directly
+
 type: origins:multiple
-hidden: true
 loop:
   type: origins:action_over_time
   interval: 5
