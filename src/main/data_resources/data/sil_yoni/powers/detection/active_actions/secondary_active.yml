@@ -1,3 +1,6 @@
+name: internal power
+description: this power should never be added to origin directly
+
 type: origins:multiple
 # 枚举
 # 0 无动作

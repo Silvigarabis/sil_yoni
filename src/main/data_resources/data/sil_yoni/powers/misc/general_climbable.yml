@@ -1,8 +1,9 @@
 type: origins:multiple
 hidden: true
-# 通用攀爬能力，允许攀登一般方块（正确硬度小于50）
+# 通用攀爬能力，允许攀登一般方块（正确硬度小于20）
 ability:
    type: origins:climbing
+   allow_holding: false
    condition:
       type: origins:and
       conditions:
@@ -15,36 +16,36 @@ ability:
             conditions:
             -  type: origins:hardness
                comparison: "<"
-               compare_to: 50
+               compare_to: 20
             -  type: origins:hardness
                comparison: ">="
                compare_to: 0
 
-debug:
-   type: origins:action_over_time
-   interval: 1
-   entity_action:
-      type: origins:if_else
-      if_action:
-         type: origins:execute_command
-         command: 'title @s actionbar {"text": "目前可以攀爬" }'
-      else_action:
-         type: origins:execute_command
-         command: 'title @s actionbar {"text": "无法在此处攀爬" }'
-      condition:
-         type: origins:and
-         conditions:
-         -  type: origins:collided_horizontally
-         -  type: origins:block_collision
-            offset_x: 0.1
-            offset_y: 0.1
-            block_condition:
-               type: origins:and
-               conditions:
-               -  type: origins:hardness
-                  comparison: "<"
-                  compare_to: 50
-               -  type: origins:hardness
-                  comparison: ">="
-                  compare_to: 0
+# debug:
+   # type: origins:action_over_time
+   # interval: 1
+   # entity_action:
+      # type: origins:if_else
+      # if_action:
+         # type: origins:execute_command
+         # command: 'title @s actionbar {"text": "目前可以攀爬" }'
+      # else_action:
+         # type: origins:execute_command
+         # command: 'title @s actionbar {"text": "无法在此处攀爬" }'
+      # condition:
+         # type: origins:and
+         # conditions:
+         # -  type: origins:collided_horizontally
+         # -  type: origins:block_collision
+            # offset_x: 0.1
+            # offset_y: 0.1
+            # block_condition:
+               # type: origins:and
+               # conditions:
+               # -  type: origins:hardness
+                  # comparison: "<"
+                  # compare_to: 20
+               # -  type: origins:hardness
+                  # comparison: ">="
+                  # compare_to: 0
    

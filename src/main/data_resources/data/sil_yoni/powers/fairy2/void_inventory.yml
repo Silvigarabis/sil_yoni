@@ -8,6 +8,7 @@ container_data:
    title: container.sil_yoni:void_inventory
    recoverable: false
    drop_on_death: false
+   container_type: double_chest
    key:
       key: key.origins.secondary_active
       continuous: true

@@ -13,7 +13,7 @@ block_condition:
         type: origins:in_tag
         tag: origins:natural_stone
       comparison: '>'
-      compare_to: 2
+      compare_to: 3
 modifier:
   operation: multiply_base
   value: -0.99

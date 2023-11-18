@@ -1,76 +1,220 @@
 type: origins:multiple
 
-no_fall_damage:
-   type: origins:invulnerability
-   damage_condition:
-      type: origins:in_tag
-      tag: is_fall
-effects:
+# no_fall_damage:
+   # type: origins:invulnerability
+   # damage_condition:
+      # type: origins:in_tag
+      # tag: is_fall
+
+no_fall:
+    type: origins:modify_falling
+    take_fall_damage: false
+    velocity: 0
+auto_stop:
+   type: origins:resource
+   min: 0
+   max: 50
+   start_value: 0
+   max_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:add_velocity
+         space: world
+         set: true
+         x: 0
+         y: 0
+         z: 0
+
+auto_stop_reset_timer:
    type: origins:action_over_time
    interval: 1
    entity_action:
-      type: origins:apply_effect
-      effects:
-      -
-         effect: minecraft:slow_falling
-         duration: 20
-         amplifier: 0
-         show_particles: false
-         show_icon: false
+      type: origins:change_resource
+      resource: sil_yoni:the_plane_fly/data_auto_stop
+      operation: add
+      change: 1
 
-# boost_forward:
+boost_forward:
+   type: origins:active_self
+   key:
+      key: key.forward
+      continuous: true
+   entity_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: sil_yoni:the_plane_fly/data_auto_stop
+         operation: set
+         change: 0
+      -
+         type: origins:if_else
+         condition:
+            type: origins:sprinting
+         if_action:
+            type: origins:and
+            actions:
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.6
+         else_action:
+            type: origins:and
+            actions:
+            -
+               type: origins:add_velocity
+               space: local
+               z: 0.025
+
+# stop:
    # type: origins:active_self
    # key:
-      # key: key.forward
+      # key: key.back
       # continuous: true
+   # # condition:
+      # # type: origins:moving
    # entity_action:
-      # type: origins:and
-      # actions:
-      # -
-         # type: origins:if_else
-         # condition:
-            # type: origins:sprinting
-         # if_action:
-            # type: origins:and
-            # actions:
-            # -
-               # type: origins:add_velocity
-               # space: local
-               # z: 0.08
-         # else_action:
-            # type: origins:and
-            # actions:
-            # -
-               # type: origins:add_velocity
-               # space: local
-               # z: 0.02
-# down:
-   # type: origins:active_self
-   # key:
-      # key: key.sneak
-      # continuous: true
-   # condition:
-      # type: origins:moving
-      # inverted: true
-   # entity_action:
-      # type: origins:and
-      # actions:
-         # -
-            # type: origins:add_velocity
-            # space: world
-            # y: -0.02
-# up:
-   # type: origins:active_self
-   # key:
-      # key: key.jump
-      # continuous: true
-   # condition:
-      # type: origins:moving
-      # inverted: true
-   # entity_action:
-      # type: origins:and
-      # actions:
-         # -
-            # type: origins:add_velocity
-            # space: world
-            # y: 0.02
+      # type: origins:delay
+      # ticks: 10
+      # action: a
+
+left:
+   type: origins:active_self
+   key:
+      key: key.left
+      continuous: true
+   entity_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: sil_yoni:the_plane_fly/data_auto_stop
+         operation: set
+         change: 0
+      -
+         type: origins:add_velocity
+         space: local_horizontal
+         x: 0.02
+
+right:
+   type: origins:active_self
+   key:
+      key: key.right
+      continuous: true
+   entity_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: sil_yoni:the_plane_fly/data_auto_stop
+         operation: set
+         change: 0
+      -
+         type: origins:add_velocity
+         space: local_horizontal
+         x: -0.02
+
+go_back:
+   type: origins:active_self
+   key:
+      key: key.back
+      continuous: true
+   entity_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: sil_yoni:the_plane_fly/data_auto_stop
+         operation: set
+         change: 0
+      -
+         type: origins:delay
+         ticks: 5
+         action:
+            type: origins:add_velocity
+            space: local_horizontal
+            set: true
+            z: -0.05
+
+down_dynamic:
+   type: origins:active_self
+   key:
+      key: key.sneak
+      continuous: true
+   condition:
+      type: origins:moving
+   entity_action:
+      type: origins:and
+      actions:
+         -
+            type: origins:change_resource
+            resource: sil_yoni:the_plane_fly/data_auto_stop
+            operation: set
+            change: 0
+         -
+            type: origins:add_velocity
+            space: world
+            y: -0.1
+up_dynamic:
+   type: origins:active_self
+   key:
+      key: key.jump
+      continuous: true
+   condition:
+      type: origins:moving
+   entity_action:
+      type: origins:and
+      actions:
+         -
+            type: origins:change_resource
+            resource: sil_yoni:the_plane_fly/data_auto_stop
+            operation: set
+            change: 0
+         -
+            type: origins:add_velocity
+            space: world
+            y: 0.03
+
+down_static:
+   type: origins:active_self
+   key:
+      key: key.sneak
+      continuous: true
+   condition:
+      type: origins:moving
+      inverted: true
+   entity_action:
+      type: origins:and
+      actions:
+         -
+            type: origins:change_resource
+            resource: sil_yoni:the_plane_fly/data_auto_stop
+            operation: set
+            change: 0
+         -
+            type: origins:add_velocity
+            space: world
+            set: true
+            y: -0.4
+up_static:
+   type: origins:active_self
+   key:
+      key: key.jump
+      continuous: true
+   condition:
+      type: origins:moving
+      inverted: true
+   entity_action:
+      type: origins:and
+      actions:
+         -
+            type: origins:change_resource
+            resource: sil_yoni:the_plane_fly/data_auto_stop
+            operation: set
+            change: 0
+         -
+            type: origins:add_velocity
+            space: world
+            set: true
+            y: 0.4

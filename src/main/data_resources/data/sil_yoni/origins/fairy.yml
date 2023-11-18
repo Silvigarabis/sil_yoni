@@ -1,8 +1,7 @@
 powers:
-  - sil_yoni:detection/active_actions/secondary_active
   - sil_yoni:fairy/heal_magic
   - sil_yoni:fairy/effects
-  - sil_yoni:freedom_flight
+  - sil_yoni:fluttering_wings
 
   - origins:vegetarian
 

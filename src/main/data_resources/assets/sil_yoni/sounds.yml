@@ -2,5 +2,10 @@ entity.fairy.fly:
   sounds:
     - name: note/icechime
       volume: 0.5
-  # 猜猜我从哪里找到的这东西
-  subtitle: touhouorigins.subtitles.entity.fairy.fly
+  subtitle: sil_yoni.subtitles.entity.fairy.fly
+
+
+entity.fairy2.fly:
+  sounds:
+    - name: minecraft:entity.bee.loop
+  subtitle: sil_yoni.subtitles.entity.fairy2.fly
