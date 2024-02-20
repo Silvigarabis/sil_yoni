@@ -1,13 +1,18 @@
 hidden: true
 condition:
-  type: origins:and
-  conditions:
-    - inverted: true
-      type: origins:on_block
-    - inverted: true
+   type: origins:and
+   conditions:
+   -
+      type: origins:or
+      conditions:
+      -
+         type: origins:ability
+         ability: minecraft:flying
+   -
       type: origins:riding
-    - inverted: true
-      type: origins:fall_flying
+      inverted: true
+   -
+      type: origins:moving
 type: origins:exhaust
 interval: 60
 exhaustion: 1

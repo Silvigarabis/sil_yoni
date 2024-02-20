@@ -22,18 +22,14 @@ callbacks:
         power: sil_yoni:condition/condition_wear_heavy_armor
         source: sil_yoni:misc/harder_armor
 wear_heavy_armor:
-  type: origins:conditioned_attribute
-  tick_rate: 30
-  condition:
-    type: origins:and
-    conditions:
-      - type: origins:resource
-        resource: sil_yoni:condition/condition_wear_heavy_armor_result
-        comparison: '=='
-        compare_to: 1
-  modifiers:
-    - attribute: generic.movement_speed
-      operation: multiply_total
+   type: origins:modify_attribute
+   condition:
+      type: origins:resource
+      resource: sil_yoni:condition/condition_wear_heavy_armor_result
+      comparison: '=='
+      compare_to: 1
+   attribute: generic.movement_speed
+   modifier:
+      operation: multiply_total_multiplicative
       value: -0.16
       name: sil_yoni:misc/harder_armor
-  update_health: false

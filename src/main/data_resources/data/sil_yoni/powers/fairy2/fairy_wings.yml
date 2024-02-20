@@ -110,7 +110,6 @@ status_uodater_flag_can_recure_energy:
             conditions:
             -
                type: origins:on_block
-               inverted: true
             -
                type: origins:and
                conditions:
@@ -145,12 +144,6 @@ status_uodater_flag_can_use_wings:
       condition:
          type: origins:and
          conditions:
-         -
-            type: origins:in_block
-            block_condition:
-               type: origins:fluid
-               fluid_condition: { type: origins:empty }
-               #inverted: true
          -
             type: origins:resource
             resource: "sil_yoni:fairy2/fairy_wings_broken_wings_recover_timer"
@@ -207,6 +200,12 @@ wings_ability_mayfly:
   condition:
     type: apoli:and
     conditions:
+      -
+         type: origins:in_block
+         block_condition:
+            type: origins:fluid
+            fluid_condition: { type: origins:empty }
+            #inverted: true
       - type: origins:resource
         resource: "sil_yoni:fairy2/fairy_wings_flag_can_use_wings"
         comparison: '=='
@@ -460,69 +459,69 @@ particle_effect:
     force: true
 
 # 不进入飞行模式的伪飞行
-direct_wings:
-  type: apoli:active_self
-  key:
-    key: key.jump
-    continuous: true
-  condition:
-    type: apoli:and
-    conditions:
-      -
-         type: origins:resource
-         resource: "sil_yoni:fairy2/fairy_wings_flag_can_use_wings"
-         comparison: '=='
-         compare_to: 1
-      -
-         type: origins:resource
-         resource: "sil_yoni:fairy2/fairy_wings_flag_should_use_wings"
-         comparison: '=='
-         compare_to: 1
-      -
-         type: origins:ability
-         ability: minecraft:flying
-         inverted: true
-  entity_action:
-    type: origins:and
-    actions:
-    -
-      type: origins:add_velocity
-      y: 0.04
-    -
-      type: origins:apply_effect
-      effect:
-         effect: minecraft:slow_falling
-         duration: 100
-         show_particles: false
-         show_icon: false
+# direct_wings:
+  # type: apoli:active_self
+  # key:
+    # key: key.jump
+    # continuous: true
+  # condition:
+    # type: apoli:and
+    # conditions:
+      # -
+         # type: origins:resource
+         # resource: "sil_yoni:fairy2/fairy_wings_flag_can_use_wings"
+         # comparison: '=='
+         # compare_to: 1
+      # -
+         # type: origins:resource
+         # resource: "sil_yoni:fairy2/fairy_wings_flag_should_use_wings"
+         # comparison: '=='
+         # compare_to: 1
+      # -
+         # type: origins:ability
+         # ability: minecraft:flying
+         # inverted: true
+  # entity_action:
+    # type: origins:and
+    # actions:
+    # -
+      # type: origins:add_velocity
+      # y: 0.08
+    # -
+      # type: origins:apply_effect
+      # effect:
+         # effect: minecraft:slow_falling
+         # duration: 100
+         # show_particles: false
+         # show_icon: false
 
-direct_wings_lost_energy:
-  type: apoli:active_self
-  key:
-    key: key.jump
-    continuous: true
-  cooldown: 15
-  hud_render:
-    should_render: false
-  condition:
-    type: apoli:and
-    conditions:
-      -
-         type: origins:resource
-         resource: "sil_yoni:fairy2/fairy_wings_flag_can_use_wings"
-         comparison: '=='
-         compare_to: 1
-      -
-         type: origins:resource
-         resource: "sil_yoni:fairy2/fairy_wings_flag_should_use_wings"
-         comparison: '=='
-         compare_to: 1
-      -
-         type: origins:ability
-         ability: minecraft:flying
-         inverted: true
-  entity_action:
-    type: origins:change_resource
-    resource: "sil_yoni:fairy2/fairy_wings_energy"
-    operation: add
-    change: -1
+# direct_wings_lost_energy:
+  # type: apoli:active_self
+  # key:
+    # key: key.jump
+    # continuous: true
+  # cooldown: 20
+  # hud_render:
+    # should_render: false
+  # condition:
+    # type: apoli:and
+    # conditions:
+      # -
+         # type: origins:resource
+         # resource: "sil_yoni:fairy2/fairy_wings_flag_can_use_wings"
+         # comparison: '=='
+         # compare_to: 1
+      # -
+         # type: origins:resource
+         # resource: "sil_yoni:fairy2/fairy_wings_flag_should_use_wings"
+         # comparison: '=='
+         # compare_to: 1
+      # -
+         # type: origins:ability
+         # ability: minecraft:flying
+         # inverted: true
+  # entity_action:
+    # type: origins:change_resource
+    # resource: "sil_yoni:fairy2/fairy_wings_energy"
+    # operation: add
+    # change: -1

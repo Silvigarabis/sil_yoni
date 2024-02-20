@@ -20,14 +20,15 @@ callbacks:
 lower_jumping:
   type: origins:modify_jump
   modifier:
-    operation: multiply_base_multiplicative
+    operation: multiply_base_additive
     value: -0.5
     name: sil_yoni:physique/tiny_body
 small_step:
-  type: origins:attribute
-  update_health: false
-  modifier:
-    attribute: generic.movement_speed
-    operation: multiply_base
-    value: -0.5
-    name: sil_yoni:physique/tiny_body
+   attribute: generic.movement_speed
+   type: origins:modify_attribute
+   modifier:
+      operation: multiply_base_additive
+      value: -0.5
+      name: sil_yoni:physique/tiny_body
+
+# 总的来说，体型为原本的0.25，速度和跳跃高度减少0.5*

@@ -66,7 +66,24 @@ loop:
             type: origins:fall_flying
             inverted: true
       action:
-         type: origins:change_resource
-         resource: sil_yoni:the_plane_fly_is_flying
-         operation: set
-         change: 0
+         # 延迟一下关闭时间
+         type: origins:delay
+         ticks: 12
+         action:
+            type: origins:if_else
+            condition:
+               type: origins:and
+               conditions:
+               -
+                  type: origins:resource
+                  resource: sil_yoni:the_plane_fly_is_flying
+                  comparison: "=="
+                  compare_to: 1
+               -
+                  type: origins:fall_flying
+                  inverted: true
+            if_action:
+               type: origins:change_resource
+               resource: sil_yoni:the_plane_fly_is_flying
+               operation: set
+               change: 0

@@ -1,13 +1,23 @@
 hidden: true
 condition:
-  type: origins:and
-  conditions:
-    - inverted: true
-      type: origins:on_block
-    - inverted: true
+   type: origins:and
+   conditions:
+   -
+      type: origins:or
+      conditions:
+      -
+         type: origins:and
+         conditions:
+         -
+            type: origins:on_block
+            inverted: true
+         -
+            type: origins:fall_flying
+   -
       type: origins:riding
-    - type: origins:fall_flying
-    - type: origins:moving
+      inverted: true
+   -
+      type: origins:moving
 type: origins:exhaust
 interval: 60
 exhaustion: 1

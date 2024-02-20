@@ -1,11 +1,5 @@
 type: origins:multiple
 
-# no_fall_damage:
-   # type: origins:invulnerability
-   # damage_condition:
-      # type: origins:in_tag
-      # tag: is_fall
-
 no_fall:
     type: origins:modify_falling
     take_fall_damage: false
@@ -13,7 +7,7 @@ no_fall:
 auto_stop:
    type: origins:resource
    min: 0
-   max: 50
+   max: 40
    start_value: 0
    max_action:
       type: origins:and
@@ -95,7 +89,7 @@ left:
       -
          type: origins:add_velocity
          space: local_horizontal
-         x: 0.02
+         x: 0.03
 
 right:
    type: origins:active_self
@@ -113,7 +107,7 @@ right:
       -
          type: origins:add_velocity
          space: local_horizontal
-         x: -0.02
+         x: -0.03
 
 go_back:
    type: origins:active_self
@@ -174,7 +168,7 @@ up_dynamic:
          -
             type: origins:add_velocity
             space: world
-            y: 0.03
+            y: 0.2
 
 down_static:
    type: origins:active_self
@@ -196,7 +190,7 @@ down_static:
             type: origins:add_velocity
             space: world
             set: true
-            y: -0.4
+            y: -0.15
 up_static:
    type: origins:active_self
    key:
@@ -217,4 +211,4 @@ up_static:
             type: origins:add_velocity
             space: world
             set: true
-            y: 0.4
+            y: 0.25

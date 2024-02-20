@@ -30,16 +30,15 @@ callbacks:
         power: sil_yoni:condition/condition_wear_heavy_armor
         source: sil_yoni:physique/small_body
 lower_jumping:
-  type: origins:modify_jump
-  modifier:
-    operation: multiply_base_additive
-    value: -0.2
-    name: sil_yoni:physique/small_body
+   type: origins:modify_jump
+   modifier:
+      operation: multiply_base_additive
+      value: -0.2
+      name: sil_yoni:physique/small_body
 small_step:
-  type: origins:attribute
-  update_health: false
-  modifiers:
-    - attribute: generic.movement_speed
-      operation: multiply_base
+   type: origins:modify_attribute
+   attribute: generic.movement_speed
+   modifier:
+      operation: multiply_base_additive
       value: -0.2
       name: sil_yoni:physique/small_body

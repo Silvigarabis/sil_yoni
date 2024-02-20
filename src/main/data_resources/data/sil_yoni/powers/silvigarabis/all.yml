@@ -1,98 +1,170 @@
 type: origins:multiple
-# auto_setup_triggers:
-  # type: apoli:action_over_time
-  # interval: 3
-  # entity_action:
-    # type: origins:if_else
-    # condition:
-      # type: origins:and
-      # conditions:
-        # - type: origins:on_block
-          # inverted: true
-        # - type: origins:riding
-          # inverted: true
-        # - type: apoli:command
-          # command: data get entity @s SleepTimer
-          # comparison: '=='
-          # compare_to: 0
-    # if_action:
-      # type: origins:if_else
-      # condition:
-        # type: origins:power
-        # inverted: true
-        # power: sil_yoni:silvigarabis/elytra
-        # source: sil_yoni:silvigarabis/all
-      # if_action:
-        # type: origins:and
-        # actions:
-          # - type: origins:grant_power
-            # power: sil_yoni:silvigarabis/elytra
-            # source: sil_yoni:silvigarabis/all
-    # else_action:
-      # type: origins:if_else
-      # condition:
-        # type: origins:power
-        # power: sil_yoni:silvigarabis/elytra
-        # source: sil_yoni:silvigarabis/all
-      # if_action:
-        # type: origins:and
-        # actions:
-          # - type: origins:revoke_power
-            # power: sil_yoni:silvigarabis/elytra
-            # source: sil_yoni:silvigarabis/all
+
+# set scale
+callbacks:
+  type: origins:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_gained:
+    type: origins:and
+    actions:
+      - type: origins:grant_power
+        power: sil_yoni:the_plane_fly
+        source: sil_yoni:silvigarabis/all
+      - type: origins:execute_command
+        command: function sil_yoni:origins/silvigarabis/set_scale
+  entity_action_respawned:
+    type: origins:and
+    actions:
+      - type: origins:execute_command
+        command: function sil_yoni:origins/silvigarabis/set_scale
+  entity_action_lost:
+    type: origins:and
+    actions:
+      - type: origins:revoke_power
+        power: sil_yoni:the_plane_fly
+        source: sil_yoni:silvigarabis/all
+      - type: origins:execute_command
+        command: function sil_yoni:origins/silvigarabis/reset_scale
+
 body_color:
   type: origins:model_color
   alpha: 0.7
 
+no_strength_0:
+   type: origins:modify_break_speed
+   modifier:
+      operation: multiply_base_additive
+      value: -0.74
+   block_condition:
+      type: origins:hardness
+      comparison: "!="
+      compare_to: 0
 
-no_strength:
-  type: origins:modify_break_speed
-  modifier:
-    operation: multiply_base
-    value: -0.74
-attribute_modifiers:
-  type: origins:attribute
-  modifiers:
-    - attribute: generic.attack_damage
-      operation: multiply_total
+no_strength_1:
+   type: origins:modify_damage_dealt
+   modifier:
+      operation: multiply_base_additive
       value: -0.8
-    - attribute: generic.armor
-      operation: multiply_total
-      value: -1
-    - attribute: generic.movement_speed
-      operation: multiply_total
-      value: -0.15
-    - attribute: generic.max_health
-      operation: addition
-      value: 30
+   
 no_regen:
   type: origins:disable_regen
-  condition:
-    type: apoli:and
-    conditions:
-      - type: origins:exposed_to_sun
-        inverted: true
-no_breath:
+  
+damage_immu:
   type: origins:invulnerability
   damage_condition:
     type: origins:or
     conditions:
       - type: origins:name
+        name: starve
+      - type: origins:name
         name: drown
-immu_energy:
-  type: origins:modify_damage_taken
-  damage_condition:
-    type: origins:or
-    conditions:
       - type: origins:in_tag
         tag: is_fire
       - type: origins:in_tag
         tag: is_lightning
-  modifier:
-    operation: multiply_total_multiplicative
-    value: -1
-no_food_require:
-  type: origins:modify_exhaustion
-  modifier:
-    operation: set_total
-    value: 0
+
+lower_health:
+   type: origins:modify_attribute
+   attribute: generic.max_health
+   modifier:
+      operation: set_base
+      value: 8
+
+loops:
+   type: origins:action_over_time
+   interval: 20
+   entity_action:
+      type: origins:and
+      actions:
+      # 饥饿度恢复
+      -
+         type: origins:if_else
+         condition:
+            type: origins:and
+            inverted: true
+            conditions:
+            -
+               type: origins:or
+               conditions:
+               -
+                  type: origins:and
+                  conditions:
+                  -
+                     type: origins:on_block
+                     inverted: true
+                  -
+                     type: origins:fall_flying
+            -
+               type: origins:riding
+               inverted: true
+            -
+               type: origins:moving
+         if_action:
+            type: origins:apply_effect
+            effect:
+               effect: saturation
+               duration: 1
+               amplifier: 0
+               show_icon: false
+               show_particles: false
+      # 不需要呼吸
+      -
+         type: origins:gain_air
+         value: 20
+
+self_regen:
+   type: origins:action_over_time
+   interval: 40
+   condition:
+      type: origins:and
+      conditions:
+      -
+         type: origins:relative_health
+         comparison: "<"
+         compare_to: 1
+      -
+         type: apoli:or
+         conditions:
+            - type: origins:exposed_to_sun
+            - type: origins:brightness
+              comparison: ">="
+              compare_to: 0.4
+   entity_action:
+      type: origins:heal
+      amount: 1
+
+# lower_jumping:
+  # type: origins:modify_jump
+  # modifier:
+    # operation: multiply_base_additive
+    # value: -0.4
+
+# no_breath:
+  # type: origins:invulnerability
+  # damage_condition:
+    # type: origins:or
+    # conditions:
+
+# small_step:
+  # type: origins:attribute
+  # update_health: false
+  # modifiers:
+    # - attribute: generic.movement_speed
+      # operation: multiply_base
+      # value: -0.2
+      # name: sil_yoni:physique/small_body
+# attribute_modifiers:
+  # type: origins:attribute
+  # modifiers:
+    # - attribute: generic.movement_speed
+      # operation: multiply_total
+      # value: -0.3
+    # - attribute: generic.attack_damage
+      # operation: multiply_total
+      # value: -0.8
+    # - attribute: generic.armor
+      # operation: multiply_total
+      # value: -1
+    # - attribute: generic.max_health
+      # operation: addition
+      # value: 30

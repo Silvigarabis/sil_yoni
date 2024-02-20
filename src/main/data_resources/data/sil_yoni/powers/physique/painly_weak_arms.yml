@@ -9,6 +9,11 @@ mode1:
       type: origins:and
       conditions:
       -
+         # 谁能给我解释为什么水还有硬度的
+         type: origins:fluid
+         fluid_condition: { type: origins:empty }
+         inverted: true
+      -
          type: origins:hardness
          comparison: "<"
          compare_to: 1
@@ -17,7 +22,7 @@ mode1:
          comparison: ">"
          compare_to: 0
    modifier:
-      operation: multiply_base
+      operation: multiply_base_multiplicative
       value: -0.4
       name: sil_yoni:physique/painly_weak_arms
 
@@ -31,6 +36,11 @@ mode2:
       type: origins:and
       conditions:
       -
+         # 谁能给我解释为什么水还有硬度的
+         type: origins:fluid
+         fluid_condition: { type: origins:empty }
+         inverted: true
+      -
          type: origins:hardness
          comparison: "<"
          compare_to: 2
@@ -39,7 +49,7 @@ mode2:
          comparison: ">="
          compare_to: 1
    modifier:
-      operation: multiply_base
+      operation: multiply_base_multiplicative
       value: -0.6
       name: sil_yoni:physique/painly_weak_arms
 
@@ -53,6 +63,11 @@ mode3:
       type: origins:and
       conditions:
       -
+         # 谁能给我解释为什么水还有硬度的
+         type: origins:fluid
+         fluid_condition: { type: origins:empty }
+         inverted: true
+      -
          type: origins:hardness
          comparison: "<"
          compare_to: 5
@@ -61,7 +76,7 @@ mode3:
          comparison: ">="
          compare_to: 2
    modifier:
-      operation: multiply_base
+      operation: multiply_base_multiplicative
       value: -0.8
       name: sil_yoni:physique/painly_weak_arms
 
@@ -76,11 +91,16 @@ mode4:
       type: origins:and
       conditions:
       -
+         # 谁能给我解释为什么水还有硬度的
+         type: origins:fluid
+         fluid_condition: { type: origins:empty }
+         inverted: true
+      -
          type: origins:hardness
          comparison: ">="
          compare_to: 5
    modifier:
-      operation: multiply_base
+      operation: multiply_base_multiplicative
       value: -1
       name: sil_yoni:physique/painly_weak_arms
 
@@ -93,6 +113,11 @@ mode3_1:
       type: origins:and
       conditions:
       -
+         # 谁能给我解释为什么水还有硬度的
+         type: origins:fluid
+         fluid_condition: { type: origins:empty }
+         inverted: true
+      -
          type: origins:hardness
          comparison: "<"
          compare_to: 5
@@ -101,7 +126,7 @@ mode3_1:
          comparison: ">="
          compare_to: 2
    modifier:
-      operation: multiply_base
+      operation: multiply_base_multiplicative
       value: -0.3
       name: sil_yoni:physique/painly_weak_arms
 
@@ -115,10 +140,15 @@ mode4_1:
       type: origins:and
       conditions:
       -
+         # 谁能给我解释为什么水还有硬度的
+         type: origins:fluid
+         fluid_condition: { type: origins:empty }
+         inverted: true
+      -
          type: origins:hardness
          comparison: ">="
          compare_to: 5
    modifier:
-      operation: multiply_base
+      operation: multiply_base_multiplicative
       value: -0.5
       name: sil_yoni:physique/painly_weak_arms
