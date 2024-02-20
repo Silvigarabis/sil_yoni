@@ -45,10 +45,10 @@ no_strength_1:
    modifier:
       operation: multiply_base_additive
       value: -0.8
-   
+
 no_regen:
   type: origins:disable_regen
-  
+
 damage_immu:
   type: origins:invulnerability
   damage_condition:
