@@ -1,5 +1,0 @@
-resources/data/**/*.json
-resources/assets/**/*.json
-
-node_modules
-

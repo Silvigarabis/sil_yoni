@@ -19,7 +19,7 @@ repositories {
 }
 
 loom {
-    splitEnvironmentSourceSets()
+	splitEnvironmentSourceSets()
 
 	mods {
 		"modid" {
@@ -51,6 +51,23 @@ processResources {
 	filesMatching("fabric.mod.json") {
 		expand "version": project.version
 	}
+}
+
+tasks.register('generateJsonDatapack') {
+	doFirst {
+		println "start generation datapack with yaml written"
+		exec {
+			workingDir "build-scripts"
+			commandLine "bash", "build.sh", "${projectDir}/datapack/", "${tasks.processResources.destinationDir.getAbsolutePath()}"
+		}
+	}
+	doLast {
+		println "datapack generated!"
+	}
+}
+
+tasks.named('processResources') {
+	dependsOn tasks.generateJsonDatapack
 }
 
 tasks.withType(JavaCompile).configureEach {
