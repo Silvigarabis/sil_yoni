@@ -1,0 +1,1 @@
+{"hidden":true,"condition":{"type":"origins:and","conditions":[{"type":"origins:or","conditions":[{"type":"origins:ability","ability":"minecraft:flying"}]},{"type":"origins:riding","inverted":true},{"type":"origins:moving"}]},"type":"origins:exhaust","interval":60,"exhaustion":1}
