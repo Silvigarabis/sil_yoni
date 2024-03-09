@@ -1,1 +1,0 @@
-{"hidden":true,"name":"mining speed in air","type":"origins:modify_break_speed","condition":{"inverted":true,"type":"origins:on_block"},"block_condition":{"type":"origins:hardness","comparison":"!=","compare_to":0},"modifier":{"operation":"multiply_total_multiplicative","value":4}}

@@ -24,7 +24,7 @@ should_rebuild_datapack(){
 }
 
 get_time_info(){
-   find "$1" -type f,d | xargs -0 stat -c "%n %Y"
+   find "$1" -type f,d -print0 | xargs -0 stat -c "%n %Y"
 }
 
 rebuild_java(){
@@ -52,7 +52,7 @@ get_datapack_source_dir(){
 }
 
 cd "$(realpath "$(dirname "$BASH_SOURCE")")"
-set -u
+set -ue
 
 should_rebuild_datapack
 should_rebuild_java
@@ -65,5 +65,5 @@ while sleep 3; do
       rebuild_java
    elif should_rebuild_datapack; then
       rebuild_datapack
-   if
+   fi
 done
