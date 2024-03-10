@@ -1,8 +1,5 @@
 #!/bin/bash
 
-java_source_time_info=$(cat .java_source_time_info || true)
-datapack_source_time_info=$(cat .datapack_source_time_info || true)
-
 should_rebuild_java(){
    local time_info=$(get_time_info $(get_java_source_dir))
    if [[ ${time_info} != ${java_source_time_info} ]]; then
@@ -40,7 +37,9 @@ rebuild_datapack(){
    local jarFile=$(realpath "../build/libs/sil_yoni-1.3.0.jar")
    (
       cd ../build/resources/main
-      zip -r "${jarFile}" *
+      if [[ -n ${jarFile} ]]; then
+         zip -r "${jarFile}" *
+      fi
    )
    bash ./afterbuild.sh "${jarFile}" || true
 }
@@ -54,7 +53,11 @@ get_datapack_source_dir(){
 }
 
 cd "$(realpath "$(dirname "$BASH_SOURCE")")"
+
 set -u
+
+java_source_time_info=$(cat .java_source_time_info || true)
+datapack_source_time_info=$(cat .datapack_source_time_info || true)
 
 while sleep 3; do
    if should_rebuild_java; then
