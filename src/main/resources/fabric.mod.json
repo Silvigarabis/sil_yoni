@@ -18,6 +18,9 @@
          "io.github.silvigarabis.sil_yoni.SilYoniMod"
       ]
    },
+   "mixins": [
+      "sil_yoni.mixins.json"
+   ],
    "depends": {
       "fabricloader": "*",
       "minecraft": "~1.20.1",
