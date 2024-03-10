@@ -1,28 +1,28 @@
 {
-    "schemaVersion": 1,
-    "id": "sil_yoni",
-    "version": "${version}",
-    "name": "SIL YONI",
-    "description": "Who am I?",
-    "authors": [
-        "Silvigarabis"
-    ],
-    "contact": {
-        "homepage": "https://github.com/Silvigarabis"
-    },
-    "license": "All rights reserved",
-    "icon": "assets/sil_yoni/icon.png",
-    "environment": "*",
-    "entrypoints": {
-        "main": [
-            "io.github.silvigarabis.sil_yoni.SilYoniMod"
-        ]
-    },
-    "depends": {
-        "fabricloader": ">=0.14.21",
-        "minecraft": "~1.20.1",
-        "java": ">=17",
-        "origins": ">=1.9.0",
-        "pehkui": ">=3.0"
-    }
+   "schemaVersion": 1,
+   "id": "sil_yoni",
+   "version": "${version}",
+   "name": "SIL YONI",
+   "description": "Who am I?",
+   "authors": [
+      "Silvigarabis"
+   ],
+   "contact": {
+      "homepage": "https://github.com/Silvigarabis/sil_yoni"
+   },
+   "license": "All rights reserved",
+   "icon": "assets/sil_yoni/icon.png",
+   "environment": "*",
+   "entrypoints": {
+      "main": [
+         "io.github.silvigarabis.sil_yoni.SilYoniMod"
+      ]
+   },
+   "depends": {
+      "fabricloader": "*",
+      "minecraft": "~1.20.1",
+      "java": ">=17",
+      "origins": ">=1.9.0",
+      "pehkui": ">=3.0"
+   }
 }
