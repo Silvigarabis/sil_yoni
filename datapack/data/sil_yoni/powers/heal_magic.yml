@@ -1,0 +1,49 @@
+type: origins:active_self
+cooldown: 600
+key:
+   key: key.origins.primary_active
+hud_render:
+   should_render: true
+   sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_02.png
+   bar_index: 9
+condition:
+   type: origins:and
+   conditions:
+      type: origins:food_level
+      comparison: '>='
+      compare_to: 6
+entity_action:
+   type: origins:and
+   actions:
+   -
+      type: origins:play_sound
+      sound: minecraft:block.amethyst_block.fall
+      volume: 1
+      pitch: 1
+   -
+      type: origins:exhaust
+      amount: 30
+   -
+      type: origins:apply_effect
+      effect:
+         effect: minecraft:absorption
+         duration: 600
+         amplifier: 4
+   -
+      type: origins:area_of_effect
+      radius: 4
+      include_target: false
+      bientity_action:
+         type: origins:target_action
+         action:
+            type: origins:and
+            actions:
+            -
+               type: origins:apply_effect
+               effect:
+                  effect: minecraft:regeneration
+                  duration: 140
+                  amplifier: 3
+            -
+               type: origins:execute_command
+               command: particle minecraft:heart ~ ~ ~ 0.2 0.2 0.2 0.1 10 normal

@@ -1,0 +1,55 @@
+type: origins:multiple
+effects:
+   type: apoli:action_over_time
+   interval: 200
+   condition:
+      type: origins:biome
+      condition:
+         type: origins:category
+         category: forest
+   entity_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:if_else
+         condition:
+            type: origins:relative_health
+            comparison: <
+            compare_to: 1
+         if_action:
+            type: origins:apply_effect
+            effect:
+               effect: minecraft:regeneration
+               duration: 210
+               amplifier: 0
+               show_particles: false
+               show_icon: false
+      -
+         type: origins:apply_effect
+         effects:
+         -
+            effect: minecraft:resistance
+            duration: 210
+            amplifier: 0
+            show_particles: false
+            show_icon: false
+         -
+            effect: minecraft:luck
+            duration: 210
+            amplifier: 1
+            show_particles: false
+            show_icon: true
+
+extra_attributes:
+   type: origins:conditioned_attribute
+   tick_rate: 40
+   condition:
+      type: origins:biome
+      condition:
+         type: origins:category
+         category: forest
+   modifier:
+      attribute: generic.max_health
+      operation: addition
+      value: 6
+      name: sil_yoni:blessing/forest_s_giving
