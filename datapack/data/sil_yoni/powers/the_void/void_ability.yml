@@ -1,0 +1,194 @@
+type: origins:multiple
+
+# can use standalone (not recommended)
+enabled:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 0
+   min_action:
+      type: origins:revoke_power
+      power: "*:the_void/void_ability_data"
+      source: "*:the_void/void_ability"
+   max_action:
+      type: origins:grant_power
+      power: "*:the_void/void_ability_data"
+      source: "*:the_void/void_ability"
+
+can_inventory:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 1
+   min_action:
+      type: origins:nothing
+   max_action:
+      type: origins:nothing
+
+can_regen:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 0
+   min_action:
+      type: origins:nothing
+   max_action:
+      type: origins:nothing
+
+can_leave:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 1
+   min_action:
+      type: origins:nothing
+   max_action:
+      type: origins:nothing
+
+can_enter:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 1
+   min_action:
+      type: origins:nothing
+   max_action:
+      type: origins:nothing
+
+# 1 enter or -1 leave
+call_switch:
+   type: origins:resource
+   min: -1
+   max: 1
+   start_value: 0
+   min_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: "*:*_call_switch"
+         operation: set
+         change: 0
+      -
+         type: origins:if_else
+         condition:
+            type: origins:and
+            conditions:
+            -
+               type: origins:resource
+               resource: "*:*_enabled"
+               comparison: "=="
+               compare_to: 1
+            -
+               type: origins:resource
+               resource: "*:*_can_leave"
+               comparison: "=="
+               compare_to: 1
+         if_action:
+            type: origins:change_resource
+            resource: "*:*_enabled"
+            operation: set
+            change: 0
+   max_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:change_resource
+         resource: "*:*_call_switch"
+         operation: set
+         change: 0
+      -
+         type: origins:if_else
+         condition:
+            type: origins:and
+            conditions:
+            -
+               type: origins:resource
+               resource: "*:*_enabled"
+               comparison: "=="
+               compare_to: 0
+            -
+               type: origins:resource
+               resource: "*:*_can_enter"
+               comparison: "=="
+               compare_to: 1
+         if_action:
+            type: origins:change_resource
+            resource: "*:*_enabled"
+            operation: set
+            change: 1
+
+trigger_auto_enter:
+   type: origins:action_over_time
+   interval: 10
+   entity_condition:
+      type: origins:and
+      conditions:
+      -
+         type: origins:resource
+         resource: "*:*_enabled"
+         comparison: "=="
+         compare_to: 0
+      -
+         type: origins:resource
+         resource: "*:*_can_enter"
+         comparison: "=="
+         compare_to: 1
+   entity_action:
+      type: origins:nothing
+
+trigger_auto_leave:
+   type: origins:action_over_time
+   interval: 10
+   entity_condition:
+      type: origins:and
+      conditions:
+      -
+         type: origins:resource
+         resource: "*:*_enabled"
+         comparison: "=="
+         compare_to: 1
+      -
+         type: origins:resource
+         resource: "*:*_can_leave"
+         comparison: "=="
+         compare_to: 1
+   entity_action:
+      type: origins:nothing
+
+trigger_auto_switch_on_void_hurt:
+   type: origins:modify_damage_taken
+   damage_condition:
+      type: origins:out_of_world
+   entity_condition:
+      type: origins:and
+      conditions:
+      -
+         type: origins:resource
+         resource: "*:*_enabled"
+         comparison: "=="
+         compare_to: 0
+      -
+         type: origins:resource
+         resource: "*:*_can_enter"
+         comparison: "=="
+         compare_to: 1
+   self_action:
+      type: origins:change_resource
+      resource: "*:*_enabled"
+      operation: set
+      change: 1
+   modifier:
+      operation: set_total
+      value: 0
+
+trigger_power_change:
+   type: origins:action_on_callback
+   execute_chosen_when_orb: true
+   entity_action_lost:
+      type: origins:revoke_power
+      power: "*:the_void/void_ability_data"
+      source: "*:the_void/void_ability"
+   entity_action_gained:
+      type: origins:nothing
+        

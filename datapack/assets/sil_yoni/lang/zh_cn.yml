@@ -66,10 +66,10 @@ power.sil_yoni.guxi/boost_to_sky_power_desc.description: 你可以消耗能量�
 power.sil_yoni.guxi/fire_light_power_desc.name: 特殊能力：能量发送
 power.sil_yoni.guxi/fire_light_power_desc.description: 你可以将组成你的能量发送到外界。手持剑或镐使用。
 
-power.sil_yoni.fairy2/fairy_wings.name: 膜翅
-power.sil_yoni.fairy2/fairy_wings.description: 你的身体上生长着一对膜翅，你可以用它飞行一段时间，但是长时间的飞行会使你感到极度疲惫。
-power.sil_yoni.fairy2/void_inventory.name: 虚空存储
-power.sil_yoni.fairy2/void_inventory.description: 你可以利用虚空空间存储你的物品。
+power.sil_yoni.spirit_of_void/fairy_wings.name: 膜翅
+power.sil_yoni.spirit_of_void/fairy_wings.description: 你的身体上生长着一对膜翅，你可以用它飞行一段时间，但是长时间的飞行会使你感到极度疲惫。
+power.sil_yoni.spirit_of_void/void_inventory.name: 虚空存储
+power.sil_yoni.spirit_of_void/void_inventory.description: 你可以利用虚空空间存储你的物品。
 
 sil_yoni.subtitles.entity.fairy.fly: 妖精飞起来
 sil_yoni.subtitles.entity.fairy2.fly: 膜翅震动

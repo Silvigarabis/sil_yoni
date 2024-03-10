@@ -1,0 +1,27 @@
+hidden: true
+type: origins:multiple
+trigger_on_power_change:
+   type: origins:action_on_callback
+   execute_chosen_when_orb: true
+   entity_action_gained:
+      type: origins:execute_command
+      command: scale multiply pehkui:visibility 2.6875
+   entity_action_respawned:
+      type: origins:execute_command
+      command: scale multiply pehkui:visibility 2.6875
+   entity_action_lost:
+      type: origins:execute_command
+      command: scale divide pehkui:visibility 2.6875
+
+effect_glowing:
+   type: origins:self_glow
+   use_teams: false
+effect_night_vision:
+   type: origins:night_vision
+   condition:
+      type: origins:status_effect
+      effect: minecraft:blindness
+      inverted: true
+no_darkness:
+   type: origins:effect_immunity
+   effect: minecraft:darkness

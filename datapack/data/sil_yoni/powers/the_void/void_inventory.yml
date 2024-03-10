@@ -1,0 +1,25 @@
+type: origins:multiple
+# 这逻辑太乱了，可能的话我会重写一次
+badges:
+-  origins:active
+
+enabled:
+   type: origins:resource
+   min: 0
+   max: 1
+   start_value: 1
+
+container_data:
+   type: origins:inventory
+   title: container.sil_yoni:void_inventory
+   recoverable: false
+   drop_on_death: false
+   container_type: double_chest
+   key:
+      key: key.origins.secondary_active
+      continuous: true
+   condition:
+      type: origins:resource
+      resource: "*:*_enabled"
+      comparison: '=='
+      compare_to: 1

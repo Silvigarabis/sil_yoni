@@ -1,0 +1,94 @@
+type: origins:multiple
+
+ctrl_down:
+   type: origins:active_self
+   key:
+      key: key.back
+      continuous: true
+   entity_action:
+      type: origins:riding_action
+      action:
+         type: origins:add_velocity
+         space: world
+         y: -0.1
+         client: true
+         server: true
+
+ctrl_forward:
+   type: origins:active_self
+   key:
+      key: key.forward
+      continuous: true
+   entity_action:
+      type: origins:riding_action
+      action:
+         type: origins:add_velocity
+         space: local
+         z: 0.2
+         client: true
+         server: true
+
+ctrl_left:
+   type: origins:active_self
+   key:
+      key: key.left
+      continuous: true
+   entity_action:
+      type: origins:riding_action
+      action:
+         type: origins:add_velocity
+         space: local
+         z: 0.15
+         client: true
+         server: true
+
+ctrl_right:
+   type: origins:active_self
+   key:
+      key: key.right
+      continuous: true
+   entity_action:
+      type: origins:riding_action
+      action:
+         type: origins:add_velocity
+         space: local
+         x: -0.15
+         client: true
+         server: true
+
+ctrl_up:
+   type: origins:active_self
+   key:
+      key: key.jump
+      continuous: true
+   entity_action:
+      type: origins:riding_action
+      action:
+         type: origins:add_velocity
+         space: world
+         'y': 0.1
+         client: true
+         server: true
+
+ride_target_look_forward:
+   type: origins:action_over_time
+   interval: 1
+   entity_action:
+      type: origins:and
+      actions:
+      -
+         type: origins:riding_action
+         action:
+            type: origins:execute_command
+            command: function sil_yoni:origin_power/bee_rider/ride_target/prepare_for_rot_change
+      -
+         type: origins:execute_command
+         command: function sil_yoni:origin_power/bee_rider/rider/change_rot_for_prepared
+      -
+         type: origins:riding_action
+         action:
+            type: origins:execute_command
+               command: >-
+                  function
+                  sil_yoni:origin_power/bee_rider/ride_target/rot_change_mark_cleanup
+                  
