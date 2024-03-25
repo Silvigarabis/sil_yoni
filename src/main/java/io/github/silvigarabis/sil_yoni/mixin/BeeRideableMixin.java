@@ -9,7 +9,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.BeeEntity;
@@ -20,30 +23,50 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ActionResult;
 
+/*
+为蜜蜂添加一个骑乘动作（但是通过修改其他东西）
+ */
 @Mixin(BeeEntity.class)
 public abstract class BeeRideableMixin extends AnimalEntity {
    @Unique
    private static final Logger LOGGER = LoggerFactory.getLogger("SIL YONI");
 
-   /*//@Inject(at = @At("HEAD"), method = "Lnet/minecraft/entity/passive/AnimalEntity;interactMob")
-   @Inject(at = @At("HEAD"), method = "interactMob")
-   private void onInteractMobBee(PlayerEntity player, Hand hand, CallbackInfo info){
-      LOGGER.info("some one just interacting a bee");
-      player.sendMessage(Text.literal("some one just interacting a bee"), false);
-   }*/
-
-   /*
-    hope there's no conflict with other mods
-    */
    @Override
-   public ActionResult interactMob(PlayerEntity player, Hand hand) {
-      LOGGER.info("some one interact on a bee");
-      player.sendMessage(Text.literal("you just interact on a bee!"), false);
-      return super.interactMob(player, hand);
+   public ActionResult interactMob(PlayerEntity player, Hand hand){
+      var itemStack = player.getStackInHand(hand);
+      if (!itemStack.isEmpty()){
+         return super.interactMob(player, hand);
+      }
+      if (this.getFirstPassenger() != null){
+         return super.interactMob(player, hand);
+      }
+
+      BeeEntity entity = (BeeEntity)(Object)this;
+
+      LOGGER.info("some one just interacting a bee");
+      player.sendMessage(Text.literal("riding bee!"), false);
+
+      var isServerSide = !entity.getWorld().isClient();
+      if (isServerSide){
+         player.setYaw(entity.getYaw());
+         player.setPitch(entity.getPitch());
+         player.startRiding(entity);
+      }
+
+      return ActionResult.success(isServerSide);
    }
 
-   public BeeRideableMixin(EntityType<? extends AnimalEntity> et, World w){
-      super(et, w);
-      throw new RuntimeException("mixin class cannot be construct");
+   @Override
+   public LivingEntity getControllingPassenger(){
+      var passenger = this.getFirstPassenger();
+      if (passenger instanceof LivingEntity){
+         return (LivingEntity)passenger;
+      }
+      return super.getControllingPassenger();
+   }
+
+   public BeeRideableMixin(EntityType<? extends AnimalEntity> e, World w){
+      super(e, w);
+      throw new RuntimeException("no construct for mixin class");
    }
 }

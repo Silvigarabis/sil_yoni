@@ -3,7 +3,8 @@
    "package": "io.github.silvigarabis.sil_yoni.mixin",
    "compatibilityLevel": "JAVA_17",
    "mixins": [
-      "BeeRideableMixin"
+      "BeeRideableMixin",
+      "TestMixin"
    ],
    "injectors": {
       "defaultRequire": 1
