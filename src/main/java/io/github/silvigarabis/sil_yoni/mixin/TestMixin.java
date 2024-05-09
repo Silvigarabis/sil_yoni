@@ -28,13 +28,33 @@ import net.minecraft.util.math.Vec3d;
 
 @Mixin(Entity.class)
 public abstract class TestMixin {
+   @Unique
+   private static final Logger LOGGER = LoggerFactory.getLogger("SIL YONI");
    @Inject(
       method = "setVelocity",
       at = @At("HEAD")
    )
    public void printStackTraceWhenChangeVelocity(CallbackInfo info){
-      if (((Entity)(Object)this).getFirstPassenger() != null){
-        new Exception("changed velocity").printStackTrace();
+      if (((Entity)(Object)this).getFirstPassenger() != null && !((Entity)(Object)this).getWorld().isClient()){
+         // new Exception("changed velocity").printStackTrace();
+      }
+   }
+   @Inject(
+      method = "updateVelocity",
+      at = @At("HEAD")
+   )
+   public void printSomethingWhenUpdateVelocity(float speed, Vec3d movementInput, CallbackInfo info){
+      if (((Entity)(Object)this).hasPassengers()){
+          LOGGER.info("updateVelocity on {} speed {} input {}", ((Entity)(Object)this).getWorld().isClient() ? "client" : "server", speed, movementInput.toString());
+      }
+   }
+   @Inject(
+      method = "updateVelocity",
+      at = @At("RETURN")
+   )
+   public void printVelocityAfterUpdateVelocity(float speed, Vec3d movementInput, CallbackInfo info){
+      if (((Entity)(Object)this).hasPassengers()){
+          LOGGER.info("updateVelocity on {} as {}", ((Entity)(Object)this).getWorld().isClient() ? "client" : "server", ((Entity)(Object)this).getVelocity().toString());
       }
    }
 }
