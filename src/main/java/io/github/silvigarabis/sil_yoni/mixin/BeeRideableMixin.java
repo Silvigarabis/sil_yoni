@@ -22,10 +22,14 @@ import net.minecraft.world.World;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.math.Vec3d;
+
+import io.github.silvigarabis.sil_yoni.feature.BeeRidingFeature;
 
 /*
-为蜜蜂添加一个骑乘动作（但是通过修改其他东西）
+ * 为蜜蜂添加一个骑乘动作
  */
+ 
 @Mixin(BeeEntity.class)
 public abstract class BeeRideableMixin extends AnimalEntity {
    @Unique
@@ -33,27 +37,17 @@ public abstract class BeeRideableMixin extends AnimalEntity {
 
    @Override
    public ActionResult interactMob(PlayerEntity player, Hand hand){
-      var itemStack = player.getStackInHand(hand);
-      if (!itemStack.isEmpty()){
-         return super.interactMob(player, hand);
+      if (!this.isBreedingItem(player.getStackInHand(hand)) && !this.hasPassengers() && !player.shouldCancelInteraction()) {
+         if (!this.getWorld().isClient && BeeRidingFeature.canRideBee(this, player)){
+            player.setYaw(this.getYaw());
+            player.setPitch(this.getPitch());
+            player.startRiding(this);
+
+            player.sendMessage(Text.literal("riding bee!"), false);
+         }
+         return ActionResult.success(this.getWorld().isClient);
       }
-      if (this.getFirstPassenger() != null){
-         return super.interactMob(player, hand);
-      }
-
-      BeeEntity entity = (BeeEntity)(Object)this;
-
-      LOGGER.info("some one just interacting a bee");
-      player.sendMessage(Text.literal("riding bee!"), false);
-
-      var isServerSide = !entity.getWorld().isClient();
-      if (isServerSide){
-         player.setYaw(entity.getYaw());
-         player.setPitch(entity.getPitch());
-         player.startRiding(entity);
-      }
-
-      return ActionResult.success(isServerSide);
+      return super.interactMob(player, hand);
    }
 
    @Override
@@ -63,6 +57,48 @@ public abstract class BeeRideableMixin extends AnimalEntity {
          return (LivingEntity)passenger;
       }
       return super.getControllingPassenger();
+   }
+
+   @Override
+   protected void tickControlled(PlayerEntity controllingPlayer, Vec3d movementInput) {
+      this.getWorld().getProfiler().push("BeeEntity.tickControlled()");
+      this.setRotation(controllingPlayer.getYaw(), controllingPlayer.getPitch() * 0.5f);
+      this.bodyYaw = this.headYaw = this.getYaw();
+      this.prevYaw = this.headYaw;
+      LOGGER.info("manually travel for BeeEntity.tickControlled() and mob {}, actual movement speed: {}, fake speed: 0.02", this.toString(), this.getMovementSpeed());
+      this.updateVelocity(0.02f, this.getControlledMovementInput(controllingPlayer, movementInput));
+      this.getWorld().getProfiler().pop();
+   }
+
+   @Override
+   protected Vec3d getControlledMovementInput(PlayerEntity controllingPlayer, Vec3d movementInput) {
+      LOGGER.info("controllingPlayer.forwardSpeed: {}", controllingPlayer.forwardSpeed);
+
+      double forwardSpeed = Math.signum(controllingPlayer.forwardSpeed);
+      double sidewaysSpeed = Math.signum(controllingPlayer.sidewaysSpeed);
+      double upwardSpeed = 0.0;
+      if (sidewaysSpeed != 0 || forwardSpeed != 0){
+         upwardSpeed = -0.75 * Math.sin(Math.PI / 180 * controllingPlayer.getPitch());
+      }
+
+      Vec3d input = new Vec3d(sidewaysSpeed, upwardSpeed, forwardSpeed);
+      return input.normalize();
+   }
+
+   @Inject(
+      method = "tickMovement",
+      at = @At(
+         value = "INVOKE",
+         target = "Lnet/minecraft/entity/passive/AnimalEntity;tickMovement()V",
+         shift = At.Shift.AFTER
+      ),
+      cancellable = true
+   )
+   public void injectTickMovement(CallbackInfo info){
+      // if there is an passenger, do not tick other things
+      if (this.hasPassengers()){
+         info.cancel();
+      }
    }
 
    public BeeRideableMixin(EntityType<? extends AnimalEntity> e, World w){
