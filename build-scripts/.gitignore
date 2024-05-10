@@ -1,0 +1,4 @@
+node_modules/
+afterbuild.sh
+.java_source_time_info
+.datapack_source_time_info
