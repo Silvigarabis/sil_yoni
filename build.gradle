@@ -1,3 +1,13 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.yaml:snakeyaml:1.27'
+		//classpath 'org.codehaus.groovy:groovy-json:3.0.17'
+	}
+}
+
 plugins {
 	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
@@ -52,10 +62,16 @@ dependencies {
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
-    modImplementation "com.github.apace100:apoli:${project.apoli_version}"
+	modImplementation "com.github.apace100:apoli:${project.apoli_version}"
+
+	implementation 'org.yaml:snakeyaml:1.27'
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 }
+
+import groovy.json.JsonOutput
+import java.nio.file.Paths
+import org.yaml.snakeyaml.Yaml
 
 processResources {
 	inputs.property "version", project.version
@@ -68,23 +84,22 @@ processResources {
 		])
 		
 	}
-}
-
-tasks.register('generateJsonDatapack') {
-	doFirst {
-		println "start generation datapack with yaml written"
-		exec {
-			workingDir "build-scripts"
-			commandLine "bash", "build-datapack.sh", "${projectDir}/datapack/", "${tasks.processResources.destinationDir.getAbsolutePath()}"
-		}
+	
+	filesMatching("**/*.yml") {
+		def yamlContent = new Yaml().load(it.open())
+		def jsonContent = JsonOutput.toJson(yamlContent)
+		
+		def destJsonFilePath = it.getPath().replaceAll("\\.yml\$", ".json")
+		def destJsonFile = new File(destinationDir, destJsonFilePath)
+		
+		destJsonFile.getParentFile().mkdirs()
+		destJsonFile.text = jsonContent
+		
+		println "convert " + it.getPath() + " to " + destJsonFilePath
+		
+		exclude()
 	}
-	doLast {
-		println "datapack generated!"
-	}
-}
 
-tasks.named('processResources') {
-	dependsOn tasks.generateJsonDatapack
 }
 
 tasks.withType(JavaCompile).configureEach {

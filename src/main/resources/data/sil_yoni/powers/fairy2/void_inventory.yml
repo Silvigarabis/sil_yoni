@@ -1,0 +1,43 @@
+type: origins:multiple
+# 这逻辑太乱了，可能的话我会重写一次
+badges:
+-  sil_yoni:long_press_active
+-  sil_yoni:only_usable_in_void_space
+container_data:
+   type: origins:inventory
+   title: container.sil_yoni:void_inventory
+   recoverable: false
+   drop_on_death: false
+   container_type: double_chest
+   key:
+      key: key.origins.secondary_active
+      continuous: true
+   condition:
+      type: origins:and
+      conditions:
+      -  type: origins:resource
+         resource: sil_yoni:void_space/in_void_space
+         comparison: '=='
+         compare_to: 1
+      -  type: origins:resource
+         resource: "sil_yoni:detection/active_actions/secondary_active_tc"
+         comparison: '=='
+         compare_to: 2
+
+callbacks:
+    type: origins:action_on_callback
+    execute_chosen_when_orb: true
+    entity_action_gained:
+        type: origins:and
+        actions:
+        -
+            type: origins:grant_power
+            power: sil_yoni:detection/active_actions/secondary_active
+            source: sil_yoni:void_space
+    entity_action_lost:
+        type: origins:and
+        actions:
+        -
+            type: origins:revoke_power
+            power: sil_yoni:detection/active_actions/secondary_active
+            source: sil_yoni:void_space

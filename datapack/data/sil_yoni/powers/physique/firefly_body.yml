@@ -1,6 +1,0 @@
-type: origins:self_glow
-entity_condition:
-   type: origins:on_block
-   inverted: true
-bientity_condition:
-   type: origins:can_see

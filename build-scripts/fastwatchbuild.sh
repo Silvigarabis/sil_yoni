@@ -1,5 +1,7 @@
 #!/bin/bash
 
+achieve_name=sil_yoni-1.3.0.jar
+
 should_rebuild_java(){
    local time_info=$(get_time_info $(get_java_source_dir))
    if [[ ${time_info} != ${java_source_time_info} ]]; then
@@ -27,14 +29,14 @@ get_time_info(){
 }
 
 rebuild_java(){
-   ( cd .. && sh gradlew build )
-   local jarFile=$(realpath "../build/libs/sil_yoni-1.3.0.jar")
+   ( cd .. && gradle build )
+   local jarFile=$(realpath "../build/libs/${achieve_name}")
    bash ./afterbuild.sh "${jarFile}" || true
 }
 
 rebuild_datapack(){
-   node scripts/cover_yaml_to_json.js "$(get_datapack_source_dir)" ../build/resources/main
-   local jarFile=$(realpath "../build/libs/sil_yoni-1.3.0.jar")
+   ( cd .. && gradle :processResources )
+   local jarFile=$(realpath "../build/libs/${achieve_name}")
    (
       cd ../build/resources/main
       if [[ -n ${jarFile} ]]; then
@@ -45,11 +47,11 @@ rebuild_datapack(){
 }
 
 get_java_source_dir(){
-   echo ../src/main/
+   echo ../src/
 }
 
 get_datapack_source_dir(){
-   echo ../datapack/
+   echo ../src/resources/
 }
 
 cd "$(realpath "$(dirname "$BASH_SOURCE")")"
