@@ -7,6 +7,7 @@ should_rebuild_java(){
    if [[ ${time_info} != ${java_source_time_info} ]]; then
       java_source_time_info="${time_info}"
       echo "${time_info}" > .java_source_time_info
+      should_rebuild_datapack
       return 0
    else
       return 1
@@ -25,7 +26,7 @@ should_rebuild_datapack(){
 }
 
 get_time_info(){
-   find "$1" -type f,d -print0 | xargs -0 stat -c "%n %Y"
+   find "$@" -type f,d -print0 | xargs -0 stat -c "%n %Y"
 }
 
 rebuild_java(){
@@ -35,13 +36,18 @@ rebuild_java(){
 }
 
 rebuild_datapack(){
-   ( cd .. && gradle :processResources )
+   ( cd .. && gradle :processResources :processClientResources )
    local jarFile=$(realpath "../build/libs/${achieve_name}")
    (
-      cd ../build/resources/main
-      if [[ -n ${jarFile} ]]; then
-         zip -r "${jarFile}" *
-      fi
+      cd ../build/resources/
+      for d in *; do
+         (
+            cd "$d"
+            if [[ -n ${jarFile} ]]; then
+               zip -r "${jarFile}" *
+            fi
+         )
+      done
    )
    bash ./afterbuild.sh "${jarFile}" || true
 }
@@ -51,7 +57,7 @@ get_java_source_dir(){
 }
 
 get_datapack_source_dir(){
-   echo ../src/resources/
+   echo ../src/*/resources/
 }
 
 cd "$(realpath "$(dirname "$BASH_SOURCE")")"
@@ -64,7 +70,8 @@ datapack_source_time_info=$(cat .datapack_source_time_info || true)
 while sleep 3; do
    if should_rebuild_java; then
       rebuild_java
-   elif should_rebuild_datapack; then
+   fi
+   if should_rebuild_datapack; then
       rebuild_datapack
    fi
 done
