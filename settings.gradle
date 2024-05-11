@@ -9,4 +9,11 @@ pluginManagement {
 	}
 }
 
+buildCache {
+	local {
+		directory = new File(rootDir, 'build-cache')
+		removeUnusedEntriesAfterDays = 30
+	}
+}
+
 rootProject.name = "sil_yoni"
