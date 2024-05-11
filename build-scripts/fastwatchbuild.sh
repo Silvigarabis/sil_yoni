@@ -26,7 +26,7 @@ should_rebuild_datapack(){
 }
 
 get_time_info(){
-   find "$@" -type f,d -print0 | xargs -0 stat -c "%n %Y"
+   find "$@" -print0 | xargs -0 stat -c "%n %Y"
 }
 
 rebuild_java(){
@@ -44,7 +44,7 @@ rebuild_datapack(){
          (
             cd "$d"
             if [[ -n ${jarFile} ]]; then
-               zip -r "${jarFile}" *
+               zip -r "${jarFile}" data assets
             fi
          )
       done
@@ -53,11 +53,11 @@ rebuild_datapack(){
 }
 
 get_java_source_dir(){
-   echo ../src/
+   echo ../src/ -type f -a \( -name \*.java -o -name \*.json \)
 }
 
 get_datapack_source_dir(){
-   echo ../src/*/resources/
+   echo ../src/*/resources/ -type f
 }
 
 cd "$(realpath "$(dirname "$BASH_SOURCE")")"
