@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,26 +28,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Vec3d;
 
-@Mixin(PlayerEntity.class)
-public abstract class TestMixin {
-   @Unique
-   private static final Logger LOGGER = LoggerFactory.getLogger("SIL YONI");
-   @Unique
-   private PlayerEntity self;
-
-   @Inject(
-      method = "<init>",
-      at = @At("RETURN")
-   )
-   public void setSelf(CallbackInfo info){
-      self = (PlayerEntity)(Object)this;
-   }
-
-   @Inject(
-      method = "tick",
-      at = @At("HEAD")
-   )
-   public void printSome(CallbackInfo info){
-      LOGGER.info("some data on {}: forwardSpeed: {}, sidewaySpeed: {}, upwardSpeed: {}", self.getWorld().isClient() ? "client" : "server", self.forwardSpeed, self.sidewaysSpeed, self.upwardSpeed);
-   }
+@Mixin(LivingEntity.class)
+public interface LivingEntityAccessor {
+   @Accessor("jumping")
+   boolean isJumping();
 }

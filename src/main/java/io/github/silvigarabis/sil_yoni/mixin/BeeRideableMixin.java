@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -74,11 +75,25 @@ public abstract class BeeRideableMixin extends AnimalEntity {
    protected Vec3d getControlledMovementInput(PlayerEntity controllingPlayer, Vec3d movementInput) {
       LOGGER.info("controllingPlayer.forwardSpeed: {}", controllingPlayer.forwardSpeed);
 
+      double upwardSpeed = 0.0;
       double forwardSpeed = Math.signum(controllingPlayer.forwardSpeed);
       double sidewaysSpeed = Math.signum(controllingPlayer.sidewaysSpeed);
-      double upwardSpeed = 0.0;
-      if (sidewaysSpeed != 0 || forwardSpeed != 0){
-         upwardSpeed = -0.75 * Math.sin(Math.PI / 180 * controllingPlayer.getPitch());
+      boolean playerIsJumping = ((LivingEntityAccessor)(Object)controllingPlayer).isJumping();
+
+      if (forwardSpeed == -1.0){
+         //按住back -> 下降
+         //按住back + jump -> 后退
+         if (!playerIsJumping){
+            upwardSpeed = -1.0;
+            forwardSpeed = 0.0;
+         }
+      } else if (playerIsJumping){
+         //按住jump -> 上升
+         upwardSpeed = 1.0;
+      }
+
+      if (forwardSpeed != 0){
+         upwardSpeed = forwardSpeed * -0.75 * Math.sin(Math.PI / 180 * controllingPlayer.getPitch());
       }
 
       Vec3d input = new Vec3d(sidewaysSpeed, upwardSpeed, forwardSpeed);
