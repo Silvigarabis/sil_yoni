@@ -12,6 +12,7 @@ import io.github.silvigarabis.sil_yoni.power.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.registry.Registry;
 
+@SuppressWarnings("unchecked")
 public class SilYoniPowers {
    private static void register(PowerFactory<?> powerFactory) {
       Registry.register(ApoliRegistries.POWER_FACTORY, powerFactory.getSerializerId(), powerFactory);
@@ -20,6 +21,7 @@ public class SilYoniPowers {
       register(factorySupplier.createFactory());
    }
    public static void register(){
+      register(FlightAbilityPower::createFactory);
       register(BeeRiderPower::createFactory);
    }
 }
