@@ -1,0 +1,63 @@
+type: apoli:multiple
+with_no_strength_effect:
+   type: apoli:modify_break_speed
+   condition:
+      inverted: true
+      type: apoli:status_effect
+      effect: minecraft:strength
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:hardness
+         comparison: ">"
+         compare_to: 0
+      -
+         type: apoli:adjacent
+         adjacent_condition:
+            type: apoli:and
+            conditions:
+            -
+               type: apoli:fluid
+               fluid_condition: { type: apoli:empty }
+            -
+               type: apoli:hardness
+               comparison: ">="
+               compare_to: 1.5
+         comparison: '>='
+         compare_to: 4
+   modifier:
+     operation: multiply_base_multiplicative
+     value: -1
+     name: sil_yoni:physique/powerless_arms
+
+with_strength_effect:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:hardness
+         comparison: ">"
+         compare_to: 0
+      -
+         type: apoli:adjacent
+         adjacent_condition:
+            type: apoli:and
+            conditions:
+            -
+               type: apoli:fluid
+               fluid_condition: { type: apoli:empty }
+            -
+               type: apoli:hardness
+               comparison: ">="
+               compare_to: 1.5
+         comparison: '>='
+         compare_to: 4
+   modifier:
+     operation: multiply_base_multiplicative
+     value: -0.5
+     name: sil_yoni:physique/powerless_arms

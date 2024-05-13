@@ -1,37 +1,37 @@
-type: origins:multiple
+type: apoli:multiple
 hidden: true
 callbacks:
-  type: origins:action_on_callback
+  type: apoli:action_on_callback
   execute_chosen_when_orb: true
   entity_action_gained:
-    type: origins:and
+    type: apoli:and
     actions:
-      - type: origins:grant_power
+      - type: apoli:grant_power
         power: sil_yoni:condition/condition_wear_light_armor
         source: sil_yoni:misc/hardest_armor
-      - type: origins:grant_power
+      - type: apoli:grant_power
         power: sil_yoni:condition/condition_wear_heavy_armor
         source: sil_yoni:misc/hardest_armor
   entity_action_lost:
-    type: origins:and
+    type: apoli:and
     actions:
-      - type: origins:revoke_power
+      - type: apoli:revoke_power
         power: sil_yoni:condition/condition_wear_light_armor
         source: sil_yoni:misc/hardest_armor
-      - type: origins:revoke_power
+      - type: apoli:revoke_power
         power: sil_yoni:condition/condition_wear_heavy_armor
         source: sil_yoni:misc/hardest_armor
 wear_normal_armor:
-  type: origins:conditioned_attribute
+  type: apoli:conditioned_attribute
   tick_rate: 30
   condition:
-    type: origins:and
+    type: apoli:and
     conditions:
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_light_armor_result
         comparison: '=='
         compare_to: 0
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_heavy_armor_result
         comparison: '=='
         compare_to: 0
@@ -42,16 +42,16 @@ wear_normal_armor:
       name: sil_yoni:misc/hardest_armor
   update_health: false
 wear_only_light_armor:
-  type: origins:conditioned_attribute
+  type: apoli:conditioned_attribute
   tick_rate: 30
   condition:
-    type: origins:and
+    type: apoli:and
     conditions:
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_light_armor_result
         comparison: '=='
         compare_to: 1
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_heavy_armor_result
         comparison: '=='
         compare_to: 0
@@ -62,16 +62,16 @@ wear_only_light_armor:
       name: sil_yoni:misc/hardest_armor
   update_health: false
 wear_light_and_heavy_armor:
-  type: origins:conditioned_attribute
+  type: apoli:conditioned_attribute
   tick_rate: 30
   condition:
-    type: origins:and
+    type: apoli:and
     conditions:
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_light_armor_result
         comparison: '=='
         compare_to: 1
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_heavy_armor_result
         comparison: '=='
         compare_to: 1
@@ -82,16 +82,16 @@ wear_light_and_heavy_armor:
       name: sil_yoni:misc/hardest_armor
   update_health: false
 wear_only_heavy_armor:
-  type: origins:conditioned_attribute
+  type: apoli:conditioned_attribute
   tick_rate: 30
   condition:
-    type: origins:and
+    type: apoli:and
     conditions:
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_light_armor_result
         comparison: '=='
         compare_to: 0
-      - type: origins:resource
+      - type: apoli:resource
         resource: sil_yoni:condition/condition_wear_heavy_armor_result
         comparison: '=='
         compare_to: 1

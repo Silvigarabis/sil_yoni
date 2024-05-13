@@ -1,0 +1,90 @@
+type: apoli:multiple
+loop_energy:
+   type: apoli:action_over_time
+   internal: 30
+   entity_action:
+      # 检查是否有能量足够
+      type: apoli:if_else
+      condition:
+         type: apoli:food_level
+         comparison: "<="
+         compare_to: 4
+      #如果能量不够
+      if_action:
+         #检查当前状态
+         type: apoli:if_else
+         condition:
+            type: apoli:power
+            inverted: true
+            power: sil_yoni:origin_spec/guxi/no_energy
+            source: sil_yoni:origin_spec/guxi/triggers
+         #如果状态为有能量
+         if_action:
+            #切换到没能量
+            type: apoli:and
+            actions:
+            -
+               type: apoli:revoke_power
+               power: sil_yoni:origin_spec/guxi/elytra_deform
+               source: sil_yoni:origin_spec/guxi/triggers
+            -
+               type: apoli:revoke_power
+               power: sil_yoni:origin_spec/guxi/fire_light
+               source: sil_yoni:origin_spec/guxi/triggers
+            -
+               type: apoli:grant_power
+               power: sil_yoni:origin_spec/guxi/no_energy
+               source: sil_yoni:origin_spec/guxi/triggers
+      # 如果能量足够
+      else_action:
+         #检查当前状态
+         type: apoli:if_else
+         condition:
+            type: apoli:power
+            power: sil_yoni:origin_spec/guxi/no_energy
+            source: sil_yoni:origin_spec/guxi/triggers
+         #如果状态为没能量
+         if_action:
+            #切换到有能量
+            type: apoli:and
+            actions:
+            -
+               type: apoli:grant_power
+               power: sil_yoni:origin_spec/guxi/elytra_deform
+               source: sil_yoni:origin_spec/guxi/triggers
+            -
+               type: apoli:grant_power
+               power: sil_yoni:origin_spec/guxi/fire_light
+               source: sil_yoni:origin_spec/guxi/triggers
+            -
+               type: apoli:revoke_power
+               power: sil_yoni:origin_spec/guxi/no_energy
+               source: sil_yoni:origin_spec/guxi/triggers
+
+#添加时添加
+callbacks:
+   type: apoli:action_on_callback
+   execute_chosen_when_orb: true
+   entity_action_gained:
+      type: apoli:grant_power
+      power: sil_yoni:origin_spec/guxi/no_energy
+      source: sil_yoni:origin_spec/guxi/triggers
+   entity_action_respawned:
+      type: apoli:grant_power
+      power: sil_yoni:origin_spec/guxi/no_energy
+      source: sil_yoni:origin_spec/guxi/triggers
+   entity_action_lost:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:revoke_power
+         power: sil_yoni:origin_spec/guxi/fire_light
+         source: sil_yoni:origin_spec/guxi/triggers
+      -
+         type: apoli:revoke_power
+         power: sil_yoni:origin_spec/guxi/elytra_deform
+         source: sil_yoni:origin_spec/guxi/triggers
+      -
+         type: apoli:revoke_power
+         power: sil_yoni:origin_spec/guxi/no_energy
+         source: sil_yoni:origin_spec/guxi/triggers

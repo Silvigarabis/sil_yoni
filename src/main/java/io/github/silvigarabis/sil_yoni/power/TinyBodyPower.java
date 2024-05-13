@@ -41,25 +41,19 @@ public class TinyBodyPower extends Power {
 
    @Override
    public void onGained(){
-      ScaleTypes.WIDTH.getScaleData(this.entity)
-         .getBaseValueModifiers().add(TinyBodyModifier.INSTANCE);
-      ScaleTypes.HEIGHT.getScaleData(this.entity)
-         .getBaseValueModifiers().add(TinyBodyModifier.INSTANCE);
-      ScaleTypes.BLOCK_REACH.getScaleData(this.entity)
-         .getBaseValueModifiers().add(TinyBodyModifier.INSTANCE);
-      ScaleTypes.ENTITY_REACH.getScaleData(this.entity)
-         .getBaseValueModifiers().add(TinyBodyModifier.INSTANCE);
+      for (var type : TinyBodyModifier.AffectedValues){
+         type.getScaleData(this.entity)
+            .getBaseValueModifiers()
+            .add(TinyBodyModifier.INSTANCE);
+      }
    }
 
    @Override
    public void onLost(){
-      ScaleTypes.WIDTH.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(TinyBodyModifier.INSTANCE);
-      ScaleTypes.HEIGHT.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(TinyBodyModifier.INSTANCE);
-      ScaleTypes.ENTITY_REACH.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(TinyBodyModifier.INSTANCE);
-      ScaleTypes.BLOCK_REACH.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(TinyBodyModifier.INSTANCE);
+      for (var type : TinyBodyModifier.AffectedValues){
+         type.getScaleData(this.entity)
+            .getBaseValueModifiers()
+            .remove(TinyBodyModifier.INSTANCE);
+      }
    }
 }

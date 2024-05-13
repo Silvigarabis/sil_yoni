@@ -1,6 +1,6 @@
-type: origins:self_glow
+type: apoli:self_glow
 entity_condition:
-    type: origins:on_block
-    inverted: true
+   type: apoli:on_block
+   inverted: true
 bientity_condition:
-    type: origins:can_see
+    type: apoli:can_see

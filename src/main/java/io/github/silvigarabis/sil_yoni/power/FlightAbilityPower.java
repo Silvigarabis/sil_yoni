@@ -32,7 +32,7 @@ public class FlightAbilityPower extends Power {
 
    @Override
    public boolean shouldTick(){
-      return shouldTick;
+      return shouldTick && this.isActive();
    }
 
    @Override

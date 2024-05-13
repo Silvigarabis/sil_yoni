@@ -1,0 +1,160 @@
+type: apoli:multiple
+# 力量(_,0)效果去破坏(0,1)硬度方块
+state1:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+      inverted: true
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         # 谁能给我解释为什么水还有硬度的
+         type: apoli:fluid
+         fluid_condition: { type: apoli:empty }
+         inverted: true
+      -
+         type: apoli:hardness
+         comparison: "<"
+         compare_to: 1
+      -
+         type: apoli:hardness
+         comparison: ">"
+         compare_to: 0
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -0.4
+      name: sil_yoni:physique/strengthless_arms
+
+# 力量(_,0)效果去破坏[1,2)硬度方块
+state2:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+      inverted: true
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         # 谁能给我解释为什么水还有硬度的
+         type: apoli:fluid
+         fluid_condition: { type: apoli:empty }
+         inverted: true
+      -
+         type: apoli:hardness
+         comparison: "<"
+         compare_to: 2
+      -
+         type: apoli:hardness
+         comparison: ">="
+         compare_to: 1
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -0.6
+      name: sil_yoni:physique/strengthless_arms
+
+# 力量(_,0)效果去破坏[2,5)硬度方块
+state3:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+      inverted: true
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         # 谁能给我解释为什么水还有硬度的
+         type: apoli:fluid
+         fluid_condition: { type: apoli:empty }
+         inverted: true
+      -
+         type: apoli:hardness
+         comparison: "<"
+         compare_to: 5
+      -
+         type: apoli:hardness
+         comparison: ">="
+         compare_to: 2
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -0.8
+      name: sil_yoni:physique/strengthless_arms
+
+# 力量(_,_)效果去破坏[2,5)硬度方块
+state4:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         # 谁能给我解释为什么水还有硬度的
+         type: apoli:fluid
+         fluid_condition: { type: apoli:empty }
+         inverted: true
+      -
+         type: apoli:hardness
+         comparison: "<"
+         compare_to: 5
+      -
+         type: apoli:hardness
+         comparison: ">="
+         compare_to: 2
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -0.3
+      name: sil_yoni:physique/strengthless_arms
+
+# 力量(_,1)效果去破坏(5,_)硬度方块
+state5:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+      min_amplifier: 1
+      inverted: true
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         # 谁能给我解释为什么水还有硬度的
+         type: apoli:fluid
+         fluid_condition: { type: apoli:empty }
+         inverted: true
+      -
+         type: apoli:hardness
+         comparison: ">="
+         compare_to: 5
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -1
+      name: sil_yoni:physique/strengthless_arms
+
+# 力量[1,_)效果去破坏[5,)硬度方块
+state6:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:status_effect
+      effect: minecraft:strength
+      min_amplifier: 1
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         # 谁能给我解释为什么水还有硬度的
+         type: apoli:fluid
+         fluid_condition: { type: apoli:empty }
+         inverted: true
+      -
+         type: apoli:hardness
+         comparison: ">="
+         compare_to: 5
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -0.5
+      name: sil_yoni:physique/strengthless_arms

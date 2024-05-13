@@ -1,7 +1,7 @@
 name: internal power
 description: this power should never be added to origin directly
 
-type: origins:multiple
+type: apoli:multiple
 # 枚举
 # 0 无动作
 # 1 按下1次
@@ -11,7 +11,7 @@ type: origins:multiple
 # -2 长按（4秒）
 # -3 持续按住（10秒）
 result:
-   type: origins:resource
+   type: apoli:resource
    min: -3
    max: 3
    start_value: 0
@@ -21,222 +21,222 @@ result:
       # bar_index: 11
 
 tl:
-   type: origins:resource
+   type: apoli:resource
    min: 0
    max: 240 # 12sec
    start_value: 0
 
 tr:
-   type: origins:resource
+   type: apoli:resource
    min: 0
    max: 20 # 1sec
    start_value: 0
 
 tc:
-   type: origins:resource
+   type: apoli:resource
    min: 0
    max: 3
    start_value: 0
 
 on_press_key:
-   type: origins:active_self
+   type: apoli:active_self
    key:
       key: key.origins.secondary_active
       continuous: false
    entity_action:
-      type: origins:and
+      type: apoli:and
       actions:
       -
-         type: origins:change_resource
+         type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_tl"
          operation: set
          change: 0
       -
-         type: origins:change_resource
+         type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_tr"
          operation: set
          change: 12
       -
-         type: origins:if_else
+         type: apoli:if_else
          condition:
-            type: origins:resource
+            type: apoli:resource
             resource: "sil_yoni:detection/active_actions/secondary_active_tc"
             comparison: '=='
             compare_to: 3
          if_action:
-            type: origins:change_resource
+            type: apoli:change_resource
             resource: "sil_yoni:detection/active_actions/secondary_active_tc"
             operation: set
             change: 0
          else_action:
-            type: origins:change_resource
+            type: apoli:change_resource
             resource: "sil_yoni:detection/active_actions/secondary_active_tc"
             operation: add
             change: 1
       -
-         type: origins:if_else
+         type: apoli:if_else
          condition:
             inverted: true
-            type: origins:power
+            type: apoli:power
             power: "sil_yoni:detection/active_actions/secondary_active/pressing"
             source: 'sil_yoni:detection/active_actions/secondary_active'
          if_action:
-            type: origins:grant_power
+            type: apoli:grant_power
             power: "sil_yoni:detection/active_actions/secondary_active/pressing"
             source: 'sil_yoni:detection/active_actions/secondary_active'
 
 on_hold_key:
-   type: origins:active_self
+   type: apoli:active_self
    key:
       key: key.origins.secondary_active
       continuous: true
    entity_action:
-      type: origins:and
+      type: apoli:and
       actions:
       -
-         type: origins:change_resource
+         type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_tl"
          operation: add
          change: 1
       -
-         type: origins:change_resource
+         type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_tr"
          operation: set
          change: 12
 
 on_release:
-   type: origins:resource
+   type: apoli:resource
    min: 0
    max: 1
    start_value: 0
    max_action:
-      type: origins:and
+      type: apoli:and
       actions:
       -
-         type: origins:change_resource
+         type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_on_release"
          operation: set
          change: 0
       -
-         type: origins:if_else_list
+         type: apoli:if_else_list
          actions:
          -  condition:
-               type: origins:or
+               type: apoli:or
                conditions:
-               -  type: origins:and
+               -  type: apoli:and
                   conditions:
-                  -  type: origins:resource
+                  -  type: apoli:resource
                      resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                      comparison: '>='
                      compare_to: 60 # 3sec
-                  -  type: origins:resource
+                  -  type: apoli:resource
                      resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                      comparison: '<'
                      compare_to: 80 # 4sec
-               -  type: origins:and
+               -  type: apoli:and
                   conditions:
-                  -  type: origins:resource
+                  -  type: apoli:resource
                      resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                      comparison: '>='
                      compare_to: 110 # 5.5sec
-                  -  type: origins:resource
+                  -  type: apoli:resource
                      resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                      comparison: '<'
                      compare_to: 200 # 10sec
-               -  type: origins:and
+               -  type: apoli:and
                   conditions:
-                  -  type: origins:resource
+                  -  type: apoli:resource
                      resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                      comparison: '>='
                      compare_to: 230 # 11.5sec
             action:
-               type: origins:change_resource
+               type: apoli:change_resource
                resource: "sil_yoni:detection/active_actions/secondary_active_result"
                operation: set
                change: 0
          -
             condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:resource
+               -  type: apoli:resource
                   resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                   comparison: '>='
                   compare_to: 30 # 1.5sec
-               -  type: origins:resource
+               -  type: apoli:resource
                   resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                   comparison: '<'
                   compare_to: 60 # 3sec
             action:
-               type: origins:change_resource
+               type: apoli:change_resource
                resource: "sil_yoni:detection/active_actions/secondary_active_result"
                operation: set
                change: -1
          -
             condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:resource
+               -  type: apoli:resource
                   resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                   comparison: '>='
                   compare_to: 80 # 4sec
-               -  type: origins:resource
+               -  type: apoli:resource
                   resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                   comparison: '<'
                   compare_to: 110 # 5.5sec
             action:
-               type: origins:change_resource
+               type: apoli:change_resource
                resource: "sil_yoni:detection/active_actions/secondary_active_result"
                operation: set
                change: -2
          -
             condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:resource
+               -  type: apoli:resource
                   resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                   comparison: '>='
                   compare_to: 200 # 10sec
-               -  type: origins:resource
+               -  type: apoli:resource
                   resource: "sil_yoni:detection/active_actions/secondary_active_tl"
                   comparison: '<'
                   compare_to: 230 # 11.5sec
             action:
-               type: origins:change_resource
+               type: apoli:change_resource
                resource: "sil_yoni:detection/active_actions/secondary_active_result"
                operation: set
                change: -3
          -
             condition:
-               type: origins:constant
+               type: apoli:constant
                value: true
             action:
-               type: origins:modify_resource
+               type: apoli:modify_resource
                resource: "sil_yoni:detection/active_actions/secondary_active_result"
                modifier:
                   operation: set_total
                   value: -3 # 此值无效
                   resource: "sil_yoni:detection/active_actions/secondary_active_tc"
-      -  type: origins:change_resource
+      -  type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_tc"
          operation: set
          change: 0
-      -  type: origins:change_resource
+      -  type: apoli:change_resource
          resource: "sil_yoni:detection/active_actions/secondary_active_tl"
          operation: set
          change: 0
-      -  type: origins:delay
+      -  type: apoli:delay
          ticks: 2
          action:
-            type: origins:revoke_power
+            type: apoli:revoke_power
             power: "sil_yoni:detection/active_actions/secondary_active/pressing"
             source: 'sil_yoni:detection/active_actions/secondary_active'
 
 callbacks:
-    type: origins:action_on_callback
+    type: apoli:action_on_callback
     execute_chosen_when_orb: true
     entity_action_lost:
-        type: origins:and
+        type: apoli:and
         actions:
-            - type: origins:revoke_power
+            - type: apoli:revoke_power
               power: "sil_yoni:detection/active_actions/secondary_active/pressing"
               source: "sil_yoni:detection/active_actions/secondary_active"

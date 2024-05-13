@@ -1,11 +1,11 @@
 hidden: true
 name: mining speed in air
-type: origins:modify_break_speed
+type: apoli:modify_break_speed
 condition:
    inverted: true
-   type: origins:on_block
+   type: apoli:on_block
 block_condition:
-   type: origins:hardness
+   type: apoli:hardness
    comparison: "!="
    compare_to: 0
 modifier:

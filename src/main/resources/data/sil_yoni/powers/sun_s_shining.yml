@@ -1,0 +1,41 @@
+type: apoli:multiple
+effects:
+   type: apoli:action_over_time
+   interval: 200
+   condition: { type: apoli:exposed_to_sun }
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:chance
+         chance: 0.15
+         action: { type: apoli:heal, amount: 1 }
+      -
+         type: apoli:apply_effect
+         effects:
+         -
+            effect: minecraft:resistance
+            duration: 210
+            amplifier: 0
+            show_particles: false
+            show_icon: false
+         -
+            effect: minecraft:strength
+            duration: 210
+            amplifier: 0
+            show_particles: false
+            show_icon: true
+
+extra_heart:
+   type: apoli:conditioned_attribute
+   tick_rate: 200
+   condition: { type: apoli:exposed_to_sun }
+   modifiers:
+   -
+      attribute: generic.attack_damage
+      operation: addition
+      value: 2
+   -
+      attribute: generic.max_health
+      operation: addition
+      value: 4

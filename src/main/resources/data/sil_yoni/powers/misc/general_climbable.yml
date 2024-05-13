@@ -1,158 +1,158 @@
-type: origins:multiple
+type: apoli:multiple
 hidden: true
 # 通用攀爬能力，允许攀登一般方块（正确硬度小于20）
 ability:
-   type: origins:climbing
+   type: apoli:climbing
    allow_holding: true
    condition:
-      type: origins:and
+      type: apoli:and
       conditions:
-      -  type: origins:collided_horizontally
+      -  type: apoli:collided_horizontally
       -
-         type: origins:or
+         type: apoli:or
          conditions:
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_x: 0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_z: 0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_x: 0.1
             offset_y: -0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_z: 0.1
             offset_y: -0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_x: -0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_z: -0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_x: -0.1
             offset_y: -0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
-         -  type: origins:block_collision
+         -  type: apoli:block_collision
             offset_z: -0.1
             offset_y: -0.1
             block_condition:
-               type: origins:and
+               type: apoli:and
                conditions:
-               -  type: origins:block
+               -  type: apoli:block
                   inverted: true
                   block: minecraft:air
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: "<"
                   compare_to: 20
-               -  type: origins:hardness
+               -  type: apoli:hardness
                   comparison: ">="
                   compare_to: 0
 
 # debug:
-   # type: origins:action_over_time
+   # type: apoli:action_over_time
    # interval: 1
    # entity_action:
-      # type: origins:if_else
+      # type: apoli:if_else
       # if_action:
-         # type: origins:execute_command
+         # type: apoli:execute_command
          # command: 'title @s actionbar {"text": "目前可以攀爬" }'
       # else_action:
-         # type: origins:execute_command
+         # type: apoli:execute_command
          # command: 'title @s actionbar {"text": "无法在此处攀爬" }'
       # condition:
-         # type: origins:and
+         # type: apoli:and
          # conditions:
-         # -  type: origins:collided_horizontally
-         # -  type: origins:block_collision
+         # -  type: apoli:collided_horizontally
+         # -  type: apoli:block_collision
             # offset_x: 0.1
             # offset_y: 0.1
             # block_condition:
-               # type: origins:and
+               # type: apoli:and
                # conditions:
-               # -  type: origins:hardness
+               # -  type: apoli:hardness
                   # comparison: "<"
                   # compare_to: 20
-               # -  type: origins:hardness
+               # -  type: apoli:hardness
                   # comparison: ">="
                   # compare_to: 0
    

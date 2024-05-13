@@ -1,0 +1,5 @@
+type: apoli:attribute
+modifier:
+   attribute: generic.max_health
+   operation: addition
+   value: 30

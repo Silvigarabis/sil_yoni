@@ -1,30 +1,30 @@
-type: origins:multiple
+type: apoli:multiple
 hidden: true
 callbacks:
-  type: origins:action_on_callback
+  type: apoli:action_on_callback
   execute_chosen_when_orb: true
   entity_action_gained:
-    type: origins:and
+    type: apoli:and
     actions:
-      - type: origins:grant_power
+      - type: apoli:grant_power
         power: sil_yoni:condition/condition_wear_light_armor
         source: sil_yoni:misc/harder_armor
-      - type: origins:grant_power
+      - type: apoli:grant_power
         power: sil_yoni:condition/condition_wear_heavy_armor
         source: sil_yoni:misc/harder_armor
   entity_action_lost:
-    type: origins:and
+    type: apoli:and
     actions:
-      - type: origins:revoke_power
+      - type: apoli:revoke_power
         power: sil_yoni:condition/condition_wear_light_armor
         source: sil_yoni:misc/harder_armor
-      - type: origins:revoke_power
+      - type: apoli:revoke_power
         power: sil_yoni:condition/condition_wear_heavy_armor
         source: sil_yoni:misc/harder_armor
 wear_heavy_armor:
-   type: origins:modify_attribute
+   type: apoli:modify_attribute
    condition:
-      type: origins:resource
+      type: apoli:resource
       resource: sil_yoni:condition/condition_wear_heavy_armor_result
       comparison: '=='
       compare_to: 1

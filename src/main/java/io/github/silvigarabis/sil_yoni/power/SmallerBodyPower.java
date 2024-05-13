@@ -40,21 +40,19 @@ public class SmallerBodyPower extends Power {
 
    @Override
    public void onGained(){
-      ScaleTypes.WIDTH.getScaleData(this.entity)
-         .getBaseValueModifiers().add(SmallerBodyModifier.INSTANCE);
-      ScaleTypes.HEIGHT.getScaleData(this.entity)
-         .getBaseValueModifiers().add(SmallerBodyModifier.INSTANCE);
-      ScaleTypes.BLOCK_REACH.getScaleData(this.entity)
-         .getBaseValueModifiers().add(SmallerBodyModifier.INSTANCE);
+      for (var type : SmallerBodyModifier.AffectedValues){
+         type.getScaleData(this.entity)
+            .getBaseValueModifiers()
+            .add(SmallerBodyModifier.INSTANCE);
+      }
    }
 
    @Override
    public void onLost(){
-      ScaleTypes.WIDTH.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(SmallerBodyModifier.INSTANCE);
-      ScaleTypes.HEIGHT.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(SmallerBodyModifier.INSTANCE);
-      ScaleTypes.BLOCK_REACH.getScaleData(this.entity)
-         .getBaseValueModifiers().remove(SmallerBodyModifier.INSTANCE);
+      for (var type : SmallerBodyModifier.AffectedValues){
+         type.getScaleData(this.entity)
+            .getBaseValueModifiers()
+            .remove(SmallerBodyModifier.INSTANCE);
+      }
    }
 }

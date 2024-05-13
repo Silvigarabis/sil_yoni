@@ -1,0 +1,52 @@
+type: apoli:multiple
+prevent_eat:
+   type: apoli:prevent_item_use
+   item_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:food
+      -
+         type: origins:or
+         inverted: true
+         conditions:
+         -
+            type: origins:ingredient
+            ingredient: { tag: sil_yoni:item_with_energy }
+         -
+            type: origins:ingredient
+            ingredient: { item: minecraft:potion }
+         -
+            type: origins:ingredient
+            ingredient: { item: minecraft:suspicious_stew }
+
+prevent_regen_saturation:
+   type: apoli:modify_food
+   saturation_modifier:
+      operation: multiply_total
+      value: -1
+
+decrease_suspicious_stew_food:
+   type: apoli:modify_food
+   item_condition:
+      type: origins:ingredient
+      ingredient: { item: minecraft:suspicious_stew }
+   food_modifier:
+      operation: addition
+      value: -5
+
+eat_fire:
+   type: apoli:modify_damage_taken
+   damage_condition:
+      type: apoli:or
+      conditions:
+      -
+         { type: "apoli:in_tag", tag: "is_fire" }
+      -
+         { type: "apoli:in_tag", tag: "is_lightning" }
+   modifier:
+      operation: multiply_total_multiplicative
+      value: -1
+   self_action:
+      type: apoli:exhaust
+      amount: -0.05

@@ -1,0 +1,4 @@
+type: apoli:modify_exhaustion
+modifier:
+   operation: multiply_total_multiplicative
+   value: -0.6

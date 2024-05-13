@@ -1,0 +1,7 @@
+type: apoli:modify_attribute
+attribute: generic.armor
+modifier:
+   operation: multiply_base_additive
+   value: -0.4
+   name: sil_yoni:physique/light_body
+

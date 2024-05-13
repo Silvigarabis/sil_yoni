@@ -1,4 +1,4 @@
 hidden: true
-type: origins:effect_immunity
+type: apoli:effect_immunity
 effects:
   - minecraft:darkness
