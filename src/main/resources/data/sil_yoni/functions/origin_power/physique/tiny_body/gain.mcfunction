@@ -1,1 +1,0 @@
-function sil_yoni:origin_power/physique/tiny_body/respawn

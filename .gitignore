@@ -2,6 +2,7 @@
 
 .gradle/
 build/
+build-cache/
 out/
 classes/
 

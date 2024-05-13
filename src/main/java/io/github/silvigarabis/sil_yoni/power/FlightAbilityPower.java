@@ -18,6 +18,7 @@ public class FlightAbilityPower extends Power {
 
    public FlightAbilityPower(PowerType<?> type, LivingEntity entity){
       super(type, entity);
+      // because I don't know how to make other mob to fly
       shouldTick = entity instanceof PlayerEntity;
    }
 
