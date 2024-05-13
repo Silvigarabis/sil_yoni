@@ -27,10 +27,10 @@ loop_energy:
                type: apoli:revoke_power
                power: sil_yoni:origin_spec/guxi/elytra_deform
                source: sil_yoni:origin_spec/guxi/triggers
-            -
-               type: apoli:revoke_power
-               power: sil_yoni:origin_spec/guxi/fire_light
-               source: sil_yoni:origin_spec/guxi/triggers
+            # -
+               # type: apoli:revoke_power
+               # power: sil_yoni:origin_spec/guxi/fire_light
+               # source: sil_yoni:origin_spec/guxi/triggers
             -
                type: apoli:grant_power
                power: sil_yoni:origin_spec/guxi/no_energy
@@ -52,10 +52,10 @@ loop_energy:
                type: apoli:grant_power
                power: sil_yoni:origin_spec/guxi/elytra_deform
                source: sil_yoni:origin_spec/guxi/triggers
-            -
-               type: apoli:grant_power
-               power: sil_yoni:origin_spec/guxi/fire_light
-               source: sil_yoni:origin_spec/guxi/triggers
+            # -
+               # type: apoli:grant_power
+               # power: sil_yoni:origin_spec/guxi/fire_light
+               # source: sil_yoni:origin_spec/guxi/triggers
             -
                type: apoli:revoke_power
                power: sil_yoni:origin_spec/guxi/no_energy
@@ -76,10 +76,10 @@ callbacks:
    entity_action_lost:
       type: apoli:and
       actions:
-      -
-         type: apoli:revoke_power
-         power: sil_yoni:origin_spec/guxi/fire_light
-         source: sil_yoni:origin_spec/guxi/triggers
+      # -
+         # type: apoli:revoke_power
+         # power: sil_yoni:origin_spec/guxi/fire_light
+         # source: sil_yoni:origin_spec/guxi/triggers
       -
          type: apoli:revoke_power
          power: sil_yoni:origin_spec/guxi/elytra_deform
@@ -88,3 +88,6 @@ callbacks:
          type: apoli:revoke_power
          power: sil_yoni:origin_spec/guxi/no_energy
          source: sil_yoni:origin_spec/guxi/triggers
+
+prevent_natural_regen:
+   type: apoli:disable_regen

@@ -22,5 +22,5 @@ attribute_while_no_energy:
 no_strength:
    type: apoli:modify_break_speed
    modifier:
-      operation: multiply_base_multiplicative
+      operation: multiply_total_multiplicative
       value: -1

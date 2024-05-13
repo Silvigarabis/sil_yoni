@@ -33,6 +33,6 @@ public class NoBreathPower extends Power {
 
    @Override
    public void tick(){
-      this.entity.setAir(200);
+      this.entity.setAir(300);
    }
 }

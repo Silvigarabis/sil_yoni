@@ -1,3 +1,4 @@
+hidden: true
 type: apoli:active_self
 cooldown: 3
 key:
@@ -15,7 +16,7 @@ condition:
    -
       type: apoli:food_level
       comparison: ">"
-      compare_to: 0
+      compare_to: 0.05
 entity_action:
    type: apoli:raycast
    distance: 80
@@ -24,9 +25,8 @@ entity_action:
    shape_type: collider
    fluid_handling: none
    before_action:
-      type: apoli:damage
-      damage_type: sil_yoni:guxi_starve_energy
-      amount: 1
+      type: apoli:exhaust
+      amount: 5
    bientity_action:
       type: apoli:damage
       damage_type: sil_yoni:energy_dense_explosion
