@@ -67,11 +67,15 @@ set -u
 java_source_time_info=$(cat .java_source_time_info || true)
 datapack_source_time_info=$(cat .datapack_source_time_info || true)
 
-while sleep 3; do
-   if should_rebuild_java; then
-      rebuild_java
-   fi
-   if should_rebuild_datapack; then
-      rebuild_datapack
-   fi
-done
+main(){
+   while sleep 3; do
+      if should_rebuild_java; then
+         rebuild_java
+      fi
+      if should_rebuild_datapack; then
+         rebuild_datapack
+      fi
+   done
+}
+
+"${1:-main}"

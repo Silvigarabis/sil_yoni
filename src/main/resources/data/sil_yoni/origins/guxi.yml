@@ -1,6 +1,7 @@
 powers:
   - sil_yoni:origin_spec/guxi/triggers
   - sil_yoni:origin_spec/guxi/energy_eat
+  - sil_yoni:origin_spec/guxi/fire_light
   - sil_yoni:sun_s_shining
 
   - sil_yoni:physique/powerful_health
@@ -13,7 +14,7 @@ powers:
   - sil_yoni:vision/night_vision_always
   - sil_yoni:misc/general_climbable
   - sil_yoni:misc/no_breath
-  - sil_yoni:misc/extremely_mini_stomach
+  - sil_yoni:misc/mini_stomach
 icon:
   item: minecraft:music_disc_11
 unchoosable: false
