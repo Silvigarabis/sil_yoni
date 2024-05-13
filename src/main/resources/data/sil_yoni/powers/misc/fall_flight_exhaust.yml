@@ -1,23 +1,23 @@
 hidden: true
 condition:
-   type: origins:and
+   type: apoli:and
    conditions:
    -
-      type: origins:or
+      type: apoli:or
       conditions:
       -
-         type: origins:and
+         type: apoli:and
          conditions:
          -
-            type: origins:on_block
+            type: apoli:on_block
             inverted: true
          -
-            type: origins:fall_flying
+            type: apoli:fall_flying
    -
-      type: origins:riding
+      type: apoli:riding
       inverted: true
    -
-      type: origins:moving
-type: origins:exhaust
+      type: apoli:moving
+type: apoli:exhaust
 interval: 60
 exhaustion: 1

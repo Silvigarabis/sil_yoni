@@ -1,31 +1,31 @@
-type: origins:multiple
+type: apoli:multiple
 effects:
   type: apoli:action_over_time
   interval: 200
   condition:
     type: apoli:and
     conditions:
-      - type: origins:biome
+      - type: apoli:biome
         condition:
-          type: origins:category
+          type: apoli:category
           category: forest
   entity_action:
-    type: origins:and
+    type: apoli:and
     actions:
-      - type: origins:if_else
+      - type: apoli:if_else
         condition:
-          type: origins:relative_health
+          type: apoli:relative_health
           comparison: <
           compare_to: 1
         if_action:
-          type: origins:apply_effect
+          type: apoli:apply_effect
           effect:
             effect: minecraft:regeneration
             duration: 210
             amplifier: 0
             show_particles: false
             show_icon: false
-      - type: origins:apply_effect
+      - type: apoli:apply_effect
         effects:
           - effect: minecraft:resistance
             duration: 210
@@ -38,14 +38,14 @@ effects:
             show_particles: false
             show_icon: true
 extra_heart:
-  type: origins:conditioned_attribute
+  type: apoli:conditioned_attribute
   tick_rate: 200
   condition:
     type: apoli:and
     conditions:
-      - type: origins:biome
+      - type: apoli:biome
         condition:
-          type: origins:category
+          type: apoli:category
           category: forest
   modifiers:
     - attribute: generic.max_health

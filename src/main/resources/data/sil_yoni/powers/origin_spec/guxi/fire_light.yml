@@ -1,0 +1,33 @@
+type: apoli:active_self
+cooldown: 3
+key:
+   key: key.use
+   continuous: true
+condition:
+   type: apoli:and
+   conditions:
+   -
+      type: apoli:equipped_item
+      equipment_slot: mainhand
+      item_condition:
+         type: apoli:ingredient
+         ingredient: { tag: swords }
+   -
+      type: apoli:food_level
+      comparison: ">"
+      compare_to: 0
+entity_action:
+   type: apoli:raycast
+   distance: 80
+   block: false
+   entity: true
+   shape_type: collider
+   fluid_handling: none
+   before_action:
+      type: apoli:damage
+      damage_type: sil_yoni:guxi_starve_energy
+      amount: 1
+   bientity_action:
+      type: apoli:damage
+      damage_type: sil_yoni:energy_dense_explosion
+      amount: 8
