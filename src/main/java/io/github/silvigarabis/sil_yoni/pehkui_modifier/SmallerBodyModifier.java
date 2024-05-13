@@ -16,7 +16,6 @@ public class SmallerBodyModifier extends ScaleModifier {
    public static final ScaleType[] AffectedValues = new ScaleType[]{
       ScaleTypes.HEIGHT,
       ScaleTypes.WIDTH,
-      ScaleTypes.ENTITY_REACH,
       ScaleTypes.BLOCK_REACH,
       ScaleTypes.MOTION,
       ScaleTypes.VISIBILITY,
