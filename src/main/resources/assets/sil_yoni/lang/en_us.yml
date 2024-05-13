@@ -28,8 +28,8 @@ power.sil_yoni.physique/tiny_body.description: >-
   some things may be difficult for you to do,
   such as reaching further things, or jumping on a full block.
   But your attack speed will be faster.
-power.sil_yoni.physique/small_body.name: 较小体型
-power.sil_yoni.physique/small_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
+power.sil_yoni.physique/smaller_body.name: 较小体型
+power.sil_yoni.physique/smaller_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
 
 power.sil_yoni.forager.name: Master of Land Cultivation
 power.sil_yoni.forager.description: Cultivating in nature makes you understand how to get higher yields from crops
