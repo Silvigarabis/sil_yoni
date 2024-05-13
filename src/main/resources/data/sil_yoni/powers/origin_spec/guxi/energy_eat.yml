@@ -20,6 +20,15 @@ prevent_eat:
             type: origins:ingredient
             ingredient: { item: minecraft:suspicious_stew }
 
+remove_saturation:
+   type: apoli:exhaust
+   interval: 1
+   exhaustion: 1
+   condition:
+      type: apoli:saturation_level
+      comparison: "!="
+      compare_to: 0
+
 prevent_regen_saturation:
    type: apoli:modify_food
    saturation_modifier:
