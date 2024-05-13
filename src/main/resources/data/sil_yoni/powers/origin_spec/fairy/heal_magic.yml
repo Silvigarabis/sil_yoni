@@ -1,0 +1,46 @@
+type: apoli:active_self
+key:
+   key: key.origins.primary_active
+cooldown: 600
+hud_render:
+   should_render: true
+   sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_02.png
+   bar_index: 9
+condition:
+   comparison: '>='
+   compare_to: 6
+entity_action:
+   type: apoli:and
+   actions:
+   -
+      type: apoli:exhaust
+      amount: 30
+   -
+      type: apoli:apply_effect
+      effect:
+         effect: minecraft:absorption
+         duration: 600
+         amplifier: 4
+   -
+      type: apoli:play_sound
+      sound: minecraft:block.amethyst_block.fall
+      volume: 1
+      pitch: 1
+   -
+      type: apoli:area_of_effect
+      radius: 4
+      include_target: false
+      bientity_action:
+         type: apoli:target_action
+         action:
+            type: apoli:and
+            actions:
+            -
+               type: apoli:apply_effect
+               effect:
+                  effect: minecraft:regeneration
+                  duration: 140
+                  amplifier: 3
+            -
+               type: apoli:execute_command
+               command: particle minecraft:heart ~ ~ ~ 0.2 0.2 0.2 0.1 10 normal

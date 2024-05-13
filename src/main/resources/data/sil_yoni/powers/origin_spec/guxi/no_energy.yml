@@ -1,0 +1,26 @@
+hidden: true
+type: apoli:multiple
+body_while_no_energy:
+   type: apoli:model_color
+   alpha: 0.4
+
+jump_power_while_no_energy:
+   type: apoli:modify_jump
+   modifier:
+      operation: multiply_total_multiplicative
+      value: -1
+
+attribute_while_no_energy:
+   type: apoli:attribute
+   modifiers:
+   -
+      attribute: generic.movement_speed
+      operation: multiply_total
+      value: -0.7
+   update_health: false
+
+no_strength:
+   type: apoli:modify_break_speed
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -1

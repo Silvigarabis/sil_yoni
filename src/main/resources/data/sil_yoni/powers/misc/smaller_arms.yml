@@ -1,0 +1,7 @@
+type: apoli:multiple
+mining_modifier:
+  type: apoli:modify_break_speed
+  modifier:
+    operation: multiply_base_multiplicative
+    value: -0.4
+    name: sil_yoni:misc/smaller_arms

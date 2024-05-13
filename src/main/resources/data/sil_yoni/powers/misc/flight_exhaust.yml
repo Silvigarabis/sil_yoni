@@ -1,18 +1,18 @@
 hidden: true
 condition:
-   type: origins:and
+   type: apoli:and
    conditions:
    -
-      type: origins:or
+      type: apoli:or
       conditions:
       -
-         type: origins:ability
+         type: apoli:ability
          ability: minecraft:flying
    -
-      type: origins:riding
+      type: apoli:riding
       inverted: true
    -
-      type: origins:moving
-type: origins:exhaust
+      type: apoli:moving
+type: apoli:exhaust
 interval: 60
 exhaustion: 1

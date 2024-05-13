@@ -24,8 +24,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Vec3d;
 
-import io.github.silvigarabis.sil_yoni.power.BeeRiderPower;
-import io.github.silvigarabis.sil_yoni.util.ApoliPowerHelper;
+import io.github.silvigarabis.sil_yoni.*;
 
 public class BeeRidingFeature {
    private static final Logger LOGGER = LoggerFactory.getLogger("SIL YONI");
@@ -47,7 +46,7 @@ public class BeeRidingFeature {
    public static boolean canRideBee(Entity entity, PlayerEntity player){
       if (enforced){
          return true;
-      } else if (ApoliPowerHelper.hasPower(player, BeeRiderPower.ID)){
+      } else if (SilYoniPowers.BEE_RIDER.isActive(player)){
          return true;
       } else {
          return false;

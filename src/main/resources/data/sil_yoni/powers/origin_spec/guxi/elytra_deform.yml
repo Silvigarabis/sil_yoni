@@ -1,0 +1,46 @@
+type: apoli:multiple
+equip_notflying:
+   type: apoli:elytra_flight
+   render_elytra: false
+   condition: { inverted: true, type: apoli:fall_flying }
+      
+equip_flying:
+   type: apoli:elytra_flight
+   render_elytra: true
+   condition: { type: apoli:fall_flying }
+   
+energy_lost:
+   type: apoli:exhaust
+   interval: 20
+   exhaustion: 0.4
+   condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:fall_flying
+      -
+         type: apoli:equipped_item
+         inverted: true
+         equipment_slot: chest
+         item_condition:
+            type: apoli:ingredient
+            ingredient: { item: minecraft:elytra }
+      
+boost_flight:
+   type: apoli:active_self
+   cooldown: 17
+   key:
+      key: key.jump
+      continuous: true
+   condition:
+      type: apoli:fall_flying
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:exhaust
+         amount: 0.1
+      -
+         type: apoli:add_velocity
+         space: local
+         z: 0.4
