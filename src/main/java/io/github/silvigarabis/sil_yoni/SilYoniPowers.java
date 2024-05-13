@@ -23,5 +23,7 @@ public class SilYoniPowers {
    public static void register(){
       register(FlightAbilityPower::createFactory);
       register(BeeRiderPower::createFactory);
+      register(SmallerBodyPower::createFactory);
+      register(TinyBodyPower::createFactory);
    }
 }

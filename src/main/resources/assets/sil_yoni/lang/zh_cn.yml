@@ -18,8 +18,8 @@ power.sil_yoni.physique/weak_arms.name: 虚弱的手臂
 power.sil_yoni.physique/weak_arms.description: 在没有足够力量的情况下，虚弱的手臂没有砸碎大石头从中获取物品的能力（无法开采周围拥有3个或更多自然类坚硬方块的同类型方块，除非使用了力量药水）。
 power.sil_yoni.physique/tiny_body.name: 微小珍宝
 power.sil_yoni.physique/tiny_body.description: 你的身体很小，不像一般的人类，一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
-power.sil_yoni.physique/small_body.name: 较小体型
-power.sil_yoni.physique/small_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
+power.sil_yoni.physique/smaller_body.name: 较小体型
+power.sil_yoni.physique/smaller_body.description: 你的身体比较小，类似于人类中的儿童。一些事情对你来说可能难以完成，比如够到更远的东西，又或者跳上一个完整的方块。
 
 power.sil_yoni.forager.name: 土地耕耘大师
 power.sil_yoni.forager.description: 在自然中耕种使你了解到如何从作物中获取更高的产出

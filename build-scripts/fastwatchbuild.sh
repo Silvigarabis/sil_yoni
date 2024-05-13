@@ -30,7 +30,7 @@ get_time_info(){
 }
 
 rebuild_java(){
-   ( cd .. && gradle build )
+   ( cd .. && gradle build --build-cache)
    local jarFile=$(realpath "../build/libs/${achieve_name}")
    bash ./afterbuild.sh "${jarFile}" || true
 }

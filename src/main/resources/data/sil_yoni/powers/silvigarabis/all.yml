@@ -152,7 +152,7 @@ self_regen:
     # - attribute: generic.movement_speed
       # operation: multiply_base
       # value: -0.2
-      # name: sil_yoni:physique/small_body
+      # name: sil_yoni:silvigarabis/all
 # attribute_modifiers:
   # type: origins:attribute
   # modifiers:
