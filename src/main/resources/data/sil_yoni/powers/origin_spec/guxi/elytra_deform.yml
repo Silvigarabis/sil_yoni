@@ -12,7 +12,7 @@ equip_flying:
 energy_lost:
    type: apoli:exhaust
    interval: 20
-   exhaustion: 0.4
+   exhaustion: 4
    condition:
       type: apoli:and
       conditions:
@@ -39,7 +39,10 @@ boost_flight:
       actions:
       -
          type: apoli:exhaust
-         amount: 0.1
+         amount: 1
+      -
+         type: apoli:add_velocity
+         y: 0.03
       -
          type: apoli:add_velocity
          space: local
