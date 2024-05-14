@@ -16,7 +16,7 @@ condition:
    -
       type: apoli:food_level
       comparison: ">"
-      compare_to: 0.05
+      compare_to: 0
 entity_action:
    type: apoli:raycast
    distance: 80
@@ -24,9 +24,12 @@ entity_action:
    entity: true
    shape_type: collider
    fluid_handling: none
-   before_action:
+   hit_action:
       type: apoli:exhaust
-      amount: 5
+      amount: 1.3
+   miss_action:
+      type: apoli:exhaust
+      amount: 0.05
    bientity_action:
       type: apoli:damage
       damage_type: sil_yoni:energy_dense_explosion

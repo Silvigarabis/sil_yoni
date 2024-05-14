@@ -7,12 +7,23 @@ equip_notflying:
 equip_flying:
    type: apoli:elytra_flight
    render_elytra: true
-   condition: { type: apoli:fall_flying }
-   
+   condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:fall_flying
+      -
+         type: apoli:equipped_item
+         inverted: true
+         equipment_slot: chest
+         item_condition:
+            type: apoli:ingredient
+            ingredient: { item: minecraft:elytra }
+
 energy_lost:
    type: apoli:exhaust
    interval: 20
-   exhaustion: 2.4
+   exhaustion: 0.8
    condition:
       type: apoli:and
       conditions:
@@ -39,7 +50,7 @@ boost_flight:
       actions:
       -
          type: apoli:exhaust
-         amount: 0.6
+         amount: 0.2
       -
          type: apoli:add_velocity
          y: 0.03
