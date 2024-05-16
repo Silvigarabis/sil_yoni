@@ -65,7 +65,7 @@ regen_health:
          amount: 1
       -
          type: apoli:exhaust
-         amount: 1.5
+         amount: 0.5
 
 eat_fire:
    type: apoli:modify_damage_taken
@@ -86,7 +86,7 @@ eat_fire:
 
 eat_sun_light:
    type: apoli:action_over_time
-   interval: 140
+   interval: 160
    condition:
       type: apoli:exposed_to_sun
    entity_action:
