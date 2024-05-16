@@ -39,7 +39,7 @@ public class WeakenedOnlyBodyPower extends Power {
    }
 
    @Override
-   public void onGained(){
+   public void onAdded(){
       for (var type : WeakenedBodyModifier.AffectedValues){
          if (type == ScaleTypes.HEALTH){
             continue;
@@ -51,7 +51,19 @@ public class WeakenedOnlyBodyPower extends Power {
    }
 
    @Override
-   public void onLost(){
+   public void onRespawn(){
+      for (var type : WeakenedBodyModifier.AffectedValues){
+         if (type == ScaleTypes.HEALTH){
+            continue;
+         }
+         type.getScaleData(this.entity)
+            .getBaseValueModifiers()
+            .add(WeakenedBodyModifier.INSTANCE);
+      }
+   }
+
+   @Override
+   public void onRemoved(){
       for (var type : WeakenedBodyModifier.AffectedValues){
          if (type == ScaleTypes.HEALTH){
             continue;
