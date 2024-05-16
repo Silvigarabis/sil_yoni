@@ -3,3 +3,4 @@ modifier:
    attribute: generic.max_health
    operation: addition
    value: 30
+update_health: false
