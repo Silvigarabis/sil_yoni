@@ -39,7 +39,7 @@ public class SmallerBodyPower extends Power {
    }
 
    @Override
-   public void onGained(){
+   public void onAdded(){
       for (var type : SmallerBodyModifier.AffectedValues){
          type.getScaleData(this.entity)
             .getBaseValueModifiers()
@@ -48,7 +48,16 @@ public class SmallerBodyPower extends Power {
    }
 
    @Override
-   public void onLost(){
+   public void onRespawn(){
+      for (var type : SmallerBodyModifier.AffectedValues){
+         type.getScaleData(this.entity)
+            .getBaseValueModifiers()
+            .add(SmallerBodyModifier.INSTANCE);
+      }
+   }
+
+   @Override
+   public void onRemoved(){
       for (var type : SmallerBodyModifier.AffectedValues){
          type.getScaleData(this.entity)
             .getBaseValueModifiers()
