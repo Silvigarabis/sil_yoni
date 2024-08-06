@@ -14,7 +14,6 @@ public class WeakenedBodyModifier extends ScaleModifier {
    }
 
    public static final ScaleType[] AffectedValues = new ScaleType[]{
-      ScaleTypes.DEFENSE,
       ScaleTypes.ATTACK_SPEED,
       ScaleTypes.MINING_SPEED,
       ScaleTypes.MOTION
@@ -22,7 +21,6 @@ public class WeakenedBodyModifier extends ScaleModifier {
 
    private static Map<ScaleType, Float> AffectedValueMultipliers = new HashMap<>();
    static {
-      AffectedValueMultipliers.put(ScaleTypes.DEFENSE, 0.3f);
       AffectedValueMultipliers.put(ScaleTypes.ATTACK_SPEED, 0.5f);
       AffectedValueMultipliers.put(ScaleTypes.MINING_SPEED, 0.5f);
       AffectedValueMultipliers.put(ScaleTypes.MOTION, 0.85f);
