@@ -27,7 +27,7 @@ get_time_info(){
 }
 
 rebuild_java(){
-   ( cd .. && sh gradlew build )
+   ( cd .. && gradle build )
    local jarFile=$(realpath "../build/libs/sil_yoni-1.3.0.jar")
    bash ./afterbuild.sh "${jarFile}" || true
 }
