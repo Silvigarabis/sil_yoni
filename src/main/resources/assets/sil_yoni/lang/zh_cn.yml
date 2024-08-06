@@ -69,10 +69,12 @@ power.sil_yoni.origin_spec/guxi/energy_eat.description: 你需要摄入带有纯
 sil_yoni.subtitles.entity.fairy.fly: 妖精飞起来
 sil_yoni.subtitles.entity.fairy2.fly: 膜翅震动
 
-death.attack.guxi_starve_energy: '%1$s没能保持能量充足'
-death.attack.guxi_starve_energy.player: '%1$s在与%2$s战斗时没能保持能量充足'
-death.attack.energy_dense_explosion: '%1$s被注入了太多的能量'
-death.attack.hurt_by_water.player: '%1$s被%2$s注入了太多的能量'
+death.attack.starve_energy: '%1$s没能保持能量充足'
+death.attack.starve_energy.player: '%1$s在与%2$s战斗时没能保持能量充足'
+death.attack.dense_energy: '%1$s被注入了太多的能量'
+death.attack.dense_energy.player: '%1$s在与%2$s战斗时被注入了太多的能量'
+death.attack.dense_energy_explosion: '%1$s被能量爆炸抹除了'
+death.attack.dense_energy_explosion.player: '%1$s被%2$s的能量爆炸抹除了'
 
 sil_yoni.gui.badge.hold_on_active: 按住 %s 不放（10秒）以使用
 sil_yoni.gui.badge.long_press_active: 长按 %s （4秒）以使用

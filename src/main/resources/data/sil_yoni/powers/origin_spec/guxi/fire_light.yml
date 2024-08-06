@@ -32,5 +32,5 @@ entity_action:
       amount: 0.05
    bientity_action:
       type: apoli:damage
-      damage_type: sil_yoni:energy_dense_explosion
+      damage_type: sil_yoni:dense_energy
       amount: 8

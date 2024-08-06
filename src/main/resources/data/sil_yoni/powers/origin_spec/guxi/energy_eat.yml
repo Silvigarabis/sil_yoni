@@ -84,6 +84,32 @@ eat_fire:
       food: 1
       saturation: 0
 
+harmful_damage:
+   type: apoli:modify_damage_taken
+   damage_condition:
+      type: "apoli:in_tag"
+      tag: "sil_yoni:energy_harmfully"
+   modifier:
+      operation: multiply_base_multiplicative
+      value: 1.5
+
+dense_energy_damage:
+   type: apoli:modify_damage_taken
+   damage_condition:
+      type: apoli:and
+      conditions:
+      -
+         { type: "apoli:in_tag", tag: "sil_yoni:dense_energy" }
+      -
+         { inverted: true, type: "apoli:in_tag", tag: "is_explosion" }
+   modifier:
+      operation: multiply_base_multiplicative
+      value: -0.85
+   self_action:
+      type: apoli:feed
+      food: 1
+      saturation: 0
+
 eat_sun_light:
    type: apoli:action_over_time
    interval: 160
