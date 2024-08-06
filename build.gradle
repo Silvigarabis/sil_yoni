@@ -68,6 +68,47 @@ processResources {
 		])
 		
 	}
+processResources {
+    // 在处理资源文件之前执行的动作
+    doFirst {
+        // 定义源目录和目标目录
+        def sourceDir = sourceSets.main.resources.srcDirs
+        def outputDir = destinationDir
+
+        // 获取源目录下的所有YAML文件
+        FileTree yamlFiles = fileTree(dir: sourceDir, include: '**/*.yml')
+        yamlFiles.each { File yamlFile ->
+            // 使用Groovy内置库将YAML转换为JSON
+            def yamlContent = new groovy.yaml.Yaml().load(yamlFile.text)
+            def jsonContent = groovy.json.JsonOutput.toJson(yamlContent)
+            
+            // 创建输出目录
+            new File(outputDir).mkdirs()
+            
+            // 定义JSON文件的输出路径
+            def jsonFile = new File(outputDir, yamlFile.name.replace('.yml', '.json'))
+            jsonFile.text = jsonContent
+        }
+    }
+
+    // 排除所有YAML文件，确保它们不会被复制到输出目录
+    exclude '**/*.yml'
+
+    // 指定资源文件的新输出目录
+    outputs.dir(outputDir)
+}
+	// 获取资源目录下的所有YAML文件，并转换为JSON
+		FileTree yamlFiles = fileTree(dir: 'src/main/resources', include: '**/*.yml')
+		yamlFiles.each { File yamlFile ->
+            // 使用Jackson库将YAML转换为JSON
+            def yamlContent = new groovy.yaml.Yaml().load(yamlFile.text)
+            def jsonContent = groovy.json.JsonOutput.toJson(yamlContent)
+            def jsonFile = new File(yamlFile.parent, yamlFile.name.replace('.yml', '.json'))
+            jsonFile.text = jsonContent
+        }
+    }
+}
+
 }
 
 tasks.register('generateJsonDatapack') {
