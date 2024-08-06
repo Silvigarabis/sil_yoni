@@ -39,3 +39,4 @@ extra_heart:
       attribute: generic.max_health
       operation: addition
       value: 4
+   update_health: false

@@ -1,4 +1,4 @@
 replace: false
 values:
-  - sil_yoni:energy_dense_explosion
-  - sil_yoni:guxi_starve_energy
+  - sil_yoni:dense_energy
+  - sil_yoni:dense_energy_explosion
