@@ -7,6 +7,7 @@ hud_render:
    sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_02.png
    bar_index: 9
 condition:
+   type: apoli:food_level
    comparison: '>='
    compare_to: 6
 entity_action:
