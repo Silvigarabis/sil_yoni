@@ -7,7 +7,7 @@ energy_lost:
   interval: 600
   onset_delay: 100
   damage: 1
-  damage_type: sil_yoni:guxi_starve_energy
+  damage_type: sil_yoni:starve_energy
 flight:
   type: apoli:active_self
   cooldown: 17
@@ -24,7 +24,7 @@ flight:
         action:
           type: apoli:damage
           amount: 1
-          damage_type: sil_yoni:guxi_starve_energy
+          damage_type: sil_yoni:starve_energy
       - type: apoli:add_velocity
         'y': 0.4
       - type: apoli:add_velocity
