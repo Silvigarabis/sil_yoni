@@ -22,11 +22,11 @@ entity_action:
         fluid_handling: none
         before_action:
           type: apoli:damage
-          damage_type: sil_yoni:guxi_starve_energy
+          damage_type: sil_yoni:starve_energy
           amount: 1
         bientity_action:
           type: apoli:damage
-          damage_type: sil_yoni:energy_dense_explosion
+          damage_type: sil_yoni:dense_energy_explosion
           amount: 8
     - condition:
         type: apoli:equipped_item
@@ -44,7 +44,7 @@ entity_action:
         fluid_handling: none
         before_action:
           type: apoli:damage
-          damage_type: sil_yoni:guxi_starve_energy
+          damage_type: sil_yoni:starve_energy
           amount: 1
         block_action:
           type: apoli:explode
