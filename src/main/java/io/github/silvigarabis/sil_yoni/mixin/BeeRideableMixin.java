@@ -5,16 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -66,7 +61,7 @@ public abstract class BeeRideableMixin extends AnimalEntity {
       this.setRotation(controllingPlayer.getYaw(), controllingPlayer.getPitch() * 0.5f);
       this.bodyYaw = this.headYaw = this.getYaw();
       this.prevYaw = this.headYaw;
-      LOGGER.info("manually travel for BeeEntity.tickControlled() and mob {}, actual movement speed: {}, fake speed: 0.02", this.toString(), this.getMovementSpeed());
+      LOGGER.info("manually travel for BeeEntity.tickControlled() and mob {}, actual movement speed: {}, fake speed: 0.02", this, this.getMovementSpeed());
       this.updateVelocity(0.02f, this.getControlledMovementInput(controllingPlayer, movementInput));
       this.getWorld().getProfiler().pop();
    }
@@ -78,7 +73,7 @@ public abstract class BeeRideableMixin extends AnimalEntity {
       double upwardSpeed = 0.0;
       double forwardSpeed = Math.signum(controllingPlayer.forwardSpeed);
       double sidewaysSpeed = Math.signum(controllingPlayer.sidewaysSpeed);
-      boolean playerIsJumping = ((LivingEntityAccessor)(Object)controllingPlayer).isJumping();
+      boolean playerIsJumping = ((LivingEntityAccessor) controllingPlayer).isJumping();
 
       if (forwardSpeed == -1.0){
          //按住back -> 下降
@@ -110,7 +105,7 @@ public abstract class BeeRideableMixin extends AnimalEntity {
       cancellable = true
    )
    public void injectTickMovement(CallbackInfo info){
-      // if there is an passenger, do not tick other things
+      // if there is a passenger, do not tick other things
       if (this.hasPassengers()){
          info.cancel();
       }
