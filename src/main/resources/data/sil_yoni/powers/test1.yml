@@ -15,7 +15,11 @@ test_power1:
 
 static_hunger:
   type: sil_yoni:misc/static_hunger
-  static_food_level: true
+  static_food_level: false
   static_saturation_level: true
   food_level: 10
   saturation_level: 20
+
+map_to:
+  type: sil_yoni:misc/map_resource_ratio_to_food_level
+  resource: "*:*_hud"
