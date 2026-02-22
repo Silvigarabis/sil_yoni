@@ -16,10 +16,17 @@
    "entrypoints": {
       "main": [
          "io.github.silvigarabis.sil_yoni.SilYoniMod"
-      ]
+      ],
+     "client": [
+         "io.github.silvigarabis.sil_yoni.SilYoniModClient"
+     ]
    },
    "mixins": [
-      "sil_yoni.mixins.json"
+      "sil_yoni.mixins.json",
+     {
+       "environment": "client",
+       "config": "sil_yoni.mixins.client.json"
+     }
    ],
    "depends": {
       "java": ">=17",

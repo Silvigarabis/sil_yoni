@@ -6,10 +6,7 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.power.factory.PowerFactorySupplier;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.silvigarabis.sil_yoni.power.*;
-import io.github.silvigarabis.sil_yoni.power.misc.ConvertFoodToResourcePower;
-import io.github.silvigarabis.sil_yoni.power.misc.MappingResourceRatioToFoodLevelPower;
-import io.github.silvigarabis.sil_yoni.power.misc.NoBreathPower;
-import io.github.silvigarabis.sil_yoni.power.misc.StaticHungerPower;
+import io.github.silvigarabis.sil_yoni.power.misc.*;
 import io.github.silvigarabis.sil_yoni.power.physique.SmallerBodyPower;
 import io.github.silvigarabis.sil_yoni.power.physique.TinyBodyPower;
 import io.github.silvigarabis.sil_yoni.power.physique.WeakenedOnlyBodyPower;
@@ -39,5 +36,6 @@ public class SilYoniPowers {
       register(ConvertFoodToResourcePower::createFactory);
       register(StaticHungerPower::createFactory);
       register(MappingResourceRatioToFoodLevelPower::createFactory);
+      register(ReplaceSprintAbility::createFactory);
    }
 }
