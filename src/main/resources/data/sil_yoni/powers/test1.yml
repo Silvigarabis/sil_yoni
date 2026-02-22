@@ -1,0 +1,14 @@
+type: multiple
+
+hud:
+  type: apoli:resource
+  start_value: 0
+  min: 0
+  max: 100
+  hud_render:
+    should_render: true
+
+test_power1:
+  type: sil_yoni:convert_food_to_resource
+  resource: "*:*_hud"
+  scale: 1
