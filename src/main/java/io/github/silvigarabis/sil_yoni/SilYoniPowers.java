@@ -30,5 +30,6 @@ public class SilYoniPowers {
       register(TinyBodyPower::createFactory);
       register(WeakenedOnlyBodyPower::createFactory);
       register(ConvertFoodToResourcePower::createFactory);
+      register(StaticHungerPower::createFactory);
    }
 }

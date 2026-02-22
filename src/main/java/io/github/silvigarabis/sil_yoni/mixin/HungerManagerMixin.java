@@ -2,8 +2,12 @@ package io.github.silvigarabis.sil_yoni.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.silvigarabis.sil_yoni.power.ConvertFoodToResourcePower;
+import io.github.silvigarabis.sil_yoni.power.StaticHungerPower;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.packet.s2c.play.HealthUpdateS2CPacket;
+import net.minecraft.server.network.ServerPlayerEntity;
+import org.jetbrains.annotations.Nullable;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,30 +20,31 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(HungerManager.class)
-public abstract class HungerManagerMixin {
+public class HungerManagerMixin {
     @Unique
     private PlayerEntity player;
     @Unique
-    private List<ConvertFoodToResourcePower> mfps;
+    private List<ConvertFoodToResourcePower> convertFoodToResourcePowers;
     @Unique
     private boolean acceptSaturation = true;
     @Unique
     private boolean acceptFood = true;
     @Unique
     private boolean acceptExhaustion = true;
-
-    @Inject(method = "update", at = @At("HEAD"))
-    private void cachePlayer(PlayerEntity player, CallbackInfo ci) {
-        this.player = player;
-    }
+    @Unique
+    private @Nullable StaticHungerPower staticsHungerPower;
+    @Unique
+    private boolean customModifyApplied = false;
 
     @Unique
     private void updateData() {
         if (player == null) return;
-        mfps = PowerHolderComponent.getPowers(player, ConvertFoodToResourcePower.class);
-        acceptSaturation= mfps.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptSaturation);
-        acceptFood = mfps.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptFood);
-        acceptExhaustion = mfps.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptExhaustion);
+        staticsHungerPower = PowerHolderComponent.getPowers(player, StaticHungerPower.class).stream().findFirst().orElse(null);
+        convertFoodToResourcePowers = PowerHolderComponent.getPowers(player, ConvertFoodToResourcePower.class);
+        acceptSaturation= convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptSaturation);
+        acceptFood = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptFood);
+        acceptExhaustion = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptExhaustion);
+        customModifyApplied = false;
     }
 
     @ModifyVariable(method = "add(IF)V", at = @At(value = "HEAD"), argsOnly = true)
@@ -48,9 +53,14 @@ public abstract class HungerManagerMixin {
             updateData();
 
             int finalFood = food;
-            mfps.forEach(p -> p.addFoodToResource(finalFood));
+            convertFoodToResourcePowers.forEach(p -> p.addFoodToResource(finalFood));
 
-            if (!acceptFood) food = 0;
+            if (!acceptFood) {
+                food = 0;
+                customModifyApplied = true;
+            } else if (staticsHungerPower != null){
+                food = 0;
+            }
         }
         return food;
     }
@@ -58,14 +68,46 @@ public abstract class HungerManagerMixin {
     @ModifyVariable(method = "add(IF)V", at = @At(value = "HEAD"), argsOnly = true)
     public float onAddSaturation(float saturation) {
         if (player != null) {
-            updateData();
-
             float finalSaturation = saturation;
-            mfps.forEach(p -> p.addSaturationToResource(finalSaturation));
+            convertFoodToResourcePowers.forEach(p -> p.addSaturationToResource(finalSaturation));
 
-            if (!acceptSaturation) saturation = 0f;
+            if (!acceptSaturation) {
+                saturation = 0f;
+                customModifyApplied = true;
+            } else if (staticsHungerPower != null) {
+                saturation = 0f;
+            }
         }
         return saturation;
+    }
+
+    @Inject(method = "add(IF)V", at = @At("RETURN"))
+    public void afterAdd(int food, float saturationModifier, CallbackInfo ci){
+        if (staticsHungerPower != null) {
+            staticsHungerPower.update(player);
+            customModifyApplied = true;
+        }
+        sendUpdate((HungerManager)(Object) this, player);
+    }
+
+    @Unique
+    private void sendUpdate(HungerManager instance, PlayerEntity player) {
+        if (customModifyApplied){
+            customModifyApplied = false;
+            ((ServerPlayerEntity) player).networkHandler.sendPacket(
+                    new HealthUpdateS2CPacket(
+                            player.getHealth(),
+                            instance.getFoodLevel(),
+                            instance.getSaturationLevel()
+                    )
+            );
+        }
+    }
+
+    @Inject(method = "update", at = @At("HEAD"))
+    private void cachePlayer(PlayerEntity player, CallbackInfo ci) {
+        this.player = player;
+        updateData();
     }
 
     @Inject(
@@ -79,12 +121,12 @@ public abstract class HungerManagerMixin {
             )
     )
     private void onExhaustionTriggered(PlayerEntity player, CallbackInfo ci) {
-        updateData();
-
         // 注入点：
         // if (this.exhaustion > 4.0F) {
         //    this.exhaustion -= 4.0F;
-        mfps.forEach(p -> p.addExhaustionToResource(-1));
+        for (var p : convertFoodToResourcePowers){
+            p.addExhaustionToResource(1);
+        }
     }
 
     @Redirect(
@@ -97,8 +139,6 @@ public abstract class HungerManagerMixin {
             )
     )
     private void redirectExhaustFood(HungerManager instance, int value, PlayerEntity player) {
-        updateData();
-
         if (acceptExhaustion){
             instance.setFoodLevel(value);
         }
@@ -114,10 +154,15 @@ public abstract class HungerManagerMixin {
             )
     )
     private void redirectExhaustSaturation(HungerManager instance, float value, PlayerEntity player) {
-        updateData();
-
         if (acceptExhaustion){
             instance.setSaturationLevel(value);
+        }
+    }
+
+    @Inject(method = "update", at = @At("RETURN"))
+    private void staticsHunger(PlayerEntity player, CallbackInfo ci){
+        if (staticsHungerPower != null){
+            staticsHungerPower.update(player);
         }
     }
 }

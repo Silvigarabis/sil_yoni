@@ -12,3 +12,10 @@ test_power1:
   type: sil_yoni:convert_food_to_resource
   resource: "*:*_hud"
   scale: 1
+
+static_hunger:
+  type: sil_yoni:misc/static_hunger
+  static_food_level: true
+  static_saturation_level: true
+  food_level: 10
+  saturation_level: 20
