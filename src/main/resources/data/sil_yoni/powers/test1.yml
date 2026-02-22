@@ -1,4 +1,4 @@
-type: multiple
+type: apoli:multiple
 
 hud:
   type: apoli:resource
