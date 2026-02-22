@@ -1,8 +1,8 @@
 package io.github.silvigarabis.sil_yoni.mixin;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
-import io.github.silvigarabis.sil_yoni.power.ConvertFoodToResourcePower;
-import io.github.silvigarabis.sil_yoni.power.StaticHungerPower;
+import io.github.silvigarabis.sil_yoni.power.misc.ConvertFoodToResourcePower;
+import io.github.silvigarabis.sil_yoni.power.misc.StaticHungerPower;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.packet.s2c.play.HealthUpdateS2CPacket;
