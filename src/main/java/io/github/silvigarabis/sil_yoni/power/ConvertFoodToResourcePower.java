@@ -1,6 +1,5 @@
 package io.github.silvigarabis.sil_yoni.power;
 
-import io.github.apace100.apoli.Apoli;
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.apace100.apoli.data.ApoliDataTypes;
 import io.github.apace100.apoli.power.CooldownPower;
@@ -10,7 +9,9 @@ import io.github.apace100.apoli.power.VariableIntPower;
 import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
+import io.github.silvigarabis.sil_yoni.SilYoniMod;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 public class ConvertFoodToResourcePower extends Power {
@@ -19,19 +20,21 @@ public class ConvertFoodToResourcePower extends Power {
 
     private final boolean shouldConvertFood;
     private final boolean shouldConvertSaturation;
+    private final boolean shouldConvertExhaustion;
     private final boolean shouldAcceptFood;
     private final boolean shouldAcceptSaturation;
+    private final boolean shouldAcceptExhaustion;
     private final @Nullable PowerType<?> resourceType;
     private final float resourceScale;
 
-    public ConvertFoodToResource(
+    public ConvertFoodToResourcePower(
             PowerType<?> type,
             LivingEntity entity,
             @Nullable PowerType<?> resourceType,
             float resourceScale,
-            boolean shouldConvertFood, boolean shouldConvertSaturation,
-            boolean shouldAcceptFood, boolean shouldAcceptSaturation
-            ) {
+            boolean shouldConvertFood, boolean shouldConvertSaturation, boolean shouldConvertExhaustion,
+            boolean shouldAcceptFood, boolean shouldAcceptSaturation, boolean shouldAcceptExhaustion
+    ) {
 
         super(type, entity);
 
@@ -40,9 +43,11 @@ public class ConvertFoodToResourcePower extends Power {
 
         this.shouldConvertFood = shouldConvertFood;
         this.shouldConvertSaturation = shouldConvertSaturation;
+        this.shouldConvertExhaustion = shouldConvertExhaustion;
 
         this.shouldAcceptSaturation = shouldAcceptSaturation;
         this.shouldAcceptFood = shouldAcceptFood;
+        this.shouldAcceptExhaustion = shouldAcceptExhaustion;
     }
 
     public void addFoodToResource(int food){
@@ -54,6 +59,12 @@ public class ConvertFoodToResourcePower extends Power {
     public void addSaturationToResource(float saturation) {
         if (shouldConvertSaturation) {
             addValueToResource(saturation);
+        }
+    }
+
+    public void addExhaustionToResource(int exhaustionFood) {
+        if (shouldConvertExhaustion) {
+            addValueToResource(-exhaustionFood);
         }
     }
 
@@ -78,27 +89,23 @@ public class ConvertFoodToResourcePower extends Power {
                         .add("scale", SerializableDataTypes.FLOAT, 1f)
                         .add("convert_saturation", SerializableDataTypes.BOOLEAN, true)
                         .add("convert_food", SerializableDataTypes.BOOLEAN, true)
+                        .add("convert_exhaustion", SerializableDataTypes.BOOLEAN, true)
                         .add("accept_saturation", SerializableDataTypes.BOOLEAN, false)
-                        .add("accept_food", SerializableDataTypes.BOOLEAN, false),
-                data -> (powerType, livingEntity) -> new ConvertFoodToResource(
+                        .add("accept_food", SerializableDataTypes.BOOLEAN, false)
+                        .add("accept_exhaustion", SerializableDataTypes.BOOLEAN, false),
+                data -> (powerType, livingEntity) -> new ConvertFoodToResourcePower(
                         powerType,
                         livingEntity,
                         data.get("resource"),
                         data.get("scale"),
                         data.get("convert_food"),
                         data.get("convert_saturation"),
+                        data.get("convert_exhaustion"),
                         data.get("accept_food"),
+                        data.get("accept_saturation"),
                         data.get("accept_saturation")
                 )
         ).allowCondition();
-    }
-
-    public boolean shouldConvertFood() {
-        return shouldConvertFood;
-    }
-
-    public boolean shouldConvertSaturation() {
-        return shouldConvertSaturation;
     }
 
     public boolean shouldAcceptFood() {
@@ -108,4 +115,9 @@ public class ConvertFoodToResourcePower extends Power {
     public boolean shouldAcceptSaturation() {
         return shouldAcceptSaturation;
     }
+
+    public boolean shouldAcceptExhaustion() {
+        return shouldAcceptExhaustion;
+    }
+
 }
