@@ -89,5 +89,3 @@ callbacks:
          power: sil_yoni:origin_spec/guxi/no_energy
          source: sil_yoni:origin_spec/guxi/triggers
 
-prevent_natural_regen:
-   type: apoli:disable_regen

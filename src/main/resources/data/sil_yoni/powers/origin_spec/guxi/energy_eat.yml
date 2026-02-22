@@ -19,6 +19,9 @@ prevent_eat:
          ingredient: { item: minecraft:suspicious_stew }
          inverted: true
 
+prevent_natural_regen:
+   type: apoli:disable_regen
+
 prevent_regen_saturation:
    type: apoli:modify_food
    saturation_modifier:
