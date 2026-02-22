@@ -40,10 +40,17 @@ public class HungerManagerMixin {
     private void updateData() {
         if (player == null) return;
         staticsHungerPower = PowerHolderComponent.getPowers(player, StaticHungerPower.class).stream().findFirst().orElse(null);
+
         convertFoodToResourcePowers = PowerHolderComponent.getPowers(player, ConvertFoodToResourcePower.class);
-        acceptSaturation= convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptSaturation);
-        acceptFood = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptFood);
-        acceptExhaustion = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptExhaustion);
+        if (convertFoodToResourcePowers.isEmpty()) {
+            acceptSaturation = true;
+            acceptFood = true;
+            acceptExhaustion = true;
+        } else {
+            acceptSaturation = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptSaturation);
+            acceptFood = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptFood);
+            acceptExhaustion = convertFoodToResourcePowers.stream().anyMatch(ConvertFoodToResourcePower::shouldAcceptExhaustion);
+        }
         customModifyApplied = false;
     }
 
