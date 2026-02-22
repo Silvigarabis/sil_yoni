@@ -91,7 +91,7 @@ processResources {
 	}
 	
 	filesMatching("**/*.yml") {
-        println "converting yml file %s to json".formatted(it.relativePath.toString())
+//        println "converting yml file %s to json".formatted(it.relativePath.toString())
 
         rename("\\.yml\$", ".json")
 
