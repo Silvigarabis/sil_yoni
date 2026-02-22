@@ -1,4 +1,4 @@
-package io.github.silvigarabis.sil_yoni.power;
+package io.github.silvigarabis.sil_yoni.power.misc;
 
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.apoli.power.Power;

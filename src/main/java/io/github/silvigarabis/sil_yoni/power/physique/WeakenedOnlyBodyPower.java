@@ -1,16 +1,13 @@
-package io.github.silvigarabis.sil_yoni.power;
+package io.github.silvigarabis.sil_yoni.power.physique;
 
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.factory.PowerFactory;
 
-import virtuoel.pehkui.api.ScaleModifier;
 import virtuoel.pehkui.api.ScaleTypes;
-import virtuoel.pehkui.api.ScaleData;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
 import io.github.silvigarabis.sil_yoni.SilYoniMod;
