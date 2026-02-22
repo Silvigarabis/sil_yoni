@@ -84,7 +84,7 @@ eat_fire:
       value: -1
    self_action:
       type: apoli:feed
-      food: 1
+      food: 0.02
       saturation: 0
 
 harmful_damage:
@@ -99,27 +99,30 @@ harmful_damage:
 starve_damage:
    type: apoli:modify_damage_taken
    damage_condition:
-      type: "apoli:in_tag"
-      tag: "minecraft:starve"
+      type: apoli:name
+      name: starve
    modifier:
-      operation: multiply_base_multiplicative
-      value: 6
+      operation: multiply_total
+      value: -1
+   self_action:
+      type: apoli:damage
+      amount: 4
+      source:
+         name: guxi:starve_energy
 
 dense_energy_damage:
    type: apoli:modify_damage_taken
    damage_condition:
       type: apoli:and
       conditions:
-      -
-         { type: "apoli:in_tag", tag: "sil_yoni:dense_energy" }
-      -
-         { inverted: true, type: "apoli:in_tag", tag: "is_explosion" }
+      - { type: apoli:name, name: dense_energy }
+      - { inverted: true, type: apoli:in_tag, tag: is_explosion }
    modifier:
       operation: multiply_base_multiplicative
       value: -0.85
    self_action:
       type: apoli:feed
-      food: 1
+      food: 0.85
       saturation: 0
 
 eat_sun_light:
@@ -129,7 +132,7 @@ eat_sun_light:
       type: apoli:exposed_to_sun
    entity_action:
       type: apoli:feed
-      food: 1
+      food: 0.02
       saturation: 0
 
 eat_fire_immu:

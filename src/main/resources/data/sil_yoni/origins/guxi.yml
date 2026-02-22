@@ -10,6 +10,7 @@ powers:
   - sil_yoni:physique/powerless_arms
   - sil_yoni:vision/less_color_shader
   - sil_yoni:vision/seeing_entity_quote_gold
+  - sil_yoni:vision/seeing_attack_target_entty_dark_red_always
   - sil_yoni:vision/no_bad_vision
   - sil_yoni:vision/night_vision_always
   - sil_yoni:misc/general_climbable
