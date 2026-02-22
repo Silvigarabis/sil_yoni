@@ -23,3 +23,15 @@ static_hunger:
 map_to:
   type: sil_yoni:misc/map_resource_ratio_to_food_level
   resource: "*:*_hud"
+
+test_allow_sprint:
+  type: sil_yoni:sprint_ability
+  condition:
+   type: apoli:constant
+   value: true
+
+test_deny_sprint:
+  type: sil_yoni:sprint_ability
+  condition:
+   type: apoli:constant
+   value: false
