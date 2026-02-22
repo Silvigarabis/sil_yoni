@@ -90,8 +90,8 @@ eat_fire:
 harmful_damage:
    type: apoli:modify_damage_taken
    damage_condition:
-      type: "apoli:in_tag"
-      tag: "sil_yoni:energy_harmfully"
+      type: apoli:in_tag
+      tag: sil_yoni:energy_harmfully
    modifier:
       operation: multiply_base_multiplicative
       value: 1.5
