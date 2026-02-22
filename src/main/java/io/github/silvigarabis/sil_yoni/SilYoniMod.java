@@ -31,6 +31,8 @@ public class SilYoniMod implements ModInitializer {
         SilYoniPowers.register();
         SilYoniPehkuiRegistries.registerAll();
 
+        PowerFactories.register();
+
         LOGGER.info("Done. Have a nice day.");
         
     }
