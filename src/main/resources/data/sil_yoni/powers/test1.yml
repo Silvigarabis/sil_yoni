@@ -9,7 +9,7 @@ hud:
     should_render: true
 
 test_power1:
-  type: sil_yoni:convert_food_to_resource
+  type: sil_yoni:misc/convert_food_to_resource
   resource: "*:*_hud"
   scale: 1
 

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ConvertFoodToResourcePower extends Power {
 
-    public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "convert_food_to_resource");
+    public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "misc/convert_food_to_resource");
 
     private final boolean shouldConvertFood;
     private final boolean shouldConvertSaturation;
