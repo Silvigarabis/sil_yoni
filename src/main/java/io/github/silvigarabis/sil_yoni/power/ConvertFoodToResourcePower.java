@@ -13,7 +13,9 @@ import io.github.apace100.calio.data.SerializableDataTypes;
 import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class ConvertFoodToResource extends Power {
+public class ConvertFoodToResourcePower extends Power {
+
+    public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "convert_food_to_resource");
 
     private final boolean shouldConvertFood;
     private final boolean shouldConvertSaturation;
@@ -70,7 +72,7 @@ public class ConvertFoodToResource extends Power {
     }
 
     public static PowerFactory<Power> createFactory() {
-        return new PowerFactory<>(Apoli.identifier("convert_food_to_resource"),
+        return new PowerFactory<>(ID,
                 new SerializableData()
                         .add("resource", ApoliDataTypes.POWER_TYPE, null)
                         .add("scale", SerializableDataTypes.FLOAT, 1f)

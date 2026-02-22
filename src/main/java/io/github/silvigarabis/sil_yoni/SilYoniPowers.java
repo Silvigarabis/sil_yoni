@@ -5,11 +5,7 @@ import io.github.apace100.apoli.power.PowerTypeReference;
 import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.power.factory.PowerFactorySupplier;
 import io.github.apace100.apoli.registry.ApoliRegistries;
-import io.github.apace100.calio.data.SerializableData;
-
 import io.github.silvigarabis.sil_yoni.power.*;
-
-import net.minecraft.util.Identifier;
 import net.minecraft.registry.Registry;
 
 @SuppressWarnings("unchecked")
@@ -33,5 +29,6 @@ public class SilYoniPowers {
       register(SmallerBodyPower::createFactory);
       register(TinyBodyPower::createFactory);
       register(WeakenedOnlyBodyPower::createFactory);
+      register(ConvertFoodToResourcePower::createFactory);
    }
 }
