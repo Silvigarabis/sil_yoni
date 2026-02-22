@@ -1,0 +1,22 @@
+hidden: true
+type: apoli:entity_glow
+bientity_condition:
+  type: apoli:and
+  conditions:
+    - type: apoli:target_condition
+      condition:
+        type: apoli:living
+    - type: apoli:or
+      conditions:
+      - type: apoli:attack_target
+      - type: apoli:attacker
+      - type: apoli:invert
+        condition:
+          type: apoli:attack_target
+      - type: apoli:invert
+        condition:
+          type: apoli:attacker
+use_teams: false
+red: 0.8392156862745098
+green: 0.6
+blue: 1
