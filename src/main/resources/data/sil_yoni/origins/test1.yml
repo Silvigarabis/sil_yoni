@@ -1,0 +1,9 @@
+powers:
+  - sil_yoni:test1
+
+icon:
+  item: minecraft:debug_stick
+unchoosable: true
+impact: 3
+name: 测试起源1
+description: 测试用起源，用于快捷测试能力
