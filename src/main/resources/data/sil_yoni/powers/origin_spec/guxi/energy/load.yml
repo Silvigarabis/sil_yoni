@@ -135,9 +135,9 @@ damage_lv1_trigger:
    self_action:
       type: apoli:and
       actions:
-      -
-         type: apoli:execute_command
-         command: say lv1
+      # -
+      #    type: apoli:execute_command
+      #    command: say lv1
       -
          type: apoli:exhaust
          amount: 8
@@ -175,9 +175,9 @@ damage_lv2_trigger:
    self_action:
       type: apoli:and
       actions:
-      -
-         type: apoli:execute_command
-         command: say lv2
+      # -
+      #    type: apoli:execute_command
+      #    command: say lv2
       -
          type: apoli:exhaust
          amount: 20
@@ -215,9 +215,9 @@ damage_lv3_trigger:
    self_action:
       type: apoli:and
       actions:
-      -
-         type: apoli:execute_command
-         command: say lv3
+      # -
+      #    type: apoli:execute_command
+      #    command: say lv3
       -
          type: apoli:exhaust
          amount: 40
