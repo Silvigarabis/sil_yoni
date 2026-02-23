@@ -22,7 +22,7 @@ public class SmallerBodyModifier extends ScaleModifier {
       ScaleTypes.KNOCKBACK
    };
 
-   private static Map<ScaleType, Float> AffectedValueMultipliers = new HashMap<>();
+   private static final Map<ScaleType, Float> AffectedValueMultipliers = new HashMap<>();
    static {
       AffectedValueMultipliers.put(ScaleTypes.BASE, 0.66f);
       AffectedValueMultipliers.put(ScaleTypes.HEIGHT, 0.66f);

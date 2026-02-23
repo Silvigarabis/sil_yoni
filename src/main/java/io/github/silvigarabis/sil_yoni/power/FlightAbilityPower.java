@@ -14,7 +14,7 @@ import io.github.silvigarabis.sil_yoni.SilYoniMod;
 public class FlightAbilityPower extends Power {
 
    public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "flight_ability");
-   private boolean shouldTick;
+   private final boolean shouldTick;
 
    public FlightAbilityPower(PowerType<?> type, LivingEntity entity){
       super(type, entity);
