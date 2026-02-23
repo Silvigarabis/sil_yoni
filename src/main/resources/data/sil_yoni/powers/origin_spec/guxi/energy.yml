@@ -61,3 +61,10 @@ minging_speed:
    modifier:
       operation: multiply_base_additive
       value: -0.9
+   block_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:hardness
+         comparison: ">"
+         compare_to: 0
