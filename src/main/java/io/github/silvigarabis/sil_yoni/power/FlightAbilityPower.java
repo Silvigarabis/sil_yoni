@@ -35,7 +35,4 @@ public class FlightAbilityPower extends Power {
       return shouldTick && this.isActive();
    }
 
-   @Override
-   public void tick(){
-   }
 }
