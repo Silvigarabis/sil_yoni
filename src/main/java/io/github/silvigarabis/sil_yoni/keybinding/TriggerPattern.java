@@ -64,6 +64,11 @@ public enum TriggerPattern {
             PressHold.withLongDef(),
             ActiveContinuousWhenHold.use()
     ),
+    ACTIVE_6s_LONG_HOLD_ONCE(
+            WaitPress.withInf(),
+            PressHold.with(20 * 6),
+            ActiveOnce.use()
+    ),
     ACTIVE_10s_LONG_HOLD_ONCE(
             WaitPress.withInf(),
             PressHold.with(20 * 10),
