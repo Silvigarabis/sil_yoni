@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 
 public class PowerActiveKeyListener {
+    // 用于测试效果的，由于目前暂时还没设置某种显示机制
+//    private static final String _testKey = "key.origins.primary_active";
+    private static final String _testKey = null;
+
     private static final HashMap<String, KeyBinding> keybindMap = new HashMap<>();
     private static final HashMap<String, InputProcessor> keybindProcessorMap = new HashMap<>();
 
@@ -87,6 +92,11 @@ public class PowerActiveKeyListener {
 
         var activePowers = getActivePowers(client.player);
         var usedKeys = getUseKeys(activePowers);
+
+        if (_testKey != null) {
+            usedKeys.put(_testKey, getKeyBinding(_testKey));
+        }
+
         var updatedKeyInfoMap = updateUseKeys(usedKeys);
 
         var powersToTrigger = new ArrayList<Active>();
@@ -103,6 +113,12 @@ public class PowerActiveKeyListener {
             if (triggeredPatterns != null && triggeredPatterns.contains(triggerPattern)) {
                 powersToTrigger.add(power);
             }
+        }
+
+        if (_testKey != null) {
+            var _testKey_result = updatedKeyInfoMap.get(_testKey);
+            if (_testKey_result != null && !_testKey_result.isEmpty())
+                client.player.sendMessage(Text.of("%s: %s".formatted(_testKey, _testKey_result)));
         }
 
         if (!powersToTrigger.isEmpty()) {
