@@ -124,12 +124,11 @@ damage_lv1_trigger:
             comparison: '<='
             compare_to: 60
    damage_condition:
-      type: apoli:or
-      inverted: true
-      actions:
-      - { type: apoli:name, name: guxi:starve_energy }
-      - { type: apoli:in_tag, tag: is_fire }
-      - { type: apoli:in_tag, tag: is_lightning }
+      type: apoli:and
+      conditions:
+      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
+      - { inverted: true, type: apoli:in_tag, tag: is_fire }
+      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
    modifier:
       operation: add_base_early
       value: -5
@@ -162,12 +161,11 @@ damage_lv2_trigger:
             comparison: '<='
             compare_to: 50
    damage_condition:
-      type: apoli:or
-      inverted: true
-      actions:
-      - { type: apoli:name, name: guxi:starve_energy }
-      - { type: apoli:in_tag, tag: is_fire }
-      - { type: apoli:in_tag, tag: is_lightning }
+      type: apoli:and
+      conditions:
+      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
+      - { inverted: true, type: apoli:in_tag, tag: is_fire }
+      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
    modifier:
       operation: add_base_early
       value: -10
@@ -200,12 +198,11 @@ damage_lv3_trigger:
             comparison: '<='
             compare_to: 30
    damage_condition:
-      type: apoli:or
-      inverted: true
-      actions:
-      - { type: apoli:name, name: guxi:starve_energy }
-      - { type: apoli:in_tag, tag: is_fire }
-      - { type: apoli:in_tag, tag: is_lightning }
+      type: apoli:and
+      conditions:
+      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
+      - { inverted: true, type: apoli:in_tag, tag: is_fire }
+      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
    modifier:
       operation: add_base_early
       value: -15
