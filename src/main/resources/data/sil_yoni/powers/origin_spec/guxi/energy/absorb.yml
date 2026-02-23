@@ -14,7 +14,7 @@ eat_fire:
       value: -1
    self_action:
       type: apoli:chance
-      chance: 0.2
+      chance: 0.05
       action:
          type: apoli:feed
          food: 1
