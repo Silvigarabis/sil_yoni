@@ -1,21 +1,26 @@
 powers:
   - sil_yoni:origin_spec/guxi/triggers
-  - sil_yoni:origin_spec/guxi/energy_eat
+  - sil_yoni:origin_spec/guxi/energy
+  - sil_yoni:origin_spec/guxi/energy/damage
+  - sil_yoni:origin_spec/guxi/energy/absorb
+  - sil_yoni:origin_spec/guxi/energy/food
+  - sil_yoni:origin_spec/guxi/energy/regen_health
+  - sil_yoni:vision/less_color_shader
   - sil_yoni:origin_spec/guxi/fire_light
+  - sil_yoni:origin_spec/guxi/elytra_deform_desc
+
   - sil_yoni:sun_s_shining
 
-  - sil_yoni:physique/powerful_health
+  # - sil_yoni:physique/powerful_health
   - sil_yoni:physique/smaller_body
   - sil_yoni:physique/weakened_body
   - sil_yoni:physique/powerless_arms
-  - sil_yoni:vision/less_color_shader
   - sil_yoni:vision/seeing_entity_quote_gold
   - sil_yoni:vision/seeing_attack_target_entty_dark_red_always
   - sil_yoni:vision/no_bad_vision
   - sil_yoni:vision/night_vision_always
   - sil_yoni:misc/general_climbable
   - sil_yoni:misc/no_breath
-  - sil_yoni:misc/mini_stomach
 icon:
   item: minecraft:music_disc_11
 unchoosable: false

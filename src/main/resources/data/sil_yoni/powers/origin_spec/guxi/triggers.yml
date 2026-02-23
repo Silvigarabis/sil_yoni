@@ -1,9 +1,5 @@
 type: apoli:multiple
 
-loop_activate:
-   type: apoli:action_over_time
-   internal: 30
-
 loop_energy:
    type: apoli:action_over_time
    internal: 30
@@ -11,9 +7,10 @@ loop_energy:
       # 检查是否有能量足够
       type: apoli:if_else
       condition:
-         type: apoli:food_level
+         type: apoli:resource
+         resource: sil_yoni:origin_spec/guxi/energy_data
          comparison: "<="
-         compare_to: 4
+         compare_to: 500
       #如果能量不够
       if_action:
          #检查当前状态
@@ -32,10 +29,6 @@ loop_energy:
                type: apoli:revoke_power
                power: sil_yoni:origin_spec/guxi/elytra_deform
                source: "*:*"
-            # -
-               # type: apoli:revoke_power
-               # power: sil_yoni:origin_spec/guxi/fire_light
-               # source: "*:*"
             -
                type: apoli:grant_power
                power: sil_yoni:origin_spec/guxi/no_energy
@@ -57,10 +50,6 @@ loop_energy:
                type: apoli:grant_power
                power: sil_yoni:origin_spec/guxi/elytra_deform
                source: "*:*"
-            # -
-               # type: apoli:grant_power
-               # power: sil_yoni:origin_spec/guxi/fire_light
-               # source: sil_yoni:origin_spec/guxi/triggers
             -
                type: apoli:revoke_power
                power: sil_yoni:origin_spec/guxi/no_energy
@@ -82,16 +71,20 @@ callbacks:
          power: sil_yoni:detection/active_actions/secondary_active
          source: "*:*"
    entity_action_respawned:
-      type: apoli:grant_power
-      power: sil_yoni:origin_spec/guxi/no_energy
-      source: "*:*"
+      type: apoli:and
+      actions:
+      -
+         type: apoli:change_resource
+         resource: "*:*_energy"
+         operation: set
+         change: 700
+      -
+         type: apoli:grant_power
+         power: sil_yoni:origin_spec/guxi/no_energy
+         source: "*:*"
    entity_action_lost:
       type: apoli:and
       actions:
-      # -
-         # type: apoli:revoke_power
-         # power: sil_yoni:origin_spec/guxi/fire_light
-         # source: "*:*"
       -
          type: apoli:revoke_power
          power: sil_yoni:origin_spec/guxi/elytra_deform
