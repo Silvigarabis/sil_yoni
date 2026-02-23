@@ -9,6 +9,8 @@ public class TriggerPatternRunner {
     }
 
     private @Nullable StageSpec curStage;
+
+    private int curStageSeq;
     private int nextStageSeq;
 
     private int stageTicks;
@@ -21,13 +23,15 @@ public class TriggerPatternRunner {
 
     public void reset(){
         curStage = null;
+        curStageSeq = -1;
         nextStageSeq = 0;
         stageTicks = -1;
     }
 
     public void next() {
         if (hasNext()) {
-            this.curStage = pattern.stages().get(nextStageSeq);
+            curStageSeq = nextStageSeq;
+            this.curStage = pattern.stages().get(curStageSeq);
             this.nextStageSeq++;
             this.stageTicks = -1;
         }
@@ -109,4 +113,9 @@ public class TriggerPatternRunner {
 
         return result;
     }
+
+    public int curStageSeq() {
+        return curStageSeq;
+    }
+
 }
