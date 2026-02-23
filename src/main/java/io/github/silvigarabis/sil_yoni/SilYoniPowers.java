@@ -13,7 +13,6 @@ import io.github.silvigarabis.sil_yoni.power.physique.TinyBodyPower;
 import io.github.silvigarabis.sil_yoni.power.physique.WeakenedOnlyBodyPower;
 import net.minecraft.registry.Registry;
 
-@SuppressWarnings("unchecked")
 public class SilYoniPowers {
    public static final PowerType<?> NO_BREATH = new PowerTypeReference<>(NoBreathPower.ID);
    public static final PowerType<?> TINY_BODY = new PowerTypeReference<>(TinyBodyPower.ID);
