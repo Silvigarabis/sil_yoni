@@ -29,8 +29,8 @@ public class SmallerBodyPower extends Power {
       return new PowerFactory<>(
          ID,
          new SerializableData(),
-         data -> (type, entity) -> new SmallerBodyPower(type, entity)
-      ).allowCondition();
+         data -> SmallerBodyPower::new
+      );
    }
 
    @Override

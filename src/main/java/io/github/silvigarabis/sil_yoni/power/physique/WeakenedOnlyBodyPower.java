@@ -31,8 +31,8 @@ public class WeakenedOnlyBodyPower extends Power {
       return new PowerFactory<>(
          ID,
          new SerializableData(),
-         data -> (type, entity) -> new WeakenedOnlyBodyPower(type, entity)
-      ).allowCondition();
+         data -> WeakenedOnlyBodyPower::new
+      );
    }
 
    @Override

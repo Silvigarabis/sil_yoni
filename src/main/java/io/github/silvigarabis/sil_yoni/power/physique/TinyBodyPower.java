@@ -30,7 +30,7 @@ public class TinyBodyPower extends Power {
       return new PowerFactory<>(
          ID,
          new SerializableData(),
-         data -> (type, entity) -> new TinyBodyPower(type, entity)
+         data -> TinyBodyPower::new
       ).allowCondition();
    }
 
