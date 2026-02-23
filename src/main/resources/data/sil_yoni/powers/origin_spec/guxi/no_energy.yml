@@ -16,7 +16,7 @@ attribute_while_no_energy:
    -
       attribute: generic.movement_speed
       operation: multiply_total
-      value: -0.7
+      value: -0.8
    update_health: false
 
 no_strength:

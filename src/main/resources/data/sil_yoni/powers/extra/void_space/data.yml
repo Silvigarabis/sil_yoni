@@ -33,7 +33,7 @@ no_y_axis:
    axes: [ y ]
 
 triggers:
-  type: apoli:action_on_callback
+  type: origins:action_on_callback
   execute_chosen_when_orb: true
   entity_action_lost:
     type: apoli:if_else

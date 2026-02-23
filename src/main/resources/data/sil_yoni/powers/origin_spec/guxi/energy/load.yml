@@ -1,0 +1,222 @@
+type: apoli:multiple
+
+data:
+   type: apoli:resource
+   min: -1
+   start_value: -1
+   max: 60
+   hud_render:
+      should_render: true
+      sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
+      bar_index: 4
+      condition:
+         type: apoli:resource
+         resource: "*:*_data"
+         comparison: '>'
+         compare_to: 0
+
+minging_speed:
+   type: apoli:modify_break_speed
+   condition:
+      type: apoli:resource
+      resource: "*:*_data"
+      comparison: '>='
+      compare_to: 0
+   modifier:
+      operation: multiply_base_additive
+      value: 18.9
+
+data_decrease:
+   interval: 1
+   type: apoli:action_over_time
+   condition:
+      type: apoli:resource
+      resource: "*:*_data"
+      comparison: '>='
+      compare_to: 0
+   entity_action:
+      type: apoli:and
+      actions:
+      # 第三级能量消耗，总在载荷结束时触发
+      -
+         type: apoli:if_else
+         condition:
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '=='
+            compare_to: 0
+         if_action:
+            type: apoli:exhaust
+            amount: 70
+
+      # 持续减少计数
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         operation: add
+         change: -1
+
+key_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.origins.primary_active
+      trigger: ACTIVE_SINGLE_CLICK
+   entity_action:
+      type: apoli:and
+      actions:
+      # 频繁手动触发，先行损失
+      -
+         type: apoli:if_else
+         condition:
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '>='
+            compare_to: 0
+         if_action:
+            type: apoli:exhaust
+            amount: 60
+      # 重置计时器
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: 60
+         operation: set
+
+key_cancel_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.origins.primary_active
+      trigger: ACTIVE_TRIPLE_CLICK
+   entity_action:
+      type: apoli:and
+      actions:
+      # 手动结束，较低损失
+      -
+         type: apoli:if_else
+         condition:
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '>='
+            compare_to: 0
+         if_action:
+            type: apoli:exhaust
+            amount: 8
+      # 重置计时器
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: -1
+         operation: set
+
+damage_lv1_trigger:
+   type: apoli:modify_damage_taken
+   condition:
+      type: apoli:and
+      conditions:
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '>'
+            compare_to: 50
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '<='
+            compare_to: 60
+   modifier:
+      operation: add_base_early
+      value: -5
+   self_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:exhaust
+         amount: 8
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: -1
+         operation: set
+      
+
+damage_lv2_trigger:
+   type: apoli:modify_damage_taken
+   condition:
+      type: apoli:and
+      conditions:
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '>'
+            compare_to: 30
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '<='
+            compare_to: 50
+   modifier:
+      operation: add_base_early
+      value: -10
+   self_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:exhaust
+         amount: 20
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: -1
+         operation: set
+      
+
+damage_lv3_trigger:
+   type: apoli:modify_damage_taken
+   condition:
+      type: apoli:and
+      conditions:
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '>'
+            compare_to: 0
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '<='
+            compare_to: 30
+   modifier:
+      operation: add_base_early
+      value: -15
+   self_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:exhaust
+         amount: 40
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: -1
+         operation: set
+      
+# 在方块被破坏时重置计时器，并消耗一定的能量
+mining_trigger:
+   type: apoli:action_on_block_break
+   only_when_harvested: false
+   condition:
+      type: apoli:resource
+      resource: "*:*_data"
+      comparison: '>'
+      compare_to: 0
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:exhaust
+         amount: 35
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: 60
+         operation: set

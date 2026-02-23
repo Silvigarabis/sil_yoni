@@ -63,6 +63,11 @@ public enum TriggerPattern {
             WaitPress.withDef(),
             PressHold.withLongDef(),
             ActiveContinuousWhenHold.use()
+    ),
+    ACTIVE_10s_LONG_HOLD_ONCE(
+            WaitPress.withInf(),
+            PressHold.with(20 * 10),
+            ActiveOnce.use()
     );
 
     public @Unmodifiable List<StageSpec> stages() {
