@@ -33,6 +33,7 @@ loop_energy:
                type: apoli:grant_power
                power: sil_yoni:origin_spec/guxi/no_energy
                source: "*:*"
+
       # 如果能量足够
       else_action:
          #检查当前状态
@@ -57,8 +58,13 @@ loop_energy:
 
 #添加时添加
 callbacks:
-   type: apoli:action_on_callback
+   type: origins:action_on_callback
    execute_chosen_when_orb: true
+   entity_action_chosen:
+      type: apoli:change_resource
+      resource: "sil_yoni:origin_spec/guxi/energy_data"
+      operation: set
+      change: 10000
    entity_action_gained:
       type: apoli:and
       actions:
@@ -66,18 +72,14 @@ callbacks:
          type: apoli:grant_power
          power: sil_yoni:origin_spec/guxi/no_energy
          source: "*:*"
-      -
-         type: origins:grant_power
-         power: sil_yoni:detection/active_actions/secondary_active
-         source: "*:*"
    entity_action_respawned:
       type: apoli:and
       actions:
       -
          type: apoli:change_resource
-         resource: "*:*_energy"
+         resource: "sil_yoni:origin_spec/guxi/energy_data"
          operation: set
-         change: 700
+         change: 600
       -
          type: apoli:grant_power
          power: sil_yoni:origin_spec/guxi/no_energy

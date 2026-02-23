@@ -87,6 +87,10 @@ power.sil_yoni.origin_spec/guxi/energy/food.name: 能量：摄入
 power.sil_yoni.origin_spec/guxi/energy/food.description: >-
   几乎纯粹由能量构成的存在并不需要进食，但一些物品的确可以作为你的“食物”，因为其中含有怪异的能量。
 
+power.sil_yoni.origin_spec/guxi/energy/load.name: 能量：载荷
+power.sil_yoni.origin_spec/guxi/energy/load.description: >-
+  由于本身是有能量构成的，要与世界互动，需要让能量添加上载荷，否则力量会变得非常弱小。
+
 power.sil_yoni.origin_spec/guxi/fire_light.name: 特殊能力：能量发送
 power.sil_yoni.origin_spec/guxi/fire_light.description: >-
   你可以将组成你的能量发送到外界，这会对其他生物造成伤害。
@@ -133,6 +137,9 @@ power.sil_yoni.void_space.description: 你可以进入虚空空间。
 power.sil_yoni.void_space.cooldown_deny_switch: 由于传送通道尚不稳定，无法切换空间。
 power.sil_yoni.void_space.live_keep: 你在虚空空间里死亡了，被迫从中出来。
 power.sil_yoni.void_space.leave.failed.noentrypoint: 没有找到出口。
+
+power.sil_yoni.guxi.fire_light.enabled: 能量发送：始终在攻击时发送能量
+power.sil_yoni.guxi.fire_light.disabled: 能量发送：仅在使用剑攻击时发送能量
 
 power.sil_yoni.origin_spec/fairy/fairy_wings.name: 仙灵的翅膀
 power.sil_yoni.origin_spec/fairy/fairy_wings.description: 你可以用你的翅膀飞行！不过不能飞太久，因为那可能让你的身体受伤。穿戴重甲也会加剧飞行时你的体力消耗。

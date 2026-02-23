@@ -55,3 +55,9 @@ sprint_ability:
       type: apoli:power
       inverted: true
       power: sil_yoni:origin_spec/guxi/no_energy
+
+minging_speed:
+   type: apoli:modify_break_speed
+   modifier:
+      operation: multiply_base_additive
+      value: -0.9

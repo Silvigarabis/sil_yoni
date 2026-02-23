@@ -5,12 +5,47 @@ enable_normal:
    max: 1
    hud_render: { should_render: false }
 
+force_enable_switcher:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.origins.secondary_active
+      trigger: ACTIVE_DOUBLE_CLICK
+   entity_action:
+      type: apoli:if_else
+      condition:
+         type: apoli:resource
+         resource: "*:*_enable_normal"
+         comparison: '=='
+         compare_to: 0
+      if_action:
+         type: apoli:and
+         actions:
+         -
+            type: apoli:execute_command
+            command: 'function sil_yoni:origins/guxi/show_fire_light_on'
+         -
+            type: apoli:change_resource
+            resource: "*:*_enable_normal"
+            operation: set
+            change: 1
+      else_action:
+         type: apoli:and
+         actions:
+         -
+            type: apoli:execute_command
+            command: 'function sil_yoni:origins/guxi/show_fire_light_off'
+         -
+            type: apoli:change_resource
+            resource: "*:*_enable_normal"
+            operation: set
+            change: 0
+
 trigger:
-   type: apoli:active_self
+   type: sil_yoni:detection/mutable_active_self
    cooldown: 3
    key:
       key: key.attack
-      continuous: true
+      trigger: ACTIVE_SHOT_HOLD
    condition:
       type: apoli:and
       conditions:

@@ -1,12 +1,6 @@
 type: apoli:multiple
 badges:
     - sil_yoni:hold_on_active
-key0:
-    type: apoli:active_self
-    key:
-        key: key.origins.secondary_active
-    entity_action:
-        type: apoli:nothing
 
 switch_cooldown:
     type: apoli:cooldown
@@ -17,13 +11,10 @@ switch_cooldown:
         inverted: false
 
 wait_for_trigger:
-    type: apoli:action_over_time
-    interval: 1
-    condition:
-        type: apoli:resource
-        resource: sil_yoni:detection/active_actions/secondary_active_result
-        comparison: '=='
-        compare_to: -3
+    type: sil_yoni:detection/mutable_active_self
+    key:
+        key: key.origins.secondary_active
+        trigger: ACTIVE_10s_LONG_HOLD_ONCE
     entity_action:
         type: apoli:if_else
         condition:
@@ -57,7 +48,7 @@ wait_for_trigger:
                   source: "*:*"
 
 callbacks:
-    type: apoli:action_on_callback
+    type: origins:action_on_callback
     execute_chosen_when_orb: true
     entity_action_gained:
         type: apoli:and
@@ -85,6 +76,7 @@ callbacks:
             type: apoli:revoke_power
             power: sil_yoni:detection/active_actions/secondary_active
             source: "*:*"
+
 death_callback:
     type: apoli:prevent_death
     condition:

@@ -13,9 +13,12 @@ eat_fire:
       operation: multiply_total_multiplicative
       value: -1
    self_action:
-      type: apoli:feed
-      food: 2
-      saturation: 0
+      type: apoli:chance
+      chance: 0.2
+      action:
+         type: apoli:feed
+         food: 1
+         saturation: 0
 
 eat_fire_immu:
    type: apoli:effect_immunity
@@ -24,7 +27,7 @@ eat_fire_immu:
 
 eat_sun_light:
    type: apoli:action_over_time
-   interval: 160
+   interval: 24
    condition:
       type: apoli:exposed_to_sun
    entity_action:
