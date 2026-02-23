@@ -1,5 +1,6 @@
 package io.github.silvigarabis.sil_yoni;
 
+import io.github.silvigarabis.sil_yoni.networking.ModC2SPackets;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,11 @@ public class SilYoniMod implements ModInitializer {
         // Proceed with mild caution.
 
         LOGGER.info("Initialize SilYoniMod... A mod just for me... to add some origin");
-        
+
         SilYoniSounds.register();
         SilYoniPowers.register();
         SilYoniPehkuiRegistries.registerAll();
+        ModC2SPackets.register();
 
         LOGGER.info("Done. Have a nice day.");
         
