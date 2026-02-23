@@ -9,28 +9,27 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
 
-    - name: setup jdk 17
+    - name: setup jdk 21
       uses: actions/setup-java@v4
       with:
-        java-version: 17
+        java-version: 21
         distribution: 'temurin'
 
     - name: checkout repository
       uses: actions/checkout@v4
 
     - name: validate gradle wrapper
-      uses: gradle/wrapper-validation-action@v1
+      uses: gradle/actions/wrapper-validation@v5
 
     - name: make gradle wrapper executable
-      if: ${{ runner.os != 'Windows' }}
       run: chmod +x ./gradlew
 
     - name: build
-      uses: burrunan/gradle-cache-action@v1
+      uses: burrunan/gradle-cache-action@v3
       with:
-        job-id: jdk17
+        job-id: jdk21
         arguments: build --build-cache
-        gradle-version: 8.7
+        gradle-version: wrapper
         gradle-distribution-sha-256-sum-warning: false
 
     - name: capture build artifacts
