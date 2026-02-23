@@ -4,17 +4,20 @@ buildscript {
 	}
 	dependencies {
 		classpath 'org.yaml:snakeyaml:1.27'
-		//classpath 'org.codehaus.groovy:groovy-json:3.0.17'
 	}
 }
 
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.12-SNAPSHOT'
 	id 'maven-publish'
 }
 
 version = project.mod_version
 group = project.maven_group
+def modVersion = version
+def depVersionApoli = project.apoli_version
+def depVersionFabricApi = project.fabric_version
+def depVersionFabricLoader = project.loader_version
 
 base {
 	archivesName = project.archives_base_name
@@ -42,7 +45,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"modid" {
+		"sil_yoni" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
@@ -55,17 +58,15 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	//modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	include "com.github.apace100:apoli:${project.apoli_version}"
 	modImplementation "com.github.apace100:apoli:${project.apoli_version}"
 
-	//include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	//include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
@@ -79,27 +80,28 @@ import groovy.json.JsonOutput
 import org.yaml.snakeyaml.Yaml
 
 processResources {
-	inputs.property "version", project.version
+	inputs.property "version", modVersion
 
 	filesMatching("fabric.mod.json") {
 		expand([
-			"version": project.version,
-			"loader_version": project.loader_version,
-			"apoli_version": project.apoli_version
+			"version": modVersion,
+			"loader_version": depVersionFabricLoader,
+            "fabric_version": depVersionFabricApi,
+			"apoli_version": depVersionApoli,
 		])
-		
-	}
-	
-	filesMatching("**/*.yml") {
-//        println "converting yml file %s to json".formatted(it.relativePath.toString())
 
-        rename("\\.yml\$", ".json")
+	}
+
+    rename("\\.yml\$", ".json")
+
+    filesMatching("**/*.yml") {
+//        println "converting yml file %s to json".formatted(it.relativeSourcePath.toString())
 
         def yamlContent = new Yaml().load(it.open())
         def jsonContent = JsonOutput.toJson(yamlContent)
 
         def contentReplaced = false
-        it.filter(_ -> {
+        it.filter(line -> {
             if (contentReplaced) return
             contentReplaced = true
             return jsonContent
@@ -128,19 +130,17 @@ jar {
 	}
 }
 
-// configure the maven publication
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        register("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
 
-	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
-	}
+    repositories {
+        maven {
+            name = "localTest"
+            url = uri(layout.buildDirectory.dir("repo"))
+        }
+    }
 }
