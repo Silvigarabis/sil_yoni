@@ -60,7 +60,7 @@ key_trigger:
    type: sil_yoni:detection/mutable_active_self
    key:
       key: key.origins.primary_active
-      trigger: ACTIVE_SINGLE_CLICK
+      trigger: ACTIVE_SHOT_HOLD_ONCE
    entity_action:
       type: apoli:and
       actions:
@@ -85,8 +85,8 @@ key_trigger:
 key_cancel_trigger:
    type: sil_yoni:detection/mutable_active_self
    key:
-      key: key.origins.primary_active
-      trigger: ACTIVE_TRIPLE_CLICK
+      key: key.origins.secondary_active
+      trigger: ACTIVE_SINGLE_CLICK
    entity_action:
       type: apoli:and
       actions:
@@ -130,11 +130,14 @@ damage_lv1_trigger:
       - { inverted: true, type: apoli:in_tag, tag: is_fire }
       - { inverted: true, type: apoli:in_tag, tag: is_lightning }
    modifier:
-      operation: add_base_early
+      operation: add_base_late
       value: -5
    self_action:
       type: apoli:and
       actions:
+      -
+         type: apoli:execute_command
+         command: say lv1
       -
          type: apoli:exhaust
          amount: 8
@@ -167,11 +170,14 @@ damage_lv2_trigger:
       - { inverted: true, type: apoli:in_tag, tag: is_fire }
       - { inverted: true, type: apoli:in_tag, tag: is_lightning }
    modifier:
-      operation: add_base_early
+      operation: add_base_late
       value: -10
    self_action:
       type: apoli:and
       actions:
+      -
+         type: apoli:execute_command
+         command: say lv2
       -
          type: apoli:exhaust
          amount: 20
@@ -204,11 +210,14 @@ damage_lv3_trigger:
       - { inverted: true, type: apoli:in_tag, tag: is_fire }
       - { inverted: true, type: apoli:in_tag, tag: is_lightning }
    modifier:
-      operation: add_base_early
+      operation: add_base_late
       value: -15
    self_action:
       type: apoli:and
       actions:
+      -
+         type: apoli:execute_command
+         command: say lv3
       -
          type: apoli:exhaust
          amount: 40
