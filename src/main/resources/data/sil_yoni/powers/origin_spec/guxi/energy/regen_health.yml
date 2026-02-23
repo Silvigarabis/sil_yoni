@@ -1,0 +1,25 @@
+##################
+# 生命恢复
+##################
+type: apoli:action_over_time
+interval: 20
+condition:
+   type: apoli:and
+   conditions:
+   -
+      type: apoli:relative_health
+      comparison: "<"
+      compare_to: 1
+   -
+      type: apoli:power
+      inverted: true
+      power: sil_yoni:origin_spec/guxi/no_energy
+entity_action:
+   type: apoli:and
+   actions:
+   -
+      type: apoli:heal
+      amount: 2
+   -
+      type: apoli:exhaust
+      amount: 16

@@ -22,8 +22,8 @@ equip_flying:
 
 energy_lost:
    type: apoli:exhaust
-   interval: 20
-   exhaustion: 0.65
+   interval: 10
+   exhaustion: 0.7
    condition:
       type: apoli:and
       conditions:
@@ -36,10 +36,10 @@ energy_lost:
          item_condition:
             type: apoli:ingredient
             ingredient: { item: minecraft:elytra }
-      
+
 boost_flight:
    type: apoli:active_self
-   cooldown: 17
+   cooldown: 15
    key:
       key: key.jump
       continuous: true
@@ -50,7 +50,7 @@ boost_flight:
       actions:
       -
          type: apoli:exhaust
-         amount: 0.15
+         amount: 0.7
       -
          type: apoli:add_velocity
          y: 0.03

@@ -1,0 +1,57 @@
+##################
+# 转换为能量存活
+##################
+
+type: apoli:multiple
+
+health:
+   type: apoli:attribute
+   modifier:
+      attribute: generic.max_health
+      operation: addition
+      value: 40
+   update_health: true
+
+data:
+   type: apoli:resource
+   start_value: 0
+   min: 0
+   max: 10000
+
+convert_food_to_resource:
+   type: sil_yoni:misc/convert_food_to_resource
+   resource: "*:*_data"
+   scale: 1
+   accept_food: false
+   accept_saturation: true
+   convert_food: true
+   convert_saturation: false
+
+map_food_to_energy:
+   type: sil_yoni:misc/map_resource_ratio_to_food_level
+   resource: "*:*_data"
+
+prevent_natural_regen:
+   type: apoli:disable_regen
+
+prevent_regen_saturation:
+   type: apoli:modify_food
+   saturation_modifier:
+      operation: multiply_total
+      value: -1
+
+remove_saturation:
+   type: apoli:exhaust
+   interval: 1
+   exhaustion: 10
+   condition:
+      type: apoli:saturation_level
+      comparison: ">"
+      compare_to: 0
+
+sprint_ability:
+   type: sil_yoni:sprint_ability
+   condition:
+      type: apoli:power
+      inverted: true
+      power: sil_yoni:origin_spec/guxi/no_energy

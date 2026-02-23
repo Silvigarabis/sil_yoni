@@ -1,0 +1,48 @@
+# 食物修改
+type: apoli:multiple
+prevent_eat:
+   type: apoli:prevent_item_use
+   item_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:food
+      -
+         type: apoli:ingredient
+         ingredient: { tag: sil_yoni:food_with_energy }
+         inverted: true
+      -
+         type: apoli:ingredient
+         ingredient: { item: minecraft:potion }
+         inverted: true
+      -
+         type: apoli:ingredient
+         ingredient: { item: minecraft:suspicious_stew }
+         inverted: true
+
+modify_spec_food:
+   type: apoli:modify_food
+   item_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:food
+      -
+         type: apoli:ingredient
+         ingredient: { tag: sil_yoni:food_with_energy }
+      -
+         inverted: true
+         type: origins:ingredient
+         ingredient: { item: minecraft:suspicious_stew }
+   food_modifier:
+      operation: multiply_base_additive
+      value: 3
+
+decrease_suspicious_stew_food:
+   type: apoli:modify_food
+   item_condition:
+      type: origins:ingredient
+      ingredient: { item: minecraft:suspicious_stew }
+   food_modifier:
+      operation: addition
+      value: -5
