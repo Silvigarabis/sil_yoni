@@ -22,12 +22,20 @@ public class PowerActiveKeyListener {
     private static final HashMap<String, KeyBinding> keybindMap = new HashMap<>();
     private static final HashMap<String, InputProcessor> keybindProcessorMap = new HashMap<>();
 
+    private static boolean initialized = false;
     public static void init(){
-        for (var keybind : MinecraftClient.getInstance().options.allKeys) {
+        ClientTickEvents.START_CLIENT_TICK.register((MinecraftClient mc) -> {
+            if (!initialized) {
+                initialized = true;
+                init0(mc);
+            }
+            triggerTick(mc);
+        });
+    }
+    private static void init0(MinecraftClient mc) {
+        for (var keybind : mc.options.allKeys) {
             keybindMap.put(keybind.getTranslationKey(), keybind);
         }
-
-        ClientTickEvents.START_CLIENT_TICK.register(PowerActiveKeyListener::triggerTick);
     }
 
     static @Nullable KeyBinding getKeyBinding(String key) {
