@@ -220,3 +220,18 @@ mining_trigger:
          resource: "*:*_data"
          change: 60
          operation: set
+
+flint_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.use
+      trigger: ACTIVE_6s_LONG_HOLD_ONCE
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:fire_projectile
+         entity_type: small_fireball
+      -
+         type: apoli:exhaust
+         amount: 60
