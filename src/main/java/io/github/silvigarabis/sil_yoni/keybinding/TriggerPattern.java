@@ -31,6 +31,14 @@ public enum TriggerPattern {
             ReleaseHold.withDef(),
             ActiveOnce.use()
     ),
+    ACTIVE_CLICK_THIRD(
+            WaitPress.withInf(),
+            WaitRelease.withDef(),
+            WaitPress.withDef(),
+            WaitRelease.withDef(),
+            WaitPress.withDef(),
+            ActiveOnce.use()
+    ),
     ACTIVE_SHOT_HOLD_ONCE(
             WaitPress.withInf(),
             WaitRelease.withDef(),
