@@ -20,8 +20,7 @@ starve_damage:
    self_action:
       type: apoli:damage
       amount: 4
-      source:
-         name: guxi:starve_energy
+      damage_type: sil_yoni:starve_energy
 
 resistance_trigger:
    type: sil_yoni:detection/mutable_active_self
