@@ -2,10 +2,7 @@ package io.github.silvigarabis.sil_yoni.keybinding;
 
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InputProcessor {
     private final Map<TriggerPattern, TriggerPatternRunner> patternRunnerMap = new HashMap<>();
@@ -15,7 +12,7 @@ public class InputProcessor {
     private int longPressDuration = 0;
     private boolean lastPressed = false;
 
-    public @Unmodifiable List<TriggerPattern> update(boolean pressed) {
+    public @Unmodifiable Set<TriggerPattern> update(boolean pressed) {
         List<TriggerPattern> result = new ArrayList<>();
 
         boolean justPressed = pressed && !lastPressed;
@@ -74,6 +71,6 @@ public class InputProcessor {
             longPressDuration = 0;
         }
 
-        return List.copyOf(result);
+        return Set.copyOf(result);
     }
 }

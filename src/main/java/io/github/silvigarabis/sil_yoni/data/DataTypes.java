@@ -5,31 +5,54 @@ import io.github.apace100.calio.data.SerializableDataType;
 import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.silvigarabis.sil_yoni.keybinding.TriggerPattern;
 
+import java.util.List;
+import java.util.Set;
+
 public class DataTypes {
     public static final SerializableDataType<TriggerPattern> TRIGGER_PATTERN_DATA_TYPE =
-            new SerializableDataType<>(
-                    TriggerPattern.class,
-                    (buf, value) -> buf.writeString(value.name()),
-                    buf -> TriggerPattern.valueOf(buf.readString(32767)),
-                    json -> TriggerPattern.valueOf(json.getAsString())
-            );
+            SerializableDataType.enumValue(TriggerPattern.class);
+    public static final SerializableDataType<List<TriggerPattern>> BACKWARDS_COMPATIBLE_TRIGGER_PATTERN_DATA_TYPE_LIST =
+            singleOrList(TRIGGER_PATTERN_DATA_TYPE);
+
     public static final SerializableDataType<Key> KEY_DATA_TYPE = SerializableDataType.compound(
             Key.class,
 
             new SerializableData()
                     .add("key", SerializableDataTypes.STRING)
-                    .add("trigger", TRIGGER_PATTERN_DATA_TYPE),
+                    .add("trigger", BACKWARDS_COMPATIBLE_TRIGGER_PATTERN_DATA_TYPE_LIST),
 
             (data) -> new Key(
                     data.getString("key"),
-                    data.get("trigger")
+                    Set.copyOf(data.get("trigger"))
             ),
 
             (serializableData, key) -> {
                 SerializableData.Instance data = serializableData.new Instance();
                 data.set("key", key.key());
-                data.set("trigger", key.trigger());
+                data.set("trigger", List.copyOf(key.triggers()));
                 return data;
             }
     );
+
+    public static final SerializableDataType<List<Key>> BACKWARDS_COMPATIBLE_KEY_LIST =
+            singleOrList(KEY_DATA_TYPE);
+
+    @SuppressWarnings("unchecked")
+    public static <T> SerializableDataType<List<T>> singleOrList(SerializableDataType<T> dataType) {
+        var listType = SerializableDataType.list(dataType);
+        return new SerializableDataType<>(
+                (Class<List<T>>)(Object)List.class,
+                listType::send,
+                listType::receive,
+                jsonElement -> {
+                    if (jsonElement == null || jsonElement.isJsonNull()) {
+                        return List.of();
+                    } else if (jsonElement.isJsonArray()) {
+                        return listType.read(jsonElement);
+                    } else {
+                        return List.of(dataType.read(jsonElement));
+                    }
+                }
+        );
+    }
 }
