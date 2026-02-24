@@ -65,7 +65,7 @@ key_trigger:
    type: sil_yoni:detection/mutable_active_self
    key:
       key: key.origins.primary_active
-      trigger: ACTIVE_SHOT_HOLD_ONCE
+      trigger: SINGLE_CLICK_IMMEDIATE
    entity_action:
       type: apoli:and
       actions:
@@ -91,7 +91,7 @@ key_cancel_trigger:
    type: sil_yoni:detection/mutable_active_self
    key:
       key: key.origins.secondary_active
-      trigger: ACTIVE_SINGLE_CLICK
+      trigger: SINGLE_CLICK_INTERVAL
    entity_action:
       type: apoli:and
       actions:
@@ -230,7 +230,7 @@ damage_lv3_trigger:
          resource: "*:*_data"
          change: -1
          operation: set
-      
+
 damage_on_mining_trigger:
    type: apoli:modify_damage_taken
    condition:
@@ -294,8 +294,8 @@ mining_trigger:
 flint_trigger:
    type: sil_yoni:detection/mutable_active_self
    key:
-      key: key.use
-      trigger: ACTIVE_6s_LONG_HOLD_ONCE
+      key: key.origins.secondary_active
+      trigger: LONG_PRESS_3s
    entity_action:
       type: apoli:and
       actions:

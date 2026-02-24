@@ -9,7 +9,7 @@ force_enable_switcher:
    type: sil_yoni:detection/mutable_active_self
    key:
       key: key.origins.secondary_active
-      trigger: ACTIVE_DOUBLE_CLICK
+      trigger: DOUBLE_CLICK_INTERVAL
    entity_action:
       type: apoli:if_else
       condition:
@@ -45,7 +45,7 @@ trigger:
    cooldown: 3
    key:
       key: key.attack
-      trigger: ACTIVE_SHOT_HOLD
+      trigger: SINGLE_PRESS_HOLD_CONTINUOUS
    condition:
       type: apoli:and
       conditions:

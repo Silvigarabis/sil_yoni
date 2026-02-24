@@ -22,3 +22,50 @@ starve_damage:
       amount: 4
       source:
          name: guxi:starve_energy
+
+resistance_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   cooldown: 80
+   condition:
+      type: apoli:resource
+      resource: "sil_yoni:origin_spec/guxi/energy_data"
+      comparison: ">="
+      compare_to: 1000
+   hud_render:
+      should_render: true
+      sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
+      bar_index: 6
+      condition:
+         type: apoli:resource
+         resource: "*:*_resistance_trigger"
+         comparison: '>'
+         compare_to: 0
+   key:
+      key: key.origins.primary_active
+      trigger: SINGLE_PRESS_HOLD
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:change_resource
+         operation: add
+         resource: "sil_yoni:origin_spec/guxi/energy_data"
+         change: -1000
+
+resistance_damage:
+   type: apoli:modify_damage_taken
+   condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:resource
+         resource: "*:*_resistance_trigger"
+         comparison: '>'
+         compare_to: 0
+   damage_condition:
+      type: apoli:and
+      conditions:
+      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
+   modifier: 
+      operation: multiply_total
+      value: -0.8
