@@ -40,12 +40,15 @@ dense_energy_damage:
    damage_condition:
       type: apoli:and
       conditions:
-      - { type: apoli:name, name: dense_energy }
+      - { type: apoli:in_tag, tag: guxi:dense_energy }
       - { inverted: true, type: apoli:in_tag, tag: is_explosion }
    modifier:
       operation: multiply_total
       value: -0.9
    self_action:
-      type: apoli:feed
-      food: 8
-      saturation: 0
+      type: apoli:chance
+      chance: 0.9
+      action:
+         type: apoli:feed
+         food: 2
+         saturation: 0
