@@ -84,9 +84,10 @@ public enum TriggerPattern {
             Reset.use()
     ),
 
-    SINGLE_PRESS_HOLD_CONTINUOUS(
+    SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS(
             WaitPress.withInf(),
-            ActiveContinuousWhenHold.use()
+            ActiveContinuousWhenHold.use(),
+            Reset.use()
     ),
 
     SINGLE_PRESS_HOLD(
