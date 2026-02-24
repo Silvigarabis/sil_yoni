@@ -13,31 +13,34 @@ import io.github.silvigarabis.sil_yoni.data.Key;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class ActiveCooldownPower extends CooldownPower implements io.github.silvigarabis.sil_yoni.power.detection.Active {
     public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "detection/mutable_active_self");
-    private final @Nullable Key key;
+    private final @NotNull @Unmodifiable List<Key> keys;
     private final Consumer<Entity> activeFunction;
 
     public ActiveCooldownPower(
             PowerType<?> type,
             LivingEntity entity,
-            @Nullable Key key,
+            @NotNull List<Key> keys,
             int cooldownDuration,
             HudRender hudRender,
             Consumer<Entity> activeFunction
     ) {
         super(type, entity, cooldownDuration, hudRender);
-        this.key = key;
+        this.keys = List.copyOf(keys);
         this.activeFunction = activeFunction;
     }
 
     @Override
-    public @Nullable Key getUseKey() {
-        return key;
+    public @NotNull @Unmodifiable List<Key> getUseKeys() {
+        return keys;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ActiveCooldownPower extends CooldownPower implements io.github.silv
                         .add("entity_action", ApoliDataTypes.ENTITY_ACTION)
                         .add("cooldown", SerializableDataTypes.INT, 1)
                         .add("hud_render", ApoliDataTypes.HUD_RENDER, HudRender.DONT_RENDER)
-                        .add("key", DataTypes.KEY_DATA_TYPE, null),
+                        .add("key", DataTypes.BACKWARDS_COMPATIBLE_KEY_LIST, Collections.emptyList()),
                 data ->
                         (type, player) -> new ActiveCooldownPower(
                                 type,

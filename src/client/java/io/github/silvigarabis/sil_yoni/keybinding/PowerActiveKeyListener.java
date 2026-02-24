@@ -14,10 +14,7 @@ import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PowerActiveKeyListener {
     // 用于测试效果的，由于目前暂时还没设置某种显示机制
@@ -57,27 +54,33 @@ public class PowerActiveKeyListener {
         return activePowers;
     }
 
-    private static Map<String, KeyBinding> getUseKeys(@NotNull List<Active> activePowers){
-        var useKeys = new HashMap<String, KeyBinding>();
+    private static Set<String> getUseKeys(@NotNull List<Active> activePowers){
+        var useKeys = new HashSet<String>();
         for (var power : activePowers){
-            var keyConf = power.getUseKey();
-            if (keyConf == null) continue;
-            var keybind = getKeyBinding(keyConf.key());
-            if (keybind == null) continue;
-            useKeys.put(keyConf.key(), keybind);
+            for (var k : power.getUseKeys()){
+                var keybind = getKeyBinding(k.key());
+                if (keybind == null) continue;
+                useKeys.add(k.key());
+            }
         }
         return useKeys;
     }
 
-    private static Map<String, List<TriggerPattern>> updateUseKeys(Map<String, KeyBinding> useKeys){
-        useKeys.keySet().forEach(key -> keybindProcessorMap.computeIfAbsent(key, key1 -> new InputProcessor()));
-        keybindProcessorMap.keySet().removeIf(key -> !useKeys.containsKey(key));
+    private static Map<String, Set<TriggerPattern>> updateUseKeys(Set<String> useKeys){
+        // 为所有活跃的键位监听创建处理器，并移除不再使用的处理器
+        useKeys.forEach(key -> keybindProcessorMap.computeIfAbsent(key, key1 -> new InputProcessor()));
+        keybindProcessorMap.keySet().retainAll(useKeys);
 
-        var resultMap = new HashMap<String, List<TriggerPattern>>();
+        var resultMap = new HashMap<String, Set<TriggerPattern>>();
 
-        for (var key : useKeys.keySet()){
-            var keybind = useKeys.get(key);
-            var inputProcessor = keybindProcessorMap.get(key);
+        // 更新所有处理器
+        for (var keyProcEntry : keybindProcessorMap.entrySet()) {
+            var key = keyProcEntry.getKey();
+            var keybind = getKeyBinding(key);
+
+            if (keybind == null) throw new IllegalStateException("no key binding for " + key);
+
+            var inputProcessor = keyProcEntry.getValue();
             var result = inputProcessor.update(keybind.isPressed());
             resultMap.put(key, result);
         }
@@ -94,7 +97,7 @@ public class PowerActiveKeyListener {
         var usedKeys = getUseKeys(activePowers);
 
         if (_testKey != null) {
-            usedKeys.put(_testKey, getKeyBinding(_testKey));
+            usedKeys.add(_testKey);
         }
 
         var updatedKeyInfoMap = updateUseKeys(usedKeys);
@@ -102,15 +105,7 @@ public class PowerActiveKeyListener {
         var powersToTrigger = new ArrayList<Active>();
 
         for (var power : activePowers) {
-            var keyConf = power.getUseKey();
-            if (keyConf == null) continue;
-
-            // 获取这个能力对应的 TriggerPattern
-            var triggerPattern = keyConf.trigger();
-
-            // 检查 updatedKeyInfoMap 中这个 key 是否存在，并且包含对应的 TriggerPattern
-            var triggeredPatterns = updatedKeyInfoMap.get(keyConf.key());
-            if (triggeredPatterns != null && triggeredPatterns.contains(triggerPattern)) {
+            if (power.matchAnyUseKey(updatedKeyInfoMap)) {
                 powersToTrigger.add(power);
             }
         }
