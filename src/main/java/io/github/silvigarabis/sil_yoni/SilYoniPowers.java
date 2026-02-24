@@ -8,6 +8,7 @@ import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.silvigarabis.sil_yoni.power.*;
 import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
 import io.github.silvigarabis.sil_yoni.power.misc.*;
+import io.github.silvigarabis.sil_yoni.power.modify.ModifyFoodEatTimePower;
 import io.github.silvigarabis.sil_yoni.power.physique.SmallerBodyPower;
 import io.github.silvigarabis.sil_yoni.power.physique.TinyBodyPower;
 import io.github.silvigarabis.sil_yoni.power.physique.WeakenedOnlyBodyPower;
@@ -38,5 +39,6 @@ public class SilYoniPowers {
       register(MappingResourceRatioToFoodLevelPower::createFactory);
       register(ReplaceSprintAbility::createFactory);
       register(ActiveCooldownPower::createFactory);
+      register(ModifyFoodEatTimePower::createFactory);
    }
 }
