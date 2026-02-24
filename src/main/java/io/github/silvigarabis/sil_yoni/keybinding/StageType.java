@@ -14,8 +14,8 @@ public enum StageType {
     Completed,
     Reset
     ;
-    public static final int DEFAULT_INTERVAL_WINDOW = 7;
-    public static final int DEFAULT_LONG_PRESS_INTERVAL_WINDOW = 30;
+    public static final int DEFAULT_INTERVAL_WINDOW = 6;
+    public static final int DEFAULT_LONG_PRESS_INTERVAL_WINDOW = 20;
 
     public StageSpec withInf(){
         return new StageSpec(this, Integer.MAX_VALUE);
