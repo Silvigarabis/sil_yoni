@@ -46,3 +46,27 @@ decrease_suspicious_stew_food:
    food_modifier:
       operation: addition
       value: -5
+
+modify_food_eat_time:
+   type: sil_yoni:modify/food_eat_time
+   modifier:
+     operation: set_total
+     value: 0
+
+modify_food_edible:
+   type: apoli:modify_food
+   always_edible: true
+   item_condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:food
+      -
+         type: apoli:or
+         conditions:
+         -
+            type: apoli:ingredient
+            ingredient: { tag: sil_yoni:food_with_energy }
+         -
+            type: apoli:ingredient
+            ingredient: { item: minecraft:suspicious_stew }
