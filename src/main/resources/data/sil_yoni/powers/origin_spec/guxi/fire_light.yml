@@ -45,7 +45,7 @@ trigger:
    cooldown: 3
    key:
       key: key.attack
-      trigger: SINGLE_PRESS_HOLD_CONTINUOUS
+      trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
    condition:
       type: apoli:and
       conditions:
