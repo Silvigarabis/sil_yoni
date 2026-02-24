@@ -36,7 +36,7 @@ modify_spec_food:
          ingredient: { item: minecraft:suspicious_stew }
    food_modifier:
       operation: multiply_base_additive
-      value: 3
+      value: 9.3
 
 decrease_suspicious_stew_food:
    type: apoli:modify_food
