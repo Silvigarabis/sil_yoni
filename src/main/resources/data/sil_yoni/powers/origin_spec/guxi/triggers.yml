@@ -78,8 +78,20 @@ callbacks:
       -
          type: apoli:change_resource
          resource: "sil_yoni:origin_spec/guxi/energy_data"
-         operation: set
-         change: 600
+         operation: add
+         change: -5000
+      -
+         type: apoli:if_else
+         condition:
+            type: apoli:resource
+            resource: sil_yoni:origin_spec/guxi/energy_data
+            comparison: "<"
+            compare_to: 600
+         if_action:
+            type: apoli:change_resource
+            resource: "sil_yoni:origin_spec/guxi/energy_data"
+            operation: set
+            change: 600
       -
          type: apoli:grant_power
          power: sil_yoni:origin_spec/guxi/no_energy
