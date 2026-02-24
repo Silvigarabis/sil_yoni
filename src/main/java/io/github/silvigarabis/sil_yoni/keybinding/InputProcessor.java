@@ -53,6 +53,7 @@ public class InputProcessor {
                     if (hasNext) {
                         runner.next();
                     } else {
+                        runner.reset();
                         disusedPatterns.add(pattern);
                     }
                 }
@@ -61,6 +62,7 @@ public class InputProcessor {
                     if (hasNext) {
                         runner.next();
                     } else {
+                        runner.reset();
                         disusedPatterns.add(pattern);
                     }
                 }
