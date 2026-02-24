@@ -5,7 +5,19 @@ import org.jetbrains.annotations.Nullable;
 
 public class TriggerPatternRunner {
     public enum TestResult {
-        WAITING, COMPLETED, FAILURE
+        COMPLETED,
+
+        DISUSE,
+
+        WAITING,
+
+        FAILURE,
+
+        ACTIVE,
+
+        COMPLETED_AND_ACTIVE,
+
+        RESET
     }
 
     private @Nullable StageSpec curStage;
@@ -94,21 +106,32 @@ public class TriggerPatternRunner {
                 yield TestResult.WAITING;
             }
             case ActiveOnce -> {
-                if (stageTicks == 0){
+                assert stageTicks == 0 : "ticks skipped! now is " + stageTicks;
+                yield TestResult.COMPLETED_AND_ACTIVE;
+            }
+            case ActiveContinuousWhenRelease -> {
+                if (!pressed){
+                    yield TestResult.ACTIVE;
+                } else {
                     yield TestResult.COMPLETED;
                 }
-                if (!pressed){
-                    yield TestResult.FAILURE;
-                }
-                yield TestResult.WAITING;
             }
             case ActiveContinuousWhenHold -> {
                 if (pressed){
-                    yield TestResult.COMPLETED;
+                    yield TestResult.ACTIVE;
                 } else {
-                    yield TestResult.FAILURE;
+                    yield TestResult.COMPLETED;
                 }
             }
+            case WaitUntil -> {
+                if (stageTicks >= curStage.timeTicks()){
+                    yield TestResult.COMPLETED;
+                } else {
+                    yield TestResult.WAITING;
+                }
+            }
+            case Completed -> TestResult.DISUSE;
+            case Reset -> TestResult.RESET;
         };
 
         return result;
@@ -117,5 +140,4 @@ public class TriggerPatternRunner {
     public int curStageSeq() {
         return curStageSeq;
     }
-
 }
