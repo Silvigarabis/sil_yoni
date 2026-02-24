@@ -42,20 +42,36 @@ public class InputProcessor {
                 steppedPatternCounter++;
             }
 
-            if (testResult == TriggerPatternRunner.TestResult.WAITING) {
-                continue;
-            }
-
-            if (testResult == TriggerPatternRunner.TestResult.COMPLETED) {
-                if (hasNext) {
-                    runner.next();
-                } else {
+            switch (testResult) {
+                case WAITING -> {
+                    continue;
+                }
+                case ACTIVE -> {
                     result.add(pattern);
                 }
-            } else if (testResult == TriggerPatternRunner.TestResult.FAILURE) {
-                runner.reset();
-                // 阶段失败，淘汰该模式
-                disusedPatterns.add(pattern);
+                case COMPLETED -> {
+                    if (hasNext) {
+                        runner.next();
+                    } else {
+                        disusedPatterns.add(pattern);
+                    }
+                }
+                case COMPLETED_AND_ACTIVE -> {
+                    result.add(pattern);
+                    if (hasNext) {
+                        runner.next();
+                    } else {
+                        disusedPatterns.add(pattern);
+                    }
+                }
+                case FAILURE, DISUSE -> {
+                    // 阶段失败或手动淘汰，淘汰该模式
+                    runner.reset();
+                    disusedPatterns.add(pattern);
+                }
+                case RESET -> {
+                    runner.reset();
+                }
             }
         }
 

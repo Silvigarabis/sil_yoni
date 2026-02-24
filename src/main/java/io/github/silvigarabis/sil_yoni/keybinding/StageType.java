@@ -1,9 +1,18 @@
 package io.github.silvigarabis.sil_yoni.keybinding;
 
 public enum StageType {
-    WaitPress, WaitRelease,
-    PressHold, ReleaseHold,
-    ActiveOnce, ActiveContinuousWhenHold
+    WaitPress,
+    WaitRelease,
+    PressHold,
+    ReleaseHold,
+
+    ActiveOnce,
+    ActiveContinuousWhenHold,
+    ActiveContinuousWhenRelease,
+
+    WaitUntil,
+    Completed,
+    Reset
     ;
     public static final int DEFAULT_INTERVAL_WINDOW = 7;
     public static final int DEFAULT_LONG_PRESS_INTERVAL_WINDOW = 30;
