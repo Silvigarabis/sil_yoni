@@ -4,7 +4,7 @@ data:
    type: apoli:resource
    min: -1
    start_value: -1
-   max: 60
+   max: 150
    hud_render:
       should_render: true
       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
@@ -24,7 +24,7 @@ minging_speed:
       compare_to: 0
    modifier:
       operation: multiply_base_additive
-      value: 18.9
+      value: 22.9
 
 data_decrease:
    interval: 1
@@ -47,7 +47,7 @@ data_decrease:
             compare_to: 0
          if_action:
             type: apoli:exhaust
-            amount: 70
+            amount: 17.5
 
       # 持续减少计数
       -
@@ -55,6 +55,11 @@ data_decrease:
          resource: "*:*_data"
          operation: add
          change: -1
+      
+      # 维持消耗
+      -
+         type: apoli:exhaust
+         amount: 0.4
 
 key_trigger:
    type: sil_yoni:detection/mutable_active_self
@@ -74,7 +79,7 @@ key_trigger:
             compare_to: 0
          if_action:
             type: apoli:exhaust
-            amount: 60
+            amount: 15
       # 重置计时器
       -
          type: apoli:change_resource
@@ -100,7 +105,7 @@ key_cancel_trigger:
             compare_to: 0
          if_action:
             type: apoli:exhaust
-            amount: 8
+            amount: 2
       # 重置计时器
       -
          type: apoli:change_resource
@@ -140,7 +145,7 @@ damage_lv1_trigger:
       #    command: say lv1
       -
          type: apoli:exhaust
-         amount: 8
+         amount: 2
       -
          type: apoli:change_resource
          resource: "*:*_data"
@@ -180,14 +185,13 @@ damage_lv2_trigger:
       #    command: say lv2
       -
          type: apoli:exhaust
-         amount: 20
+         amount: 5
       -
          type: apoli:change_resource
          resource: "*:*_data"
          change: -1
          operation: set
       
-
 damage_lv3_trigger:
    type: apoli:modify_damage_taken
    condition:
@@ -220,13 +224,52 @@ damage_lv3_trigger:
       #    command: say lv3
       -
          type: apoli:exhaust
-         amount: 40
+         amount: 10
       -
          type: apoli:change_resource
          resource: "*:*_data"
          change: -1
          operation: set
       
+damage_on_mining_trigger:
+   type: apoli:modify_damage_taken
+   condition:
+      type: apoli:and
+      conditions:
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '>'
+            compare_to: 60
+         -
+            type: apoli:resource
+            resource: "*:*_data"
+            comparison: '<='
+            compare_to: 150
+   damage_condition:
+      type: apoli:and
+      conditions:
+      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
+      - { inverted: true, type: apoli:in_tag, tag: is_fire }
+      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
+   modifier:
+      operation: add_base_late
+      value: -3
+   self_action:
+      type: apoli:and
+      actions:
+      # -
+      #    type: apoli:execute_command
+      #    command: say lv3
+      -
+         type: apoli:exhaust
+         amount: 10
+      -
+         type: apoli:change_resource
+         resource: "*:*_data"
+         change: -1
+         operation: set
+
 # 在方块被破坏时重置计时器，并消耗一定的能量
 mining_trigger:
    type: apoli:action_on_block_break
@@ -241,11 +284,11 @@ mining_trigger:
       actions:
       -
          type: apoli:exhaust
-         amount: 35
+         amount: 8.75
       -
          type: apoli:change_resource
          resource: "*:*_data"
-         change: 60
+         change: 150
          operation: set
 
 flint_trigger:
