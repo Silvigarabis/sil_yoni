@@ -14,7 +14,7 @@ wait_for_trigger:
     type: sil_yoni:detection/mutable_active_self
     key:
         key: key.origins.secondary_active
-        trigger: ACTIVE_10s_LONG_HOLD_ONCE
+        trigger: LONG_PRESS_10s
     entity_action:
         type: apoli:if_else
         condition:

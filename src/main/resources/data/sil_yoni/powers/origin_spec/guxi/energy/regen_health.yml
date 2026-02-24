@@ -22,4 +22,4 @@ entity_action:
       amount: 2
    -
       type: apoli:exhaust
-      amount: 16
+      amount: 48

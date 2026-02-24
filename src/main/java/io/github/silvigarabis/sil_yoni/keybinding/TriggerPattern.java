@@ -84,9 +84,20 @@ public enum TriggerPattern {
             Reset.use()
     ),
 
-    LONG_PRESS_6s(
+    SINGLE_PRESS_HOLD_CONTINUOUS(
             WaitPress.withInf(),
-            PressHold.with(20 * 6),
+            ActiveContinuousWhenHold.use()
+    ),
+
+    SINGLE_PRESS_HOLD(
+            WaitPress.withInf(),
+            PressHold.withLongDef(),
+            ActiveOnce.use()
+    ),
+
+    LONG_PRESS_3s(
+            WaitPress.withInf(),
+            PressHold.with(20 * 3),
             ActiveOnce.use()
     ),
     LONG_PRESS_10s(
@@ -94,15 +105,6 @@ public enum TriggerPattern {
             PressHold.with(20 * 10),
             ActiveOnce.use()
     ),
-
-    SINGLE_CLICK_THEN_PRESS_HOLD_ACTIVE_ONCE(
-            WaitPress.withInf(),
-            WaitRelease.withDef(),
-            WaitPress.withDef(),
-            PressHold.withLongDef(),
-            ActiveOnce.use()
-    ),
-
     ;
 
     public @Unmodifiable List<StageSpec> stages() {
