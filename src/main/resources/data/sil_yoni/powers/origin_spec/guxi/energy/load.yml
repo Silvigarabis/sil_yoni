@@ -26,6 +26,32 @@ minging_speed:
       operation: multiply_base_additive
       value: 22.9
 
+
+mining_with_harvestable:
+    type: apoli:modify_harvest
+    allow: true
+    condition:
+      type: apoli:resource
+      resource: "*:*_data"
+      comparison: '>='
+      compare_to: 0
+    block_condition:
+      type: apoli:and
+      conditions:
+        -
+          # 谁能给我解释为什么水还有硬度的
+          type: apoli:fluid
+          fluid_condition: { type: apoli:empty }
+          inverted: true
+        -
+          type: apoli:hardness
+          comparison: "<="
+          compare_to: 6
+        -
+          type: apoli:hardness
+          comparison: ">"
+          compare_to: 0
+
 data_decrease:
    interval: 1
    type: apoli:action_over_time
