@@ -41,6 +41,12 @@ repositories {
 	}
 }
 
+configurations.configureEach {
+    resolutionStrategy.force(
+            "com.github.DaFuqs:AdditionalEntityAttributes:1.20.1-SNAPSHOT"
+    )
+}
+
 loom {
 	splitEnvironmentSourceSets()
 
