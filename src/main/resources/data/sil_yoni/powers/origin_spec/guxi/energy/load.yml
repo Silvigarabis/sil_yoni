@@ -26,7 +26,6 @@ minging_speed:
       operation: multiply_base_additive
       value: 22.9
 
-
 mining_with_harvestable:
     type: apoli:modify_harvest
     allow: true
@@ -106,12 +105,12 @@ key_trigger:
          if_action:
             type: apoli:exhaust
             amount: 15
-      # 重置计时器
+      # 增加计时器
       -
          type: apoli:change_resource
          resource: "*:*_data"
          change: 60
-         operation: set
+         operation: add
 
 key_cancel_trigger:
    type: sil_yoni:detection/mutable_active_self
@@ -148,12 +147,7 @@ damage_lv1_trigger:
             type: apoli:resource
             resource: "*:*_data"
             comparison: '>'
-            compare_to: 50
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '<='
-            compare_to: 60
+            compare_to: 110
    damage_condition:
       type: apoli:and
       conditions:
@@ -175,8 +169,8 @@ damage_lv1_trigger:
       -
          type: apoli:change_resource
          resource: "*:*_data"
-         change: -1
-         operation: set
+         change: 20
+         operation: add
       
 
 damage_lv2_trigger:
@@ -188,12 +182,12 @@ damage_lv2_trigger:
             type: apoli:resource
             resource: "*:*_data"
             comparison: '>'
-            compare_to: 30
+            compare_to: 60
          -
             type: apoli:resource
             resource: "*:*_data"
             comparison: '<='
-            compare_to: 50
+            compare_to: 110
    damage_condition:
       type: apoli:and
       conditions:
@@ -211,12 +205,12 @@ damage_lv2_trigger:
       #    command: say lv2
       -
          type: apoli:exhaust
-         amount: 5
+         amount: 10
       -
          type: apoli:change_resource
          resource: "*:*_data"
-         change: -1
-         operation: set
+         change: -30
+         operation: add
       
 damage_lv3_trigger:
    type: apoli:modify_damage_taken
@@ -232,7 +226,7 @@ damage_lv3_trigger:
             type: apoli:resource
             resource: "*:*_data"
             comparison: '<='
-            compare_to: 30
+            compare_to: 60
    damage_condition:
       type: apoli:and
       conditions:
@@ -250,46 +244,7 @@ damage_lv3_trigger:
       #    command: say lv3
       -
          type: apoli:exhaust
-         amount: 10
-      -
-         type: apoli:change_resource
-         resource: "*:*_data"
-         change: -1
-         operation: set
-
-damage_on_mining_trigger:
-   type: apoli:modify_damage_taken
-   condition:
-      type: apoli:and
-      conditions:
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '>'
-            compare_to: 60
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '<='
-            compare_to: 150
-   damage_condition:
-      type: apoli:and
-      conditions:
-      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
-      - { inverted: true, type: apoli:in_tag, tag: is_fire }
-      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
-   modifier:
-      operation: add_base_late
-      value: -3
-   self_action:
-      type: apoli:and
-      actions:
-      # -
-      #    type: apoli:execute_command
-      #    command: say lv3
-      -
-         type: apoli:exhaust
-         amount: 10
+         amount: 5
       -
          type: apoli:change_resource
          resource: "*:*_data"
