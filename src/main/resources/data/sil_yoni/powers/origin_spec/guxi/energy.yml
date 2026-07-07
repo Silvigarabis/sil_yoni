@@ -18,6 +18,18 @@ data:
    min: 0
    max: 10000
 
+trigger_data_display:
+   type: sil_yoni:detection/mutable_active_self
+   cooldown: 3
+
+   key:
+      key: key.origins.secondary_active
+      trigger: SINGLE_CLICK_INTERVAL
+
+   entity_action:
+      type: apoli:execute_command
+      command: 'function sil_yoni:origins/guxi/show_energy_data'
+
 convert_food_to_resource:
    type: sil_yoni:misc/convert_food_to_resource
    resource: "*:*_data"
