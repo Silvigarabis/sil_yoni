@@ -80,6 +80,10 @@ trigger_raycast_target:
       block: false
       entity: true
       fluid_handling: none
+      bientity_condition:
+         type: apoli:target_condition
+         condition:
+            type: apoli:living
 
       # 找到了就消耗能量，向目标实体发出攻击
       bientity_action:
@@ -110,70 +114,79 @@ trigger_raycast_target:
             radius: 12
 
             bientity_condition:
-               type: apoli:or
+               type: apoli:and
                conditions:
-               # 第一种成功情况：距离4格内曾被我攻击的生物，或曾攻击过我的生物
+               # 首先得是活体
                -
-                  type: apoli:and
-                  conditions:
-                  -  
-                     type: apoli:or
-                     conditions:
-                     - { type: apoli:invert, condition: { type: apoli:attacker } }
-                     - { type: apoli:attacker }
-                  - { type: apoli:distance, comparison: '<=', compare_to: 4 }
-
-               # 第二种成功情况：整个查找范围内
-               #  战斗情况：想以我为目标的、我目标的、攻击我的、我攻击的实体，
-               #  视角情况：差不多正看着他
+                  type: apoli:target_condition
+                  condition:
+                     type: apoli:living
+               # 然后进行类别查找
                -
-                  type: apoli:and
+                  type: apoli:or
                   conditions:
-                  # 战斗情况的检测的检测
-                  - 
-                     type: apoli:or
+                  # 第一种成功情况：距离4格内曾被我攻击的生物，或曾攻击过我的生物
+                  -
+                     type: apoli:and
                      conditions:
-                     - { type: apoli:invert, condition: { type: apoli:attack_target } }
-                     - { type: apoli:invert, condition: { type: apoli:attacker } }
-                     - { type: apoli:attack_target }
-                     - { type: apoli:attacker }
+                     -
+                        type: apoli:or
+                        conditions:
+                        - { type: apoli:invert, condition: { type: apoli:attacker } }
+                        - { type: apoli:attacker }
+                     - { type: apoli:distance, comparison: '<=', compare_to: 4 }
 
-                  # 视角情况的检测
-                  - 
-                     type: apoli:or
+                  # 第二种成功情况：整个查找范围内
+                  #  战斗情况：想以我为目标的、我目标的、攻击我的、我攻击的实体，
+                  #  视角情况：差不多正看着他
+                  -
+                     type: apoli:and
                      conditions:
-                     # 对玩家实体要求更高的精确度，为了PVP公平性
+                     # 战斗情况的检测的检测
                      -
-                        type: apoli:and
+                        type: apoli:or
                         conditions:
-                        -
-                           type: apoli:target_condition
-                           condition:
-                              type: apoli:entity_type
-                              entity_type: player
-                        -
-                           type: origins:relative_rotation
-                           actor_rotation: head
-                           target_rotation: head
-                           comparison: "<="
-                           compare_to: -0.7
+                        - { type: apoli:invert, condition: { type: apoli:attack_target } }
+                        - { type: apoli:invert, condition: { type: apoli:attacker } }
+                        - { type: apoli:attack_target }
+                        - { type: apoli:attacker }
 
-                     # 对一般实体要求一般精确度
+                     # 视角情况的检测
                      -
-                        type: apoli:and
+                        type: apoli:or
                         conditions:
+                        # 对玩家实体要求更高的精确度，为了PVP公平性
                         -
-                           type: apoli:target_condition
-                           condition:
-                              type: apoli:entity_type
-                              entity_type: player
-                              inverted: true
+                           type: apoli:and
+                           conditions:
+                           -
+                              type: apoli:target_condition
+                              condition:
+                                 type: apoli:entity_type
+                                 entity_type: player
+                           -
+                              type: origins:relative_rotation
+                              actor_rotation: head
+                              target_rotation: head
+                              comparison: "<="
+                              compare_to: -0.7
+
+                        # 对一般实体要求一般精确度
                         -
-                           type: origins:relative_rotation
-                           actor_rotation: head
-                           target_rotation: head
-                           comparison: "<="
-                           compare_to: -0.3
+                           type: apoli:and
+                           conditions:
+                           -
+                              type: apoli:target_condition
+                              condition:
+                                 type: apoli:entity_type
+                                 entity_type: player
+                                 inverted: true
+                           -
+                              type: origins:relative_rotation
+                              actor_rotation: head
+                              target_rotation: head
+                              comparison: "<="
+                              compare_to: -0.3
 
             # 对找到的实体使用能量进行伤害
             bientity_action:
