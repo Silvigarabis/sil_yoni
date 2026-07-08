@@ -1,6 +1,22 @@
 type: apoli:multiple
 hidden: true
 # 通用攀爬能力，允许攀登一般方块（正确硬度小于20）
+
+x-collision-condition: &block-hardness
+   type: apoli:block_collision
+   block_condition:
+      type: apoli:and
+      conditions:
+         -  type: apoli:block
+            inverted: true
+            block: minecraft:air
+         -  type: apoli:hardness
+            comparison: "<"
+            compare_to: 20
+         -  type: apoli:hardness
+            comparison: ">="
+            compare_to: 0
+
 ability:
    type: apoli:climbing
    allow_holding: true
@@ -11,148 +27,23 @@ ability:
       -
          type: apoli:or
          conditions:
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_x: 0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_z: 0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_x: 0.1
             offset_y: -0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_z: 0.1
             offset_y: -0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_x: -0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_z: -0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_x: -0.1
             offset_y: -0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-         -  type: apoli:block_collision
+         -  <<: *block-hardness
             offset_z: -0.1
             offset_y: -0.1
-            block_condition:
-               type: apoli:and
-               conditions:
-               -  type: apoli:block
-                  inverted: true
-                  block: minecraft:air
-               -  type: apoli:hardness
-                  comparison: "<"
-                  compare_to: 20
-               -  type: apoli:hardness
-                  comparison: ">="
-                  compare_to: 0
-
-# debug:
-   # type: apoli:action_over_time
-   # interval: 1
-   # entity_action:
-      # type: apoli:if_else
-      # if_action:
-         # type: apoli:execute_command
-         # command: 'title @s actionbar {"text": "目前可以攀爬" }'
-      # else_action:
-         # type: apoli:execute_command
-         # command: 'title @s actionbar {"text": "无法在此处攀爬" }'
-      # condition:
-         # type: apoli:and
-         # conditions:
-         # -  type: apoli:collided_horizontally
-         # -  type: apoli:block_collision
-            # offset_x: 0.1
-            # offset_y: 0.1
-            # block_condition:
-               # type: apoli:and
-               # conditions:
-               # -  type: apoli:hardness
-                  # comparison: "<"
-                  # compare_to: 20
-               # -  type: apoli:hardness
-                  # comparison: ">="
-                  # compare_to: 0
-   
