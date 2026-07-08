@@ -1,90 +1,103 @@
 type: apoli:multiple
 
+# 用于检查能量载荷是否置于0
+x-energy-load-down: &condition-load-down { type: apoli:resource, resource: "*:*_data", comparison: '==', compare_to: 0 }
+x-object-energy-load-down: &object-load-down
+   condition:
+      <<: *condition-load-down
+
+# 用于检查能量是否仍有载荷
+x-energy-load-active: &condition-load-active { type: apoli:resource, resource: "*:*_data", comparison: '>', compare_to: 0 }
+x-object-energy-load-active: &object-load-active
+   condition:
+      <<: *condition-load-active
+
+# 载荷等级1
+x-energy-load-lvl1: &condition-load-lvl1
+   type: apoli:and
+   conditions:
+      - { type: apoli:resource, resource: "*:*_data", comparison: '>', compare_to: 0 }
+      - { type: apoli:resource, resource: "*:*_data", comparison: '<=', compare_to: 60 }
+
+# 载荷等级2
+x-energy-load-lvl2: &condition-load-lvl2
+   type: apoli:and
+   conditions:
+      - { type: apoli:resource, resource: "*:*_data", comparison: '>', compare_to: 60 }
+      - { type: apoli:resource, resource: "*:*_data", comparison: '<=', compare_to: 110 }
+
+# 载荷等级3
+x-energy-load-lvl3: &condition-load-lvl3
+   type: apoli:and
+   conditions:
+      - { type: apoli:resource, resource: "*:*_data", comparison: '>', compare_to: 110 }
+
+# 伤害类型检查
+x-damage-is-energy: &condition-damage-is-energy
+   type: apoli:and
+   conditions:
+      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
+      - { inverted: true, type: apoli:in_tag, tag: is_fire }
+      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
+x-object-damage-is-energy: &object-damage-is-energy
+   damage_condition:
+      <<: *condition-damage-is-energy
+
+# 载荷级别数据
 data:
    type: apoli:resource
-   min: -1
-   start_value: -1
-   max: 150
+   min: 0
+   start_value: 0
+   max: 180
    hud_render:
+      <<: *object-load-active
       should_render: true
       sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_01.png
       bar_index: 4
-      condition:
-         type: apoli:resource
-         resource: "*:*_data"
-         comparison: '>'
-         compare_to: 0
 
 minging_speed:
+   <<: *object-load-active
    type: apoli:modify_break_speed
-   condition:
-      type: apoli:resource
-      resource: "*:*_data"
-      comparison: '>='
-      compare_to: 0
    modifier:
       operation: multiply_base_additive
       value: 22.9
 
 mining_with_harvestable:
-    type: apoli:modify_harvest
-    allow: true
-    condition:
-      type: apoli:resource
-      resource: "*:*_data"
-      comparison: '>='
-      compare_to: 0
-    block_condition:
+   <<: *object-load-active
+   type: apoli:modify_harvest
+   allow: true
+   block_condition:
       type: apoli:and
       conditions:
-#        -
-#          # 谁能给我解释为什么水还有硬度的
-#          type: apoli:fluid
-#          fluid_condition: { type: apoli:empty }
-#          inverted: true
-        -
-          type: apoli:hardness
-          comparison: "<="
-          compare_to: 6
-        -
-          type: apoli:hardness
-          comparison: ">"
-          compare_to: 0
+      - { type: apoli:hardness, comparison: "<=", compare_to: 6 }
+      - { type: apoli:hardness, comparison: ">", compare_to: 0 }
 
 data_decrease:
+   <<: *object-load-active
    interval: 1
    type: apoli:action_over_time
-   condition:
-      type: apoli:resource
-      resource: "*:*_data"
-      comparison: '>='
-      compare_to: 0
    entity_action:
       type: apoli:and
       actions:
-      # 第三级能量消耗，总在载荷结束时触发
+      # 维持消耗
       -
-         type: apoli:if_else
-         condition:
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '=='
-            compare_to: 0
-         if_action:
-            type: apoli:exhaust
-            amount: 17.5
+         type: apoli:exhaust
+         amount: 0.4
 
-      # 持续减少计数
+      # 持续降低载荷计数
       -
          type: apoli:change_resource
          resource: "*:*_data"
          operation: add
          change: -1
-      
-      # 维持消耗
+
+      # 最终卸载能量消耗，总在载荷结束时触发
       -
-         type: apoli:exhaust
-         amount: 0.4
+         type: apoli:if_else
+         <<: *object-load-down
+         if_action:
+            type: apoli:exhaust
+            amount: 24
 
 key_trigger:
    type: sil_yoni:detection/mutable_active_self
@@ -94,23 +107,41 @@ key_trigger:
    entity_action:
       type: apoli:and
       actions:
-      # 频繁手动触发，先行损失
+      # 二度手动触发时消耗能量提高载荷
       -
          type: apoli:if_else
-         condition:
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '>='
-            compare_to: 0
+         <<: *object-load-active
          if_action:
             type: apoli:exhaust
             amount: 15
-      # 增加计时器
+
+      # 增加载荷
       -
          type: apoli:change_resource
          resource: "*:*_data"
          change: 60
          operation: add
+
+# 快速提高载荷（用于应对来不及多次点击以积累能量的情况，例如：数十只怪物同时攻击，导致点击后第一级载荷直接被消耗）
+key_full_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.origins.primary_active
+      trigger: LONG_PRESS_3s
+   entity_action:
+      type: apoli:and
+      actions:
+         # 快速消耗能量提高载荷
+         -
+            type: apoli:exhaust
+            amount: 80
+
+         # 增加载荷
+         -
+            type: apoli:change_resource
+            resource: "*:*_data"
+            change: 150
+            operation: add
 
 key_cancel_trigger:
    type: sil_yoni:detection/mutable_active_self
@@ -120,49 +151,24 @@ key_cancel_trigger:
    entity_action:
       type: apoli:and
       actions:
-      # 手动结束，较低损失
-      -
-         type: apoli:if_else
-         condition:
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '>='
-            compare_to: 0
-         if_action:
-            type: apoli:exhaust
-            amount: 2
-      # 重置计时器
+      # 结束载荷
       -
          type: apoli:change_resource
          resource: "*:*_data"
-         change: -1
+         change: 0
          operation: set
 
-damage_lv1_trigger:
+damage_lv3_trigger:
+   <<: *object-damage-is-energy
    type: apoli:modify_damage_taken
    condition:
-      type: apoli:and
-      conditions:
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '>'
-            compare_to: 110
-   damage_condition:
-      type: apoli:and
-      conditions:
-      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
-      - { inverted: true, type: apoli:in_tag, tag: is_fire }
-      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
+      <<: *condition-load-lvl3
    modifier:
       operation: add_base_late
-      value: -5
+      value: -15
    self_action:
       type: apoli:and
       actions:
-      # -
-      #    type: apoli:execute_command
-      #    command: say lv1
       -
          type: apoli:exhaust
          amount: 2
@@ -172,37 +178,17 @@ damage_lv1_trigger:
          change: 20
          operation: add
       
-
 damage_lv2_trigger:
+   <<: *object-damage-is-energy
    type: apoli:modify_damage_taken
    condition:
-      type: apoli:and
-      conditions:
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '>'
-            compare_to: 60
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '<='
-            compare_to: 110
-   damage_condition:
-      type: apoli:and
-      conditions:
-      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
-      - { inverted: true, type: apoli:in_tag, tag: is_fire }
-      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
+      <<: *condition-load-lvl2
    modifier:
       operation: add_base_late
       value: -10
    self_action:
       type: apoli:and
       actions:
-      # -
-      #    type: apoli:execute_command
-      #    command: say lv2
       -
          type: apoli:exhaust
          amount: 10
@@ -212,54 +198,31 @@ damage_lv2_trigger:
          change: -30
          operation: add
       
-damage_lv3_trigger:
+damage_lv1_trigger:
+   <<: *object-damage-is-energy
    type: apoli:modify_damage_taken
    condition:
-      type: apoli:and
-      conditions:
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '>'
-            compare_to: 0
-         -
-            type: apoli:resource
-            resource: "*:*_data"
-            comparison: '<='
-            compare_to: 60
-   damage_condition:
-      type: apoli:and
-      conditions:
-      - { inverted: true, type: apoli:name, name: guxi:starve_energy }
-      - { inverted: true, type: apoli:in_tag, tag: is_fire }
-      - { inverted: true, type: apoli:in_tag, tag: is_lightning }
+      <<: *condition-load-lvl1
    modifier:
       operation: add_base_late
-      value: -15
+      value: -10
    self_action:
       type: apoli:and
       actions:
-      # -
-      #    type: apoli:execute_command
-      #    command: say lv3
       -
          type: apoli:exhaust
-         amount: 5
+         amount: 18
       -
          type: apoli:change_resource
          resource: "*:*_data"
-         change: -1
+         change: 0
          operation: set
 
 # 在方块被破坏时重置计时器，并消耗一定的能量
 mining_trigger:
+   <<: *object-load-active
    type: apoli:action_on_block_break
    only_when_harvested: false
-   condition:
-      type: apoli:resource
-      resource: "*:*_data"
-      comparison: '>'
-      compare_to: 0
    entity_action:
       type: apoli:and
       actions:
