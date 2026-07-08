@@ -17,33 +17,58 @@ x-collision-condition: &block-hardness
             comparison: ">="
             compare_to: 0
 
+x-wall-climbing-condition: &wall-climbing
+   type: apoli:and
+   conditions:
+      -  type: apoli:collided_horizontally
+      -
+         type: apoli:or
+         conditions:
+            -  <<: *block-hardness
+               offset_x: 0.1
+            -  <<: *block-hardness
+               offset_z: 0.1
+            -  <<: *block-hardness
+               offset_x: 0.1
+               offset_y: -0.1
+            -  <<: *block-hardness
+               offset_z: 0.1
+               offset_y: -0.1
+            -  <<: *block-hardness
+               offset_x: -0.1
+            -  <<: *block-hardness
+               offset_z: -0.1
+            -  <<: *block-hardness
+               offset_x: -0.1
+               offset_y: -0.1
+            -  <<: *block-hardness
+               offset_z: -0.1
+               offset_y: -0.1
+
+x-start-climbing: &start-climbing
+   type: apoli:or
+   conditions:
+      - type: apoli:climbing
+      -
+         type: apoli:resource
+         resource: "*:*_jumping_trigger"
+         comparison: '>'
+         compare_to: 0
+
+jumping_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.jump
+      trigger: SINGLE_PRESS_CLICK
+   cooldown: 30
+   entity_action:
+      type: apoli:nothing
+
 ability:
    type: apoli:climbing
    allow_holding: true
    condition:
       type: apoli:and
       conditions:
-      -  type: apoli:collided_horizontally
-      -
-         type: apoli:or
-         conditions:
-         -  <<: *block-hardness
-            offset_x: 0.1
-         -  <<: *block-hardness
-            offset_z: 0.1
-         -  <<: *block-hardness
-            offset_x: 0.1
-            offset_y: -0.1
-         -  <<: *block-hardness
-            offset_z: 0.1
-            offset_y: -0.1
-         -  <<: *block-hardness
-            offset_x: -0.1
-         -  <<: *block-hardness
-            offset_z: -0.1
-         -  <<: *block-hardness
-            offset_x: -0.1
-            offset_y: -0.1
-         -  <<: *block-hardness
-            offset_z: -0.1
-            offset_y: -0.1
+         - <<: *start-climbing
+         - <<: *wall-climbing
