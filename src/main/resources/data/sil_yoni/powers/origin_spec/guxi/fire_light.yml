@@ -40,6 +40,162 @@ force_enable_switcher:
             operation: set
             change: 0
 
+x-bientity-condition-target-living: &condition-bientity-target-living
+   type: apoli:target_condition
+   condition:
+      type: apoli:living
+
+x-action-raycast-mode: &raycast-mode
+   type: origins:raycast
+   block: false
+   entity: true
+   fluid_handling: none
+   bientity_condition:
+      <<: *condition-bientity-target-living
+
+x-action-raycast-distance-60: &raycast-distance-60
+   # 进行一次直线查找，在60内找直直对着的实体
+   <<: *raycast-mode
+   distance: 60
+
+   # 找到了就消耗能量，向目标实体发出攻击
+   bientity_action:
+      type: apoli:and
+      actions:
+         -
+            type: apoli:actor_action
+            action:
+               type: apoli:exhaust
+               amount: 8
+         -
+            type: apoli:damage
+            damage_type: sil_yoni:dense_energy
+            amount: 8
+
+x-action-raycast-distance-180: &raycast-distance-180
+   # 进行一次直线查找，在180内找直直对着的实体
+   <<: *raycast-mode
+   distance: 180
+
+   # 找到了就消耗能量，向目标实体发出攻击
+   bientity_action:
+      type: apoli:and
+      actions:
+         -
+            type: apoli:actor_action
+            action:
+               type: apoli:exhaust
+               amount: 18
+         -
+            type: apoli:damage
+            damage_type: sil_yoni:dense_energy
+            amount: 8
+
+x-bientity-condition-vision-view-player: &condition-bientity-vision-view-player
+   # 对玩家实体要求更高的精确度，为了PVP公平性
+   type: apoli:and
+   conditions:
+      -
+         type: apoli:target_condition
+         condition:
+            type: apoli:entity_type
+            entity_type: player
+      -
+         type: origins:relative_rotation
+         actor_rotation: head
+         target_rotation: head
+         comparison: "<="
+         compare_to: -0.7
+
+x-bientity-condition-vision-view-non-player: &condition-bientity-vision-view-non-player
+   # 对一般实体要求一般精确度
+   type: apoli:and
+   conditions:
+      -
+         type: apoli:target_condition
+         condition:
+            type: apoli:entity_type
+            entity_type: player
+            inverted: true
+      -
+         type: origins:relative_rotation
+         actor_rotation: head
+         target_rotation: head
+         comparison: "<="
+         compare_to: -0.3
+
+x-bientity-condition-attacker: &condition-bientity-attacker
+   type: apoli:and
+   conditions:
+      -
+         type: apoli:or
+         conditions:
+            - { type: apoli:invert, condition: { type: apoli:attacker } }
+            - { type: apoli:attacker }
+      - { type: apoli:distance, comparison: '<=', compare_to: 4 }
+
+x-bientity-condition-attacking: &condition-bientity-attacking
+   # 战斗情况的检测的检测
+   type: apoli:or
+   conditions:
+      - { type: apoli:invert, condition: { type: apoli:attack_target } }
+      - { type: apoli:invert, condition: { type: apoli:attacker } }
+      - { type: apoli:attack_target }
+      - { type: apoli:attacker }
+
+x-action-area-effect: &area-effect
+   type: apoli:area_of_effect
+   radius: 12
+
+   bientity_condition:
+      type: apoli:and
+      conditions:
+         # 首先得是活体
+         - <<: *condition-bientity-target-living
+
+         # 然后进行类别查找
+         -
+            type: apoli:or
+            conditions:
+               # 第一种成功情况：距离4格内曾被我攻击的生物，或曾攻击过我的生物
+               - <<: *condition-bientity-attacker
+
+               # 第二种成功情况：整个查找范围内
+               #  战斗情况：想以我为目标的、我目标的、攻击我的、我攻击的实体，
+               #  视角情况：差不多正看着他
+               -
+                  type: apoli:and
+                  conditions:
+                     - <<: *condition-bientity-attacking
+
+                     # 视角情况的检测
+                     -
+                        type: apoli:or
+                        conditions:
+                           -
+                              <<: *condition-bientity-vision-view-player
+
+                           -
+                              <<: *condition-bientity-vision-view-non-player
+
+   # 对找到的实体使用能量进行伤害
+   bientity_action:
+      type: apoli:and
+      actions:
+         # 能量消耗
+         -
+            type: apoli:actor_action
+            action:
+               type: apoli:exhaust
+               amount: 6
+
+         # 造成伤害
+         -
+            type: apoli:damage
+            damage_type: sil_yoni:dense_energy
+            amount: 8
+
+
 # 一个通过左键触发的攻击技能
 trigger_raycast_target:
    type: sil_yoni:detection/mutable_active_self
@@ -74,160 +230,17 @@ trigger_raycast_target:
          compare_to: 0
 
    entity_action:
-      # 进行一次直线查找，在60内找直直对着的实体
-      type: origins:raycast
-      distance: 60
-      block: false
-      entity: true
-      fluid_handling: none
-      bientity_condition:
-         type: apoli:target_condition
-         condition:
-            type: apoli:living
-
-      # 找到了就消耗能量，向目标实体发出攻击
-      bientity_action:
-         type: apoli:and
-         actions:
-         -
-            type: apoli:actor_action
-            action:
-               type: apoli:exhaust
-               amount: 8
-         -
-            type: apoli:damage
-            damage_type: sil_yoni:dense_energy
-            amount: 8
-
+      <<: *raycast-distance-60
       # 没有找到这类实体，尝试提高查找范围
       miss_action:
-         # 进行一次直线查找，在180内找直直对着的实体
-         type: origins:raycast
-         distance: 180
-         block: false
-         entity: true
-         fluid_handling: none
-         bientity_condition:
-            type: apoli:target_condition
-            condition:
-               type: apoli:living
-
-         # 找到了就消耗能量，向目标实体发出攻击
-         bientity_action:
-            type: apoli:and
-            actions:
-            -
-               type: apoli:actor_action
-               action:
-                  type: apoli:exhaust
-                  amount: 18
-            -
-               type: apoli:damage
-               damage_type: sil_yoni:dense_energy
-               amount: 8
+         <<: *raycast-distance-180
 
          # 没有找到这类实体，使用范围攻击模式
          miss_action:
             type: apoli:and
             actions:
-            # 先消耗一点能量用于查找
-            -
-               type: apoli:exhaust
-               amount: 0.5
+               # 先消耗一点能量用于查找
+               - { type: apoli:exhaust, amount: 0.5 }
 
-            # 开始查找并攻击 
-            -
-               type: apoli:area_of_effect
-               radius: 12
-
-               bientity_condition:
-                  type: apoli:and
-                  conditions:
-                  # 首先得是活体
-                  -
-                     type: apoli:target_condition
-                     condition:
-                        type: apoli:living
-
-                  # 然后进行类别查找
-                  -
-                     type: apoli:or
-                     conditions:
-                     # 第一种成功情况：距离4格内曾被我攻击的生物，或曾攻击过我的生物
-                     -
-                        type: apoli:and
-                        conditions:
-                        -
-                           type: apoli:or
-                           conditions:
-                           - { type: apoli:invert, condition: { type: apoli:attacker } }
-                           - { type: apoli:attacker }
-                        - { type: apoli:distance, comparison: '<=', compare_to: 4 }
-
-                     # 第二种成功情况：整个查找范围内
-                     #  战斗情况：想以我为目标的、我目标的、攻击我的、我攻击的实体，
-                     #  视角情况：差不多正看着他
-                     -
-                        type: apoli:and
-                        conditions:
-                        # 战斗情况的检测的检测
-                        -
-                           type: apoli:or
-                           conditions:
-                           - { type: apoli:invert, condition: { type: apoli:attack_target } }
-                           - { type: apoli:invert, condition: { type: apoli:attacker } }
-                           - { type: apoli:attack_target }
-                           - { type: apoli:attacker }
-
-                        # 视角情况的检测
-                        -
-                           type: apoli:or
-                           conditions:
-                           # 对玩家实体要求更高的精确度，为了PVP公平性
-                           -
-                              type: apoli:and
-                              conditions:
-                              -
-                                 type: apoli:target_condition
-                                 condition:
-                                    type: apoli:entity_type
-                                    entity_type: player
-                              -
-                                 type: origins:relative_rotation
-                                 actor_rotation: head
-                                 target_rotation: head
-                                 comparison: "<="
-                                 compare_to: -0.7
-
-                           # 对一般实体要求一般精确度
-                           -
-                              type: apoli:and
-                              conditions:
-                              -
-                                 type: apoli:target_condition
-                                 condition:
-                                    type: apoli:entity_type
-                                    entity_type: player
-                                    inverted: true
-                              -
-                                 type: origins:relative_rotation
-                                 actor_rotation: head
-                                 target_rotation: head
-                                 comparison: "<="
-                                 compare_to: -0.3
-
-               # 对找到的实体使用能量进行伤害
-               bientity_action:
-                  type: apoli:and
-                  actions:
-                  # 能量消耗
-                  -
-                     type: apoli:actor_action
-                     action:
-                        type: apoli:exhaust
-                        amount: 6
-                  # 造成伤害
-                  -
-                     type: apoli:damage
-                     damage_type: sil_yoni:dense_energy
-                     amount: 8
+               # 开始查找并攻击
+               - <<: *area-effect
