@@ -100,19 +100,25 @@ processResources {
 
     rename("\\.yml\$", ".json")
 
-    filesMatching("**/*.yml") {
+	filesMatching("**/*.yml") {
 //        println "converting yml file %s to json".formatted(it.relativeSourcePath.toString())
 
-        def yamlContent = new Yaml().load(it.open())
-        def jsonContent = JsonOutput.toJson(yamlContent)
+		def yamlContent = new Yaml().load(it.open())
 
-        def contentReplaced = false
-        it.filter(line -> {
-            if (contentReplaced) return
-            contentReplaced = true
-            return jsonContent
-        })
+		if (yamlContent instanceof Map) {
+			yamlContent = yamlContent.findAll { key, value ->
+				!key.toString().startsWith("x-")
+			}
+		}
 
+		def jsonContent = JsonOutput.toJson(yamlContent)
+
+		def contentReplaced = false
+		it.filter { line ->
+			if (contentReplaced) return
+			contentReplaced = true
+			return jsonContent
+		}
 	}
 }
 
