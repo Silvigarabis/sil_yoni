@@ -46,23 +46,34 @@ x-wall-climbing-condition: &wall-climbing
                offset_y: -0.1
 
 x-start-climbing: &start-climbing
-   type: apoli:or
-   conditions:
-      - type: apoli:climbing
-      -
-         type: apoli:resource
-         resource: "*:*_jumping_trigger"
-         comparison: '>'
-         compare_to: 0
+   type: apoli:resource
+   resource: "*:*_start_climbing"
+   comparison: '>'
+   compare_to: 0
+
+start_climbing:
+   type: apoli:cooldown
+   cooldown: 40
+
+check_climbing:
+   type: apoli:action_over_time
+   interval: 30
+   entity_action:
+      type: apoli:if_else
+      condition:
+         type: apoli:climbing
+      if_action:
+         type: apoli:trigger_cooldown
+         power: "*:*_start_climbing"
 
 jumping_trigger:
    type: sil_yoni:detection/mutable_active_self
    key:
       key: key.jump
       trigger: SINGLE_PRESS_CLICK
-   cooldown: 30
    entity_action:
-      type: apoli:nothing
+      type: apoli:trigger_cooldown
+      power: "*:*_start_climbing"
 
 ability:
    type: apoli:climbing
