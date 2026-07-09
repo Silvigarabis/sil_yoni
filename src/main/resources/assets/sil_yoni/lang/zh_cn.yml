@@ -162,3 +162,22 @@ power.sil_yoni.origin_spec/fairy2/void_inventory.description: 你可以利用虚
 
 power.sil_yoni.origin_spec/silvigarabis/all.name: 一切的能力
 power.sil_yoni.origin_spec/silvigarabis/all.description: 你给自己添加了太多的限制
+
+sil_yoni.gui.badge.active.single-click-interval: 主动能力，单击（间隔检测）%s键后触发
+sil_yoni.gui.badge.active.double-click-interval: 主动能力，双击（间隔检测）%s键后触发
+sil_yoni.gui.badge.active.triple-click-interval: 主动能力，三击（间隔检测）%s键后触发
+
+sil_yoni.gui.badge.active.single-click-immediate: 主动能力，单击%s立即触发
+sil_yoni.gui.badge.active.double-click-immediate: 主动能力，双击%s立即触发
+sil_yoni.gui.badge.active.triple-click-immediate: 主动能力，三击%s立即触发
+
+sil_yoni.gui.badge.active.single-press-click: 主动能力，按下%s键瞬间触发
+sil_yoni.gui.badge.active.double-press-click: 主动能力，二次按下%s键瞬间触发
+sil_yoni.gui.badge.active.triple-press-click: 主动能力，三次按下%s键瞬间触发
+
+sil_yoni.gui.badge.active.single-press-hold-always-continuous: 主动能力，按住%s键持续生效
+sil_yoni.gui.badge.active.single-press-hold: 主动能力，长按%s键触发
+
+sil_yoni.gui.badge.active.long-press-3s: 主动能力，长按3秒%s键触发
+sil_yoni.gui.badge.active.long-press-10s: 主动能力，长按10秒%s键触发
+
