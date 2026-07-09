@@ -7,5 +7,6 @@ public class SilYoniModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         PowerActiveKeyListener.init();
+        BadgeManager.init();
     }
 }
