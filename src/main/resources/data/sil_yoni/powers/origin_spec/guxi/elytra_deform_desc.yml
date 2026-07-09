@@ -1,1 +1,8 @@
-type: apoli:simple
+type: apoli:multiple
+boost_flight:
+   type: apoli:active_self
+   cooldown: 15
+   key:
+      key: key.jump
+   entity_action:
+      type: apoli:nothing
