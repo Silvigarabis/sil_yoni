@@ -2,6 +2,7 @@ package io.github.silvigarabis.sil_yoni;
 
 import io.github.silvigarabis.sil_yoni.networking.ModC2SPackets;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,10 @@ public class SilYoniMod implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     private static final Logger LOGGER = LoggerFactory.getLogger("SIL YONI");
     public static final String MOD_ID = "sil_yoni";
+
+    public static Identifier identifier(String id) {
+        return new Identifier(MOD_ID, id);
+    }
 
     @Override
     public void onInitialize() {
