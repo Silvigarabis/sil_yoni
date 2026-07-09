@@ -181,3 +181,20 @@ sil_yoni.gui.badge.active.single-press-hold: 主动能力，长按%s键触发
 sil_yoni.gui.badge.active.long-press-3s: 主动能力，长按3秒%s键触发
 sil_yoni.gui.badge.active.long-press-10s: 主动能力，长按10秒%s键触发
 
+sil_yoni.gui.badge.toggle.single-click-interval: 单击%s键后开关
+sil_yoni.gui.badge.toggle.double-click-interval: 双击（间隔检测）%s键后开关
+sil_yoni.gui.badge.toggle.triple-click-interval: 三击%s键后开关
+
+sil_yoni.gui.badge.toggle.single-click-immediate: 单击%s立即开关
+sil_yoni.gui.badge.toggle.double-click-immediate: 双击%s立即开关
+sil_yoni.gui.badge.toggle.triple-click-immediate: 三击%s立即开关
+
+sil_yoni.gui.badge.toggle.single-press-click: 按下%s键瞬间开关
+sil_yoni.gui.badge.toggle.double-press-click: 二次按下%s键瞬间开关
+sil_yoni.gui.badge.toggle.triple-press-click: 三次按下%s键瞬间开关
+
+sil_yoni.gui.badge.toggle.single-press-hold-always-continuous: 按住%s键持续开关
+sil_yoni.gui.badge.toggle.single-press-hold: 长按%s键开关
+
+sil_yoni.gui.badge.toggle.long-press-3s: 长按3秒%s键开关
+sil_yoni.gui.badge.toggle.long-press-10s: 长按10秒%s键开关

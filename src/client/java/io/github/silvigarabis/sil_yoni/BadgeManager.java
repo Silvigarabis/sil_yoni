@@ -8,7 +8,8 @@ import io.github.apace100.origins.Origins;
 import io.github.apace100.origins.badge.Badge;
 import io.github.apace100.origins.badge.BadgeFactory;
 import io.github.apace100.origins.integration.AutoBadgeCallback;
-import io.github.silvigarabis.sil_yoni.power.detection.Active;
+import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
+import io.github.silvigarabis.sil_yoni.power.detection.TogglePower;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.tooltip.OrderedTextTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -25,10 +26,17 @@ public class BadgeManager {
 
     public static void createAutoBadges(Identifier powerId, PowerType<?> powerType, List<Badge> badgeList) {
         var power = powerType.create(null);
-        if (power instanceof Active active) {
+        if (power instanceof ActiveCooldownPower active) {
             for (var key : active.getUseKeys()){
                 for (var pattern : key.triggers()){
                     var badge = new KeybindBadge(ACTIVE_BADGE_SPRITE, pattern.translationKey(), key.key());
+                    badgeList.add(badge);
+                }
+            }
+        } else if (power instanceof TogglePower toggle) {
+            for (var key : toggle.getUseKeys()){
+                for (var pattern : key.triggers()){
+                    var badge = new KeybindBadge(ACTIVE_BADGE_SPRITE, pattern.toggleTranslationKey(), key.key());
                     badgeList.add(badge);
                 }
             }
@@ -84,7 +92,6 @@ public class BadgeManager {
         public BadgeFactory getBadgeFactory() {
             return KEYBIND;
         }
-
     }
 
     public static final BadgeFactory KEYBIND = new BadgeFactory(SilYoniMod.identifier("keybind"),

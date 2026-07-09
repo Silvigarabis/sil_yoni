@@ -9,6 +9,7 @@ import static io.github.silvigarabis.sil_yoni.keybinding.StageType.*;
 public enum TriggerPattern {
     SINGLE_CLICK_INTERVAL(
             "sil_yoni.gui.badge.active.single-click-interval",
+            "sil_yoni.gui.badge.toggle.single-click-interval",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             ReleaseHold.withDef(),
@@ -16,6 +17,7 @@ public enum TriggerPattern {
     ),
     DOUBLE_CLICK_INTERVAL(
             "sil_yoni.gui.badge.active.double-click-interval",
+            "sil_yoni.gui.badge.toggle.double-click-interval",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             WaitPress.withDef(),
@@ -25,6 +27,7 @@ public enum TriggerPattern {
     ),
     TRIPLE_CLICK_INTERVAL(
             "sil_yoni.gui.badge.active.triple-click-interval",
+            "sil_yoni.gui.badge.toggle.triple-click-interval",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             WaitPress.withDef(),
@@ -37,6 +40,7 @@ public enum TriggerPattern {
 
     SINGLE_CLICK_IMMEDIATE(
             "sil_yoni.gui.badge.active.single-click-immediate",
+            "sil_yoni.gui.badge.toggle.single-click-immediate",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             ActiveOnce.use(),
@@ -44,6 +48,7 @@ public enum TriggerPattern {
     ),
     DOUBLE_CLICK_IMMEDIATE(
             "sil_yoni.gui.badge.active.double-click-immediate",
+            "sil_yoni.gui.badge.toggle.double-click-immediate",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             WaitPress.withDef(),
@@ -53,6 +58,7 @@ public enum TriggerPattern {
     ),
     TRIPLE_CLICK_IMMEDIATE(
             "sil_yoni.gui.badge.active.triple-click-immediate",
+            "sil_yoni.gui.badge.toggle.triple-click-immediate",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             WaitPress.withDef(),
@@ -65,6 +71,7 @@ public enum TriggerPattern {
 
     SINGLE_PRESS_CLICK(
             "sil_yoni.gui.badge.active.single-press-click",
+            "sil_yoni.gui.badge.toggle.single-press-click",
             WaitPress.withInf(),
             ActiveOnce.use(),
             WaitRelease.withDef(),
@@ -73,6 +80,7 @@ public enum TriggerPattern {
 
     DOUBLE_PRESS_CLICK(
             "sil_yoni.gui.badge.active.double-press-click",
+            "sil_yoni.gui.badge.toggle.double-press-click",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             WaitPress.withDef(),
@@ -83,6 +91,7 @@ public enum TriggerPattern {
 
     TRIPLE_PRESS_CLICK(
             "sil_yoni.gui.badge.active.triple-press-click",
+            "sil_yoni.gui.badge.toggle.triple-press-click",
             WaitPress.withInf(),
             WaitRelease.withDef(),
             WaitPress.withDef(),
@@ -95,6 +104,7 @@ public enum TriggerPattern {
 
     SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS(
             "sil_yoni.gui.badge.active.single-press-hold-always-continuous",
+            "sil_yoni.gui.badge.toggle.single-press-hold-always-continuous",
             WaitPress.withInf(),
             ActiveContinuousWhenHold.use(),
             Reset.use()
@@ -102,6 +112,7 @@ public enum TriggerPattern {
 
     SINGLE_PRESS_HOLD(
             "sil_yoni.gui.badge.active.single-press-hold",
+            "sil_yoni.gui.badge.toggle.single-press-hold",
             WaitPress.withInf(),
             PressHold.withLongDef(),
             ActiveOnce.use()
@@ -109,12 +120,14 @@ public enum TriggerPattern {
 
     LONG_PRESS_3s(
             "sil_yoni.gui.badge.active.long-press-3s",
+            "sil_yoni.gui.badge.toggle.long-press-3s",
             WaitPress.withInf(),
             PressHold.with(20 * 3),
             ActiveOnce.use()
     ),
     LONG_PRESS_10s(
             "sil_yoni.gui.badge.active.long-press-10s",
+            "sil_yoni.gui.badge.toggle.long-press-10s",
             WaitPress.withInf(),
             PressHold.with(20 * 10),
             ActiveOnce.use()
@@ -129,12 +142,18 @@ public enum TriggerPattern {
         return translationKey;
     }
 
+    public String toggleTranslationKey(){
+        return toggleTranslationKey;
+    }
+
     private final List<StageSpec> stages;
     private final String translationKey;
+    private final String toggleTranslationKey;
 
 
-    TriggerPattern(String translationKey, StageSpec... stages) {
+    TriggerPattern(String translationKey, String toggleTranslationKey, StageSpec... stages) {
         this.translationKey = translationKey;
+        this.toggleTranslationKey = toggleTranslationKey;
         this.stages = List.of(stages);
     }
 }
