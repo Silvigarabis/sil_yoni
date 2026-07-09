@@ -1,6 +1,6 @@
 type: apoli:multiple
 hidden: true
-# 通用攀爬能力，允许攀登一般方块（正确硬度小于20）
+description: 通用攀爬能力，允许攀登一般方块（正确硬度小于20）
 
 x-collision-condition: &block-hardness
    type: apoli:block_collision
@@ -53,7 +53,7 @@ x-start-climbing: &start-climbing
 
 start_climbing:
    type: apoli:cooldown
-   cooldown: 40
+   cooldown: 80
 
 check_climbing:
    type: apoli:action_over_time
@@ -63,14 +63,37 @@ check_climbing:
       condition:
          type: apoli:climbing
       if_action:
-         type: apoli:trigger_cooldown
-         power: "*:*_start_climbing"
+         type: apoli:and
+         actions:
+#         -
+#            type: apoli:execute_command
+#            command: say climbing
+         -
+            type: apoli:trigger_cooldown
+            power: "*:*_start_climbing"
 
 jumping_trigger:
    type: sil_yoni:detection/mutable_active_self
+   interval: 30
    key:
-      key: key.jump
-      trigger: SINGLE_PRESS_CLICK
+      -
+         key: key.right
+         trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
+      -
+         key: key.left
+         trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
+      -
+         key: key.back
+         trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
+      -
+         key: key.forward
+         trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
+      -
+         key: key.sneak
+         trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
+      -
+         key: key.jump
+         trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
    entity_action:
       type: apoli:trigger_cooldown
       power: "*:*_start_climbing"
