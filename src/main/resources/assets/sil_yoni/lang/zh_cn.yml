@@ -163,9 +163,9 @@ power.sil_yoni.origin_spec/fairy2/void_inventory.description: 你可以利用虚
 power.sil_yoni.origin_spec/silvigarabis/all.name: 一切的能力
 power.sil_yoni.origin_spec/silvigarabis/all.description: 你给自己添加了太多的限制
 
-sil_yoni.gui.badge.active.single-click-interval: 主动能力，单击（间隔检测）%s键后触发
-sil_yoni.gui.badge.active.double-click-interval: 主动能力，双击（间隔检测）%s键后触发
-sil_yoni.gui.badge.active.triple-click-interval: 主动能力，三击（间隔检测）%s键后触发
+sil_yoni.gui.badge.active.single-click-interval: 主动能力，单击%s键后触发
+sil_yoni.gui.badge.active.double-click-interval: 主动能力，双击%s键后触发
+sil_yoni.gui.badge.active.triple-click-interval: 主动能力，三击%s键后触发
 
 sil_yoni.gui.badge.active.single-click-immediate: 主动能力，单击%s立即触发
 sil_yoni.gui.badge.active.double-click-immediate: 主动能力，双击%s立即触发
