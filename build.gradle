@@ -18,6 +18,7 @@ def modVersion = version
 def depVersionApoli = project.apoli_version
 def depVersionFabricApi = project.fabric_version
 def depVersionFabricLoader = project.loader_version
+def depVersionPehkui = project.pehkui_version
 
 base {
 	archivesName = project.archives_base_name
@@ -25,25 +26,30 @@ base {
 
 repositories {
 	//apoli, pehkui
-	maven { url 'https://jitpack.io' }
+	maven { url 'https://jitpack.io'
+		content {
+			includeGroup 'com.github.Virtuoel'
+			includeGroup "com.github.apace100"
+		}
+	}
+
 	//cardinal-components
 	maven {
 		name = 'Ladysnake Mods'
 		url = 'https://maven.ladysnake.org/releases'
+		content {
+			includeGroup "dev.onyxstudios.cardinal-components-api"
+		}
 	}
-	//cloth config
+
+	// cloth config
 	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.terraformersmc.com/releases/" }
-	//modmenu
-	maven {
-		name = "Terraformers"
-		url = "https://maven.terraformersmc.com/"
-	}
 }
 
 configurations.configureEach {
     resolutionStrategy.force(
-            "com.github.DaFuqs:AdditionalEntityAttributes:1.20.1-SNAPSHOT"
+		"com.github.DaFuqs:AdditionalEntityAttributes:1.20.1-SNAPSHOT",
+		"net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     )
 }
 
@@ -62,24 +68,18 @@ loom {
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	include "com.github.apace100:apoli:${project.apoli_version}"
-	modImplementation "com.github.apace100:apoli:${project.apoli_version}"
-
-	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
+	modImplementation("com.github.apace100:apoli:${project.apoli_version}") {
+		exclude group: "com.terraformersmc", module: "modmenu"
+		exclude group: "com.github.DaFuqs", module: "AdditionalEntityAttributes"
+		exclude group: "io.github.ladysnake", module: "PlayerAbilityLib"
 	}
-
-	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
 	}
-
-	modImplementation("com.github.Virtuoel:Pehkui:${pehkui_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
+	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+	modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_version}"
 }
 
 import groovy.json.JsonOutput
