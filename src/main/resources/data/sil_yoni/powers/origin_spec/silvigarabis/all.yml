@@ -1,0 +1,170 @@
+type: apoli:multiple
+
+# set scale
+callbacks:
+  type: origins:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_gained:
+    type: apoli:and
+    actions:
+      - type: apoli:grant_power
+        power: sil_yoni:the_plane_fly
+        source: "*:*"
+      - type: apoli:execute_command
+        command: function sil_yoni:origins/silvigarabis/set_scale
+  entity_action_respawned:
+    type: apoli:and
+    actions:
+      - type: apoli:execute_command
+        command: function sil_yoni:origins/silvigarabis/set_scale
+  entity_action_lost:
+    type: apoli:and
+    actions:
+      - type: apoli:revoke_power
+        power: sil_yoni:the_plane_fly
+        source: "*:*"
+      - type: apoli:execute_command
+        command: function sil_yoni:origins/silvigarabis/reset_scale
+
+body_color:
+  type: apoli:model_color
+  alpha: 0.7
+
+no_strength_0:
+   type: apoli:modify_break_speed
+   modifier:
+      operation: multiply_base_additive
+      value: -0.74
+   block_condition:
+      type: apoli:hardness
+      comparison: "!="
+      compare_to: 0
+
+no_strength_1:
+   type: apoli:modify_damage_dealt
+   modifier:
+      operation: multiply_base_additive
+      value: -0.8
+
+no_regen:
+  type: apoli:disable_regen
+
+damage_immu:
+  type: apoli:invulnerability
+  damage_condition:
+    type: apoli:or
+    conditions:
+      - type: apoli:name
+        name: starve
+      - type: apoli:name
+        name: drown
+      - type: apoli:in_tag
+        tag: is_fire
+      - type: apoli:in_tag
+        tag: is_lightning
+
+lower_health:
+   type: apoli:modify_attribute
+   attribute: generic.max_health
+   modifier:
+      operation: set_base
+      value: 8
+
+loops:
+   type: apoli:action_over_time
+   interval: 20
+   entity_action:
+      type: apoli:and
+      actions:
+      # 饥饿度恢复
+      -
+         type: apoli:if_else
+         condition:
+            type: apoli:and
+            inverted: true
+            conditions:
+            -
+               type: apoli:or
+               conditions:
+               -
+                  type: apoli:and
+                  conditions:
+                  -
+                     type: apoli:on_block
+                     inverted: true
+                  -
+                     type: apoli:fall_flying
+            -
+               type: apoli:riding
+               inverted: true
+            -
+               type: apoli:moving
+         if_action:
+            type: apoli:apply_effect
+            effect:
+               effect: saturation
+               duration: 1
+               amplifier: 0
+               show_icon: false
+               show_particles: false
+      # 不需要呼吸
+      -
+         type: apoli:gain_air
+         value: 20
+
+self_regen:
+   type: apoli:action_over_time
+   interval: 40
+   condition:
+      type: apoli:and
+      conditions:
+      -
+         type: apoli:relative_health
+         comparison: "<"
+         compare_to: 1
+      -
+         type: apoli:or
+         conditions:
+            - type: apoli:exposed_to_sun
+            - type: apoli:brightness
+              comparison: ">="
+              compare_to: 0.4
+   entity_action:
+      type: apoli:heal
+      amount: 1
+
+# lower_jumping:
+  # type: apoli:modify_jump
+  # modifier:
+    # operation: multiply_base_additive
+    # value: -0.4
+
+# no_breath:
+  # type: apoli:invulnerability
+  # damage_condition:
+    # type: apoli:or
+    # conditions:
+
+# small_step:
+  # type: apoli:attribute
+  # update_health: false
+  # modifiers:
+    # - attribute: generic.movement_speed
+      # operation: multiply_base
+      # value: -0.2
+      # name: sil_yoni:physique/small_body
+# attribute_modifiers:
+  # type: apoli:attribute
+  # modifiers:
+    # - attribute: generic.movement_speed
+      # operation: multiply_total
+      # value: -0.3
+    # - attribute: generic.attack_damage
+      # operation: multiply_total
+      # value: -0.8
+    # - attribute: generic.armor
+      # operation: multiply_total
+      # value: -1
+    # - attribute: generic.max_health
+      # operation: addition
+      # value: 30

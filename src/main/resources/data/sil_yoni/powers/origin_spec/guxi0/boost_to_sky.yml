@@ -1,0 +1,51 @@
+type: apoli:multiple
+auto_setup_triggers:
+  type: apoli:action_over_time
+  interval: 3
+  entity_action:
+    type: apoli:if_else
+    condition:
+      type: apoli:and
+      conditions:
+        - type: apoli:on_block
+          inverted: true
+        - type: apoli:riding
+          inverted: true
+        - type: apoli:command
+          command: data get entity @s SleepTimer
+          comparison: '=='
+          compare_to: 0
+    if_action:
+      type: apoli:if_else
+      condition:
+        type: apoli:power
+        inverted: true
+        power: "*:*/elytra"
+        source: "*:*"
+      if_action:
+        type: apoli:and
+        actions:
+          - type: apoli:grant_power
+            power: "*:*/elytra"
+            source: "*:*"
+    else_action:
+      type: apoli:if_else
+      condition:
+        type: apoli:power
+        power: "*:*/elytra"
+        source: "*:*"
+      if_action:
+        type: apoli:and
+        actions:
+          - type: apoli:revoke_power
+            power: "*:*/elytra"
+            source: "*:*"
+auto_remove_triggers:
+  type: origins:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_lost:
+    type: apoli:and
+    actions:
+      - type: apoli:revoke_power
+        power: "*:*/elytra"
+        source: "*:*"

@@ -1,0 +1,77 @@
+hidden: true
+type: apoli:multiple
+loop_energy:
+  type: apoli:action_over_time
+  internal: 30
+  entity_action:
+    type: apoli:if_else
+    condition:
+      type: apoli:and
+      conditions:
+        - type: apoli:relative_health
+          comparison: "<="
+          compare_to: 0.12
+    if_action:
+      type: apoli:if_else
+      condition:
+        type: apoli:power
+        inverted: true
+        power: "*:*/no_energy"
+        source: "*:*"
+      if_action:
+        type: apoli:and
+        actions:
+          - type: apoli:revoke_power
+            power: "*:*/fire_light"
+            source: "*:*"
+          - type: apoli:revoke_power
+            power: "*:*/boost_to_sky"
+            source: "*:*"
+          - type: apoli:grant_power
+            power: "*:*/no_energy"
+            source: "*:*"
+    else_action:
+      type: apoli:if_else
+      condition:
+        type: apoli:power
+        power: "*:*/no_energy"
+        source: "*:*"
+      if_action:
+        type: apoli:and
+        actions:
+          - type: apoli:grant_power
+            power: "*:*/fire_light"
+            source: "*:*"
+          - type: apoli:grant_power
+            power: "*:*/boost_to_sky"
+            source: "*:*"
+          - type: apoli:revoke_power
+            power: "*:*/no_energy"
+            source: "*:*"
+callbacks:
+  type: origins:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_gained:
+    type: apoli:and
+    actions:
+      - type: apoli:grant_power
+        power: "*:*/no_energy"
+        source: "*:*"
+  entity_action_respawned:
+    type: apoli:and
+    actions:
+      - type: apoli:grant_power
+        power: "*:*/no_energy"
+        source: "*:*"
+  entity_action_lost:
+    type: apoli:and
+    actions:
+      - type: apoli:revoke_power
+        power: "*:*/fire_light"
+        source: "*:*"
+      - type: apoli:revoke_power
+        power: "*:*/boost_to_sky"
+        source: "*:*"
+      - type: apoli:revoke_power
+        power: "*:*/no_energy"
+        source: "*:*"

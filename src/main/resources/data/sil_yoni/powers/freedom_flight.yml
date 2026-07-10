@@ -1,0 +1,97 @@
+type: apoli:multiple
+
+is_flying:
+   type: apoli:resource
+   min: 0
+   max: 1
+   start_value: 0
+   min_action:
+      type: apoli:revoke_power
+      power: "*:extra/*"
+      source: "*:*"
+   max_action:
+      type: apoli:grant_power
+      power: "*:extra/*"
+      source: "*:*"
+callbacks:
+   type: apoli:action_on_callback
+   entity_action_lost:
+      type: apoli:revoke_power
+      power: "*:extra/*"
+      source: "*:*"
+
+double_clicked:
+   type: apoli:cooldown
+   cooldown: 20
+
+first_clicked:
+   type: apoli:cooldown
+   cooldown: 20
+
+on_press_jump:
+   type: apoli:active_self
+   key:
+      key: key.jump
+      continuous: false
+   condition:
+      type: apoli:and
+      conditions:
+      -  type: apoli:resource
+         resource: "*:*_is_flying"
+         comparison: "=="
+         compare_to: 0
+      -  type: apoli:riding
+         inverted: true
+      -  type: apoli:command
+         command: data get entity @s SleepTimer
+         comparison: '=='
+         compare_to: 0
+      -  type: apoli:creative_flying
+         inverted: true
+      -  type: apoli:fall_flying
+         inverted: true
+   entity_action:
+      type: apoli:if_else
+      condition:
+         type: apoli:resource
+         resource: "*:*_first_clicked"
+         comparison: "=="
+         compare_to: 0
+      if_action:
+         type: apoli:trigger_cooldown
+         power: "*:*_first_clicked"
+      else_action:
+         type: apoli:trigger_cooldown
+         power: "*:*_double_clicked"
+
+on_press_forward:
+   type: apoli:active_self
+   condition:
+      type: apoli:and
+      conditions:
+      -  type: apoli:resource
+         resource: "*:*_double_clicked"
+         comparison: "!="
+         compare_to: 0
+      -  type: apoli:resource
+         resource: "*:*_is_flying"
+         comparison: "=="
+         compare_to: 0
+      -  type: apoli:riding
+         inverted: true
+      -  type: apoli:command
+         command: data get entity @s SleepTimer
+         comparison: '=='
+         compare_to: 0
+      -  type: apoli:creative_flying
+         inverted: true
+      -  type: apoli:fall_flying
+         inverted: true
+   key:
+      key: key.forward
+      continuous: false
+   entity_action:
+      type: apoli:change_resource
+      resource: "*:*_is_flying"
+      change: 1
+      operation: set

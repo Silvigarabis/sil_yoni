@@ -1,0 +1,62 @@
+type: apoli:multiple
+noregen:
+    type: apoli:disable_regen
+nodamage:
+    type: apoli:invulnerability
+    damage_condition:
+      type: apoli:out_of_world
+nofalldown:
+    type: apoli:modify_falling
+    velocity: 0
+    take_fall_damage: false
+noaction_1:
+    type: apoli:prevent_elytra_flight
+noaction_2:
+    type: apoli:prevent_entity_render
+noaction_3:
+    type: apoli:prevent_item_use
+no_action_4:
+    type: apoli:prevent_being_used
+no_action_5:
+    type: apoli:prevent_entity_use
+no_action_6:
+    type: apoli:prevent_block_use
+glowing:
+    type: apoli:self_glow
+vision_0:
+    type: apoli:night_vision
+no_y_axis:
+   type: apoli:modify_velocity
+   modifier:
+      operation: set_total
+      value: 0
+   axes: [ y ]
+
+triggers:
+  type: apoli:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_lost:
+    type: apoli:if_else
+    condition:
+        type: apoli:command
+        command: spreadplayers ~ ~ 1 12 false @s
+        comparison: ">"
+        compare_to: 0
+    if_action:
+        type: apoli:change_resource
+        resource: sil_yoni:extra/void_space/in_void_space
+        operation: set
+        change: 0
+    # 如果刚好头顶全是岩浆，就会没法传送，然后失败
+    else_action:
+        type: apoli:execute_command
+        command: function sil_yoni:origin_powers/void_space/leave_failed_noentrypoint
+  entity_action_gained:
+    type: apoli:and
+    actions:
+      - type: apoli:change_resource
+        resource: sil_yoni:extra/void_space/in_void_space
+        change: 1
+      - type: apoli:execute_command
+        command: tp @s ~ -80000 ~
+        

@@ -1,0 +1,50 @@
+hidden: true
+type: apoli:multiple
+callbacks:
+  type: apoli:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_gained:
+    type: apoli:and
+    actions:
+      - type: apoli:execute_command
+        command: scale multiply pehkui:visibility 2.6875
+  entity_action_respawned:
+    type: apoli:and
+    actions:
+      - type: apoli:execute_command
+        command: scale multiply pehkui:visibility 2.6875
+  entity_action_lost:
+    type: apoli:and
+    actions:
+      - type: apoli:execute_command
+        command: scale divide pehkui:visibility 2.6875
+      - type: apoli:if_else
+        condition:
+          type: apoli:status_effect
+          effect: minecraft:night_vision
+          min_amplifier: 1
+        if_action:
+          type: apoli:clear_effect
+          effect: minecraft:night_vision
+      - type: apoli:if_else
+        condition:
+          type: apoli:status_effect
+          effect: minecraft:glowing
+          min_amplifier: 1
+        if_action:
+          type: apoli:clear_effect
+          effect: minecraft:glowing
+effect_glowing:
+  type: apoli:self_glow
+  use_teams: false
+effect_night_vision:
+  type: apoli:night_vision
+  condition:
+    type: apoli:and
+    conditions:
+      - type: apoli:status_effect
+        effect: minecraft:blindness
+        inverted: true
+no_darkness:
+  type: apoli:effect_immunity
+  effect: minecraft:darkness

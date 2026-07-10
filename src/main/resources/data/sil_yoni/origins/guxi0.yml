@@ -1,0 +1,24 @@
+powers:
+  - sil_yoni:origin_spec/guxi0/boost_to_sky_power_desc
+  - sil_yoni:origin_spec/guxi0/fire_light_power_desc
+
+  - sil_yoni:origin_spec/guxi0/general
+  - sil_yoni:origin_spec/guxi0/guxi_physique
+  - sil_yoni:origin_spec/guxi0
+
+  - sil_yoni:sun_s_shining
+
+  - sil_yoni:physique/smaller_body
+  - sil_yoni:physique/weakened_body
+  - sil_yoni:physique/powerless_arms
+
+  - sil_yoni:vision/less_color_shader
+  - sil_yoni:vision/seeing_entity_quote_gold
+  - sil_yoni:vision/no_bad_vision
+  - sil_yoni:vision/night_vision_always
+
+  - sil_yoni:misc/normalized_air_mining_speed
+icon:
+  item: minecraft:music_disc_13
+unchoosable: false
+impact: 3
