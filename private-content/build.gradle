@@ -1,0 +1,96 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'org.yaml:snakeyaml:1.27'
+	}
+}
+
+plugins {
+	id 'fabric-loom' version '1.12-SNAPSHOT'
+}
+
+version = project.mod_version
+group = project.maven_group
+def modVersion = version
+def depVersionApoli = project.apoli_version
+def depVersionFabricApi = project.fabric_version
+def depVersionFabricLoader = project.loader_version
+def depVersionPehkui = project.pehkui_version
+def depVersionOrigins = project.origins_version
+
+base {
+	archivesName = project.archives_base_name + "_private_content"
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"sil_yoni_private_content" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
+
+import groovy.json.JsonOutput
+import org.yaml.snakeyaml.Yaml
+
+processResources {
+	inputs.property "version", modVersion
+
+	filesMatching("fabric.mod.json") {
+		expand([
+			"version": modVersion
+		])
+
+	}
+
+    rename("\\.yml\$", ".json")
+
+	filesMatching("**/*.yml") {
+//        println "converting yml file %s to json".formatted(it.relativeSourcePath.toString())
+
+		def yamlContent = new Yaml().load(it.open())
+
+		if (yamlContent instanceof Map) {
+			yamlContent = yamlContent.findAll { key, value ->
+				!key.toString().startsWith("x-")
+			}
+		}
+
+		def jsonContent = JsonOutput.toJson(yamlContent)
+
+		def contentReplaced = false
+		it.filter { line ->
+			if (contentReplaced) return
+			contentReplaced = true
+			return jsonContent
+		}
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 17
+}
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// If you remove this line, sources will not be generated.
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+

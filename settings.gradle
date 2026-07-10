@@ -16,3 +16,5 @@ buildCache {
 }
 
 rootProject.name = "sil_yoni"
+
+include("private-content")
