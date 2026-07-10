@@ -53,11 +53,11 @@ x-start-climbing: &start-climbing
 
 start_climbing:
    type: apoli:cooldown
-   cooldown: 80
+   cooldown: 40
 
 check_climbing:
    type: apoli:action_over_time
-   interval: 30
+   interval: 20
    entity_action:
       type: apoli:if_else
       condition:
@@ -72,9 +72,11 @@ check_climbing:
             type: apoli:trigger_cooldown
             power: "*:*_start_climbing"
 
-jumping_trigger:
+walk_trigger:
    type: sil_yoni:detection/mutable_active_self
-   interval: 30
+   condition:
+      <<: *start-climbing
+   interval: 10
    key:
       -
          key: key.right
@@ -94,6 +96,16 @@ jumping_trigger:
       -
          key: key.jump
          trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
+   entity_action:
+      type: apoli:trigger_cooldown
+      power: "*:*_start_climbing"
+
+jumping_trigger:
+   type: sil_yoni:detection/mutable_active_self
+   interval: 10
+   key:
+      key: key.jump
+      trigger: SINGLE_PRESS_HOLD_ALWAYS_CONTINUOUS
    entity_action:
       type: apoli:trigger_cooldown
       power: "*:*_start_climbing"
