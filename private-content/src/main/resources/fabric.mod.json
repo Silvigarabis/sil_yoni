@@ -1,0 +1,24 @@
+{
+   "schemaVersion": 1,
+   "id": "sil_yoni_private_content",
+   "version": "${version}",
+   "name": "SIL YONI Privates",
+   "description": "Where we are from?",
+   "authors": [
+      "Silvigarabis"
+   ],
+   "contact": {
+      "homepage": "https://github.com/Silvigarabis/sil_yoni"
+   },
+   "license": "All rights reserved",
+   "icon": "assets/sil_yoni/icon.png",
+   "environment": "*",
+   "entrypoints": {
+   },
+   "mixins": [
+   ],
+   "depends": {
+      "sil_yoni": "${version}"
+   }
+}
+

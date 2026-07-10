@@ -1,3 +1,7 @@
+/private-content/src/main/resources/*
+!/private-content/src/main/resources/fabric.mod.json
+!/private-content/src/main/resources/icon.png
+
 # gradle
 
 .gradle/
