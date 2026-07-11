@@ -1,7 +1,9 @@
 package io.github.silvigarabis.sil_yoni;
 
 import io.github.silvigarabis.sil_yoni.networking.ModC2SPackets;
+import io.github.silvigarabis.sil_yoni.power.misc.PehkuiValuePower;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,16 @@ public class SilYoniMod implements ModInitializer {
         SilYoniPowers.register();
         SilYoniPehkuiRegistries.registerAll();
         ModC2SPackets.register();
+
+        ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.register(
+                (_oldEntity, newEntity, _from, _to) -> {
+                    PehkuiValuePower.applyAfterDimensionChanged(newEntity);
+                });
+
+        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(
+                (player, _from, _to) -> {
+                   PehkuiValuePower.applyAfterDimensionChanged(player);
+                });
 
         LOGGER.info("Done. Have a nice day.");
         

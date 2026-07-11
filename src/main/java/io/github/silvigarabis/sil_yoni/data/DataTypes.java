@@ -34,8 +34,31 @@ public class DataTypes {
             }
     );
 
+    public static final SerializableDataType<PehkuiScaleValueInfo> PEHKUI_BASE_VALUE_INFO_DATA_TYPE = SerializableDataType.compound(
+            PehkuiScaleValueInfo.class,
+
+            new SerializableData()
+                    .add("scale-type", SerializableDataTypes.IDENTIFIER)
+                    .add("value", SerializableDataTypes.FLOAT),
+
+            (data) -> new PehkuiScaleValueInfo(
+                    data.getId("scale-type"),
+                    data.getFloat("value")
+            ),
+
+            (serializableData, info) -> {
+                SerializableData.Instance data = serializableData.new Instance();
+                data.set("scale-type", info.typeIdentifier());
+                data.set("value", info.baseValue());
+                return data;
+            }
+    );
+
     public static final SerializableDataType<List<Key>> BACKWARDS_COMPATIBLE_KEY_LIST =
             singleOrList(KEY_DATA_TYPE);
+
+    public static final SerializableDataType<List<PehkuiScaleValueInfo>> BACKWARDS_COMPATIBLE_PEHKUI_BASE_VALUE_INFO_LIST =
+            singleOrList(PEHKUI_BASE_VALUE_INFO_DATA_TYPE);
 
     @SuppressWarnings("unchecked")
     public static <T> SerializableDataType<List<T>> singleOrList(SerializableDataType<T> dataType) {
