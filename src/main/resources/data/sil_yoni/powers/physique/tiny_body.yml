@@ -1,1 +1,18 @@
-type: sil_yoni:physique/tiny_body
+type: sil_yoni:misc/pehkui_value
+set:
+   - scale-type: pehkui:base
+     value: 0.25
+   - scale-type: pehkui:height
+     value: 0.25
+   - scale-type: pehkui:width
+     value: 0.25
+   - scale-type: pehkui:entity_reach
+     value: 0.65
+   - scale-type: pehkui:block_reach
+     value: 0.5
+   - scale-type: pehkui:motion
+     value: 0.3
+   - scale-type: pehkui:visibility
+     value: 0.35
+   - scale-type: pehkui:knockback
+     value: 4
