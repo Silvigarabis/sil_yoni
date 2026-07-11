@@ -66,7 +66,6 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
 	include project(":private-content")
-	modLocalRuntime project(":private-content")
 
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -80,7 +79,9 @@ dependencies {
 	}
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
-	modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_version}"
+	modCompileOnly("com.github.Virtuoel:Pehkui:${project.pehkui_version}") {
+		transitive = false
+	}
 }
 
 processResources {
@@ -92,6 +93,7 @@ processResources {
 			"loader_version": depVersionFabricLoader,
             "fabric_version": depVersionFabricApi,
 			"apoli_version": depVersionApoli,
+			"pehkui_version": depVersionPehkui,
 		])
 
 	}
