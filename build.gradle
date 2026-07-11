@@ -1,15 +1,7 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath 'org.yaml:snakeyaml:1.27'
-	}
-}
-
 plugins {
 	id 'fabric-loom' version '1.12-SNAPSHOT'
 	id 'maven-publish'
+	id "io.github.silvigarabis.yaml"
 }
 
 version = project.mod_version
@@ -90,9 +82,6 @@ dependencies {
 	modImplementation "com.github.Virtuoel:Pehkui:${project.pehkui_version}"
 }
 
-import groovy.json.JsonOutput
-import org.yaml.snakeyaml.Yaml
-
 processResources {
 	inputs.property "version", modVersion
 
@@ -104,29 +93,6 @@ processResources {
 			"apoli_version": depVersionApoli,
 		])
 
-	}
-
-    rename("\\.yml\$", ".json")
-
-	filesMatching("**/*.yml") {
-//        println "converting yml file %s to json".formatted(it.relativeSourcePath.toString())
-
-		def yamlContent = new Yaml().load(it.open())
-
-		if (yamlContent instanceof Map) {
-			yamlContent = yamlContent.findAll { key, value ->
-				!key.toString().startsWith("x-")
-			}
-		}
-
-		def jsonContent = JsonOutput.toJson(yamlContent)
-
-		def contentReplaced = false
-		it.filter { line ->
-			if (contentReplaced) return
-			contentReplaced = true
-			return jsonContent
-		}
 	}
 }
 
