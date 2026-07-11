@@ -27,7 +27,8 @@ base {
 
 repositories {
 	//apoli, pehkui
-	maven { url 'https://jitpack.io'
+	maven {
+		url = 'https://jitpack.io'
 		content {
 			includeGroup 'com.github.Virtuoel'
 			includeGroup "com.github.apace100"
@@ -44,7 +45,9 @@ repositories {
 	}
 
 	// cloth config
-	maven { url "https://maven.shedaniel.me/" }
+	maven {
+		url = "https://maven.shedaniel.me/"
+	}
 }
 
 configurations.configureEach {
