@@ -59,7 +59,7 @@ public class PehkuiValuePower extends Power {
             scaleTypesAffected.add(info.type());
         }
         for (var type : scaleTypesAffected) {
-            type.getScaleData(this.entity).setBaseScale(type.getDefaultBaseScale());
+            type.getScaleData(this.entity).setScale(type.getDefaultBaseScale());
         }
     }
 
@@ -87,14 +87,14 @@ public class PehkuiValuePower extends Power {
     public static PowerFactory<Power> createFactory() {
         return new PowerFactory<>(ID,
                 new SerializableData()
-                        .add("base", DataTypes.BACKWARDS_COMPATIBLE_PEHKUI_BASE_VALUE_INFO_LIST, Collections.emptyList())
-                        .add("target", DataTypes.BACKWARDS_COMPATIBLE_PEHKUI_BASE_VALUE_INFO_LIST, Collections.emptyList())
+                        .add("start", DataTypes.BACKWARDS_COMPATIBLE_PEHKUI_BASE_VALUE_INFO_LIST, Collections.emptyList())
+                        .add("end", DataTypes.BACKWARDS_COMPATIBLE_PEHKUI_BASE_VALUE_INFO_LIST, Collections.emptyList())
                         .add("set", DataTypes.BACKWARDS_COMPATIBLE_PEHKUI_BASE_VALUE_INFO_LIST, Collections.emptyList()),
                 data -> (powerType, livingEntity) -> new PehkuiValuePower(
                         powerType,
                         livingEntity,
-                        data.get("base"),
-                        data.get("target"),
+                        data.get("start"),
+                        data.get("end"),
                         data.get("set")
                 )
         ).allowCondition();

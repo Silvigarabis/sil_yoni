@@ -1,5 +1,5 @@
 type: sil_yoni:misc/pehkui_value
-set:
+end:
    - scale-type: pehkui:base
      value: 0.66
    - scale-type: pehkui:height
