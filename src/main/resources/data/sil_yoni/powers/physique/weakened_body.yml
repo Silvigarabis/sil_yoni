@@ -1,5 +1,5 @@
 type: sil_yoni:misc/pehkui_value
-set:
+end:
    - scale-type: pehkui:attack_speed
      value: 0.5
    - scale-type: pehkui:mining_speed
