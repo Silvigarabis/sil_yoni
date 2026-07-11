@@ -97,6 +97,6 @@ public class PehkuiValuePower extends Power {
                         data.get("end"),
                         data.get("set")
                 )
-        ).allowCondition();
+        );
     }
 }
