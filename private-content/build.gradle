@@ -1,16 +1,11 @@
 plugins {
-	id 'fabric-loom' version '1.12-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 	id "io.github.silvigarabis.yaml"
 }
 
 version = project.mod_version
 group = project.maven_group
 def modVersion = version
-def depVersionApoli = project.apoli_version
-def depVersionFabricApi = project.fabric_version
-def depVersionFabricLoader = project.loader_version
-def depVersionPehkui = project.pehkui_version
-def depVersionOrigins = project.origins_version
 
 base {
 	archivesName = project.archives_base_name + "_private_content"
