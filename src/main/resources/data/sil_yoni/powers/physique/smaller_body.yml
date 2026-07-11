@@ -1,16 +1,14 @@
 type: sil_yoni:misc/pehkui_value
 end:
-   - scale-type: pehkui:base
-     value: 0.66
    - scale-type: pehkui:height
      value: 0.66
    - scale-type: pehkui:width
      value: 0.66
+   - scale-type: pehkui:drops
+     value: 0.66
+   - scale-type: pehkui:projectiles
+     value: 0.66
    - scale-type: pehkui:block_reach
      value: 0.7
-   - scale-type: pehkui:motion
-     value: 0.66
    - scale-type: pehkui:visibility
      value: 0.66
-   - scale-type: pehkui:knockback
-     value: 1.66
