@@ -29,7 +29,6 @@ public class SilYoniMod implements ModInitializer {
 
         SilYoniSounds.register();
         SilYoniPowers.register();
-        SilYoniPehkuiRegistries.registerAll();
         ModC2SPackets.register();
 
         ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.register(

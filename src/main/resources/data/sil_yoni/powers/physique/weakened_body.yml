@@ -1,1 +1,10 @@
-type: sil_yoni:physique/weakened_body
+type: sil_yoni:misc/pehkui_value
+set:
+   - scale-type: pehkui:attack_speed
+     value: 0.5
+   - scale-type: pehkui:mining_speed
+     value: 0.5
+   - scale-type: pehkui:motion
+     value: 0.85
+   - scale-type: pehkui:knockback
+     value: 4

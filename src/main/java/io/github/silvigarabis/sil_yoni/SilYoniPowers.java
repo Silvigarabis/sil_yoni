@@ -5,20 +5,16 @@ import io.github.apace100.apoli.power.PowerTypeReference;
 import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.power.factory.PowerFactorySupplier;
 import io.github.apace100.apoli.registry.ApoliRegistries;
-import io.github.silvigarabis.sil_yoni.power.*;
+import io.github.silvigarabis.sil_yoni.power.BeeRiderPower;
+import io.github.silvigarabis.sil_yoni.power.FlightAbilityPower;
 import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
 import io.github.silvigarabis.sil_yoni.power.detection.TogglePower;
 import io.github.silvigarabis.sil_yoni.power.misc.*;
 import io.github.silvigarabis.sil_yoni.power.modify.ModifyFoodEatTimePower;
-import io.github.silvigarabis.sil_yoni.power.physique.SmallerBodyPower;
-import io.github.silvigarabis.sil_yoni.power.physique.TinyBodyPower;
-import io.github.silvigarabis.sil_yoni.power.physique.WeakenedOnlyBodyPower;
 import net.minecraft.registry.Registry;
 
 public class SilYoniPowers {
    public static final PowerType<?> NO_BREATH = new PowerTypeReference<>(NoBreathPower.ID);
-   public static final PowerType<?> TINY_BODY = new PowerTypeReference<>(TinyBodyPower.ID);
-   public static final PowerType<?> SMALLER_BODY = new PowerTypeReference<>(SmallerBodyPower.ID);
    public static final PowerType<?> FLIGHT_ABILITY = new PowerTypeReference<>(FlightAbilityPower.ID);
    public static final PowerType<?> BEE_RIDER = new PowerTypeReference<>(BeeRiderPower.ID);
 
@@ -32,9 +28,6 @@ public class SilYoniPowers {
       register(NoBreathPower::createFactory);
       register(FlightAbilityPower::createFactory);
       register(BeeRiderPower::createFactory);
-      register(SmallerBodyPower::createFactory);
-      register(TinyBodyPower::createFactory);
-      register(WeakenedOnlyBodyPower::createFactory);
       register(ConvertFoodToResourcePower::createFactory);
       register(StaticHungerPower::createFactory);
       register(MappingResourceRatioToFoodLevelPower::createFactory);
