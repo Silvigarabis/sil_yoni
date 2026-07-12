@@ -48,7 +48,7 @@ boost_flight:
       actions:
       -
          type: apoli:exhaust
-         amount: 0.7
+         amount: 11.25
       -
          type: apoli:add_velocity
          y: 0.03
