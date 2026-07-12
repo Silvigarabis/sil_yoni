@@ -33,8 +33,10 @@
       "fabricloader": ">=${loader_version}",
       "minecraft": "~1.20.1",
       "apoli": "~${apoli_version}",
-      "origins": ">=1.9.0",
-      "pehkui": "^${pehkui_version}",
-      "fabric-api": ">=${fabric_version}"
+      "fabric-api": ">=${fabric_version}",
+      "origins": ">=1.9.0"
+   },
+   "suggests": {
+      "pehkui": "^${pehkui_version}"
    }
 }

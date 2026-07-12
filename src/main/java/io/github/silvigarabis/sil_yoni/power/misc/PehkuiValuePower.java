@@ -8,6 +8,7 @@ import io.github.apace100.calio.data.SerializableData;
 import io.github.silvigarabis.sil_yoni.SilYoniMod;
 import io.github.silvigarabis.sil_yoni.data.DataTypes;
 import io.github.silvigarabis.sil_yoni.data.PehkuiScaleValueInfo;
+import io.github.silvigarabis.sil_yoni.util.ReflectionUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -36,6 +37,7 @@ public class PehkuiValuePower extends Power {
     }
 
     private void doSetup(){
+        if (!ReflectionUtil.hasPehkui()) return;
         for (var info : baseValueInfoList) {
             info.type().getScaleData(this.entity).setBaseScale(info.baseValue());
         }
@@ -47,6 +49,7 @@ public class PehkuiValuePower extends Power {
         }
     }
     private void doSetupDown() {
+        if (!ReflectionUtil.hasPehkui()) return;
         var scaleTypesAffected = new HashSet<ScaleType>();
 
         for (var info : baseValueInfoList) {
