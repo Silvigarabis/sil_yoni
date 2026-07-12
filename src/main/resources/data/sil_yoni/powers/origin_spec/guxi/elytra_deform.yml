@@ -21,9 +21,7 @@ equip_flying:
             ingredient: { item: minecraft:elytra }
 
 energy_lost:
-   type: apoli:exhaust
-   interval: 10
-   exhaustion: 0.7
+   type: sil_yoni:origin_spec/guxi/deform_exhaustion_over_time
    condition:
       type: apoli:and
       conditions:

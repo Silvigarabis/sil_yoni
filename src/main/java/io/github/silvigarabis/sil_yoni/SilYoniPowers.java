@@ -6,6 +6,7 @@ import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.apoli.power.factory.PowerFactorySupplier;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.silvigarabis.sil_yoni.power.BeeRiderPower;
+import io.github.silvigarabis.sil_yoni.power.origin_spec.guxi.DeformExhaustionOverTimePower;
 import io.github.silvigarabis.sil_yoni.power.FlightAbilityPower;
 import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
 import io.github.silvigarabis.sil_yoni.power.detection.TogglePower;
@@ -38,5 +39,6 @@ public class SilYoniPowers {
       register(PehkuiValuePower::createFactory);
       register(NoSleepPower::createFactory);
       register(NoActualSleepPower::createFactory);
+      register(DeformExhaustionOverTimePower::createFactory);
    }
 }
