@@ -3,7 +3,9 @@ package io.github.silvigarabis.sil_yoni.data;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataType;
 import io.github.apace100.calio.data.SerializableDataTypes;
+import io.github.silvigarabis.sil_yoni.SilYoniMod;
 import io.github.silvigarabis.sil_yoni.keybinding.TriggerPattern;
+import io.github.silvigarabis.sil_yoni.util.ReflectionUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -41,15 +43,24 @@ public class DataTypes {
                     .add("scale-type", SerializableDataTypes.IDENTIFIER)
                     .add("value", SerializableDataTypes.FLOAT),
 
-            (data) -> new PehkuiScaleValueInfo(
-                    data.getId("scale-type"),
-                    data.getFloat("value")
-            ),
+            (data) -> {
+                if (!ReflectionUtil.hasPehkui()) return PehkuiScaleValueInfo.NO_PEHKUI;
+
+                return new PehkuiScaleValueInfo(
+                        data.getId("scale-type"),
+                        data.getFloat("value")
+                );
+            },
 
             (serializableData, info) -> {
                 SerializableData.Instance data = serializableData.new Instance();
-                data.set("scale-type", info.typeIdentifier());
-                data.set("value", info.baseValue());
+                if (ReflectionUtil.hasPehkui()) {
+                    data.set("scale-type", info.typeIdentifier());
+                    data.set("value", info.baseValue());
+                } else {
+                    data.set("scale-type", SilYoniMod.identifier("placeholder-no-pehkui"));
+                    data.set("value", 0f);
+                }
                 return data;
             }
     );

@@ -1,5 +1,6 @@
 package io.github.silvigarabis.sil_yoni.data;
 
+import io.github.silvigarabis.sil_yoni.util.ReflectionUtil;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 import virtuoel.pehkui.api.ScaleRegistries;
@@ -15,7 +16,10 @@ public record PehkuiScaleValueInfo(@NotNull ScaleType type, @NotNull Identifier 
         this(Objects.requireNonNull(ScaleRegistries.SCALE_TYPES.get(id), () -> "no such scaleType:" + id), id, baseValue);
     }
     public PehkuiScaleValueInfo {
-        Objects.requireNonNull(type, "type cannot be null");
-        Objects.requireNonNull(typeIdentifier, "typeIdentifier cannot be null");
+        if (ReflectionUtil.hasPehkui()) {
+            Objects.requireNonNull(type, "type cannot be null");
+            Objects.requireNonNull(typeIdentifier, "typeIdentifier cannot be null");
+        }
     }
+    public static final PehkuiScaleValueInfo NO_PEHKUI = new PehkuiScaleValueInfo(null, null, 0);
 }
