@@ -1,0 +1,7 @@
+type: apoli:multiple
+
+no_actual_sleep:
+   type: sil_yoni:misc/no_actual_sleep
+
+no_sleep:
+   type: sil_yoni:misc/no_sleep
