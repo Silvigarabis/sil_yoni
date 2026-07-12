@@ -101,6 +101,10 @@ power.sil_yoni.origin_spec/guxi/elytra_deform_desc.description: >-
   改变自身结构，以此创造出依附于自身的鞘翅，然后用它进行滑翔。
   也可以用一些额外的能量，在鞘翅滑翔时助推向上。
 
+power.sil_yoni.origin_spec/guxi/no_sleep.name: 特殊能力：无休无眠的能量
+power.sil_yoni.origin_spec/guxi/no_sleep.description: >-
+  体内的能量在不断地流动，致使你无法真正进入睡眠
+
 sil_yoni.subtitles.entity.fairy.fly: 妖精飞起来
 sil_yoni.subtitles.entity.fairy2.fly: 膜翅震动
 

@@ -19,6 +19,8 @@ powers:
   - sil_yoni:vision/night_vision_always
   - sil_yoni:misc/general_climbable
   - sil_yoni:misc/no_breath
+  - sil_yoni:origin_spec/guxi/no_sleep
+
 icon:
   item: minecraft:music_disc_11
 unchoosable: false
