@@ -6,7 +6,9 @@
     "BeeRideableMixin",
     "HungerManagerMixin",
     "ItemMixin",
-    "LivingEntityAccessor"
+    "LivingEntityAccessor",
+    "PlayerEntityMixin",
+    "SleepManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

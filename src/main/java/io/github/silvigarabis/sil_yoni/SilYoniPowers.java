@@ -36,5 +36,7 @@ public class SilYoniPowers {
       register(TogglePower::createFactory);
       register(ModifyFoodEatTimePower::createFactory);
       register(PehkuiValuePower::createFactory);
+      register(NoSleepPower::createFactory);
+      register(NoActualSleepPower::createFactory);
    }
 }
