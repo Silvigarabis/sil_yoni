@@ -55,11 +55,7 @@ public class DeformExhaustionOverTimePower extends Power {
          return;
       }
 
-      if (player.age % INTERVAL != 0) {
-         return;
-      }
-
-      double speed = player.getVelocity().length();
+      double speed = player.getVelocity().length() * 20;
       float exhaustion = 0;
       for (var entry : EXHAUSTIONS.entrySet()) {
          if (speed > entry.getKey()) {
@@ -69,7 +65,7 @@ public class DeformExhaustionOverTimePower extends Power {
       }
 
       if (exhaustion > 0.0F) {
-         player.addExhaustion(exhaustion * INTERVAL / 20);
+         player.addExhaustion(exhaustion / 20);
       }
    }
 }
