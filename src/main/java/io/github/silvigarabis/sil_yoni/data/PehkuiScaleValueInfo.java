@@ -16,10 +16,18 @@ public record PehkuiScaleValueInfo(@NotNull ScaleType type, @NotNull Identifier 
         this(Objects.requireNonNull(ScaleRegistries.SCALE_TYPES.get(id), () -> "no such scaleType:" + id), id, baseValue);
     }
     public PehkuiScaleValueInfo {
-        if (ReflectionUtil.hasPehkui()) {
+        if (!cinitProcess && ReflectionUtil.hasPehkui()){
             Objects.requireNonNull(type, "type cannot be null");
             Objects.requireNonNull(typeIdentifier, "typeIdentifier cannot be null");
         }
     }
-    public static final PehkuiScaleValueInfo NO_PEHKUI = new PehkuiScaleValueInfo(null, null, 0);
+
+    private static boolean cinitProcess;
+
+    public static final PehkuiScaleValueInfo NO_PEHKUI;
+    static {
+        cinitProcess = true;
+        NO_PEHKUI = new PehkuiScaleValueInfo(null, null, 0);
+        cinitProcess = false;
+    }
 }
