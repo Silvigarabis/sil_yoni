@@ -38,13 +38,13 @@ public class DeformExhaustionOverTimePower extends Power {
 
    private static final LinkedHashMap<Double, Float> EXHAUSTIONS = new LinkedHashMap<>();
    static {
-      EXHAUSTIONS.put(57d, 38f);
-      EXHAUSTIONS.put(50d, 25f);
-      EXHAUSTIONS.put(40d, 13.33f);
-      EXHAUSTIONS.put(33d, 8.25f);
-      EXHAUSTIONS.put(24d, 4.8f);
-      EXHAUSTIONS.put(10d, 1.11f);
-      EXHAUSTIONS.put(0d, 1f);
+      EXHAUSTIONS.put(57d, 29.23f);
+      EXHAUSTIONS.put(50d, 19.23f);
+      EXHAUSTIONS.put(40d, 10.26f);
+      EXHAUSTIONS.put(33d, 6.35f);
+      EXHAUSTIONS.put(24d, 3.69f);
+      EXHAUSTIONS.put(10d, 0.85f);
+      EXHAUSTIONS.put(0d, 0F);
    }
 
    private static final int INTERVAL = 4;
