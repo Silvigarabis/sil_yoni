@@ -4,12 +4,10 @@ package io.github.silvigarabis.sil_yoni;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
-import io.github.apace100.origins.Origins;
 import io.github.apace100.origins.badge.Badge;
 import io.github.apace100.origins.badge.BadgeFactory;
 import io.github.apace100.origins.integration.AutoBadgeCallback;
-import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
-import io.github.silvigarabis.sil_yoni.power.detection.TogglePower;
+import io.github.silvigarabis.sil_yoni.detection.Active;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.tooltip.OrderedTextTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
@@ -22,21 +20,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BadgeManager {
-    private static final Identifier ACTIVE_BADGE_SPRITE = Origins.identifier("textures/gui/badge/active.png");
-
     public static void createAutoBadges(Identifier powerId, PowerType<?> powerType, List<Badge> badgeList) {
         var power = powerType.create(null);
-        if (power instanceof ActiveCooldownPower active) {
+
+        if (power instanceof Active active) {
             for (var key : active.getUseKeys()){
                 for (var pattern : key.triggers()){
-                    var badge = new KeybindBadge(ACTIVE_BADGE_SPRITE, pattern.translationKey(), key.key());
-                    badgeList.add(badge);
-                }
-            }
-        } else if (power instanceof TogglePower toggle) {
-            for (var key : toggle.getUseKeys()){
-                for (var pattern : key.triggers()){
-                    var badge = new KeybindBadge(ACTIVE_BADGE_SPRITE, pattern.toggleTranslationKey(), key.key());
+                    var badge = new KeybindBadge(active.getBadgeSpriteFor(pattern), active.getTranslateFor(pattern), key.key());
                     badgeList.add(badge);
                 }
             }

@@ -10,6 +10,7 @@ import io.github.apace100.calio.data.SerializableDataTypes;
 import io.github.silvigarabis.sil_yoni.SilYoniMod;
 import io.github.silvigarabis.sil_yoni.data.DataTypes;
 import io.github.silvigarabis.sil_yoni.data.Key;
+import io.github.silvigarabis.sil_yoni.detection.PowerActive;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -20,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ActiveCooldownPower extends CooldownPower implements io.github.silvigarabis.sil_yoni.power.detection.Active {
+public class ActiveCooldownPower extends CooldownPower implements PowerActive {
     public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "detection/mutable_active_self");
     private final @NotNull @Unmodifiable List<Key> keys;
     private final Consumer<Entity> activeFunction;

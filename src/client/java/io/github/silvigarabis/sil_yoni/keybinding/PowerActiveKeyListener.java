@@ -2,7 +2,7 @@ package io.github.silvigarabis.sil_yoni.keybinding;
 
 import io.github.apace100.apoli.component.PowerHolderComponent;
 import io.github.silvigarabis.sil_yoni.networking.ModC2SPackets;
-import io.github.silvigarabis.sil_yoni.power.detection.Active;
+import io.github.silvigarabis.sil_yoni.detection.Active;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -125,7 +125,7 @@ public class PowerActiveKeyListener {
         PacketByteBuf buffer = new PacketByteBuf(Unpooled.buffer());
         buffer.writeInt(powers.size());
         for (var active : powers) {
-            buffer.writeIdentifier(active.getType().getIdentifier());
+            buffer.writeIdentifier(active.getActiveIdentifier());
         }
         powers.forEach(Active::onUse);
         ClientPlayNetworking.send(ModC2SPackets.MULTIPLE_ACTIVE_SELF_POWER, buffer);

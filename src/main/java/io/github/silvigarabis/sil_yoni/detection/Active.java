@@ -1,8 +1,10 @@
-package io.github.silvigarabis.sil_yoni.power.detection;
+package io.github.silvigarabis.sil_yoni.detection;
 
 import io.github.apace100.apoli.power.PowerType;
+import io.github.apace100.origins.Origins;
 import io.github.silvigarabis.sil_yoni.data.Key;
 import io.github.silvigarabis.sil_yoni.keybinding.TriggerPattern;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public interface Active {
      */
     void onUse();
     @NotNull List<Key> getUseKeys();
-    PowerType<?> getType();
+    Identifier getActiveIdentifier();
 
     default boolean matchAnyUseKey(Map<String, Set<TriggerPattern>> triggerMap) {
         for (var k : getUseKeys()) {
@@ -29,5 +31,13 @@ public interface Active {
             }
         }
         return false;
+    }
+
+    default Identifier getBadgeSpriteFor(TriggerPattern pattern) {
+        return Origins.identifier("textures/gui/badge/active.png");
+    }
+
+    default String getTranslateFor(TriggerPattern pattern) {
+        return pattern.translationKey();
     }
 }
