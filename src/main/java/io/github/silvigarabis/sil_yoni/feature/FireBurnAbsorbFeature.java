@@ -3,6 +3,7 @@ package io.github.silvigarabis.sil_yoni.feature;
 import io.github.silvigarabis.sil_yoni.mixin.FireBlockInvoker;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -41,6 +42,23 @@ public class FireBurnAbsorbFeature {
     public void tickActive() {
         activeTicks++;
         if (activeTicks > 40) activeTicks = 40;
+
+        BlockPos.Mutable mutable = new BlockPos.Mutable();
+        var center = entity.getBlockPos();
+        var world = entity.getWorld();
+
+        for (int x = -4; x <= 4; x++) {
+            for (int y = -4; y <= 4; y++) {
+                for (int z = -4; z <= 4; z++) {
+                    mutable.set(center, x, y, z);
+
+                    BlockState state = entity.getWorld().getBlockState(mutable);
+                    if (state.isOf(Blocks.FIRE)){
+                        setGuxiFireOwner(world, mutable, this);
+                    }
+                }
+            }
+        }
     }
 
     public void tickInactive() {
@@ -61,6 +79,12 @@ public class FireBurnAbsorbFeature {
 
     public void onRemoved() {
         this.inactiveImmediate();
+    }
+
+    public static void setGuxiFireOwner(World world, BlockPos pos, FireBurnAbsorbFeature owner){
+        if (world instanceof DataGuxiFireTracking data) {
+            data.silYoni$setGuxiFireOwner(pos, owner);
+        }
     }
 
     public static boolean isGuxiActiveFire(ServerWorld world, BlockPos pos){
