@@ -116,6 +116,7 @@ public class FireBurnAbsorbFeature {
             if (targetOwner != null) return;
 
             // TODO: 尝试传播 guxi fire
+            // TODO: 尝试限制传播范围 guxi fire
 
             // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
