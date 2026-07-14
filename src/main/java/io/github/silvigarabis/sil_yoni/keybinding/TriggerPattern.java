@@ -132,6 +132,16 @@ public enum TriggerPattern {
             PressHold.with(20 * 10),
             ActiveOnce.use()
     ),
+
+    LONG_PRESS_10s_ALWAYS_CONTINUOUS(
+            "sil_yoni.gui.badge.active.long-press-10s-always-continuous",
+            "sil_yoni.gui.badge.toggle.long-press-10s-always-continuous",
+            WaitPress.withInf(),
+            PressHold.with(20 * 10),
+            ActiveContinuousWhenHold.use(),
+            Reset.use()
+    ),
+
     ;
 
     public @Unmodifiable List<StageSpec> stages() {
