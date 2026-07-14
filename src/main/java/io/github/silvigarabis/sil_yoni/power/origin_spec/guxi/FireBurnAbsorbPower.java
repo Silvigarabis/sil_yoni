@@ -33,10 +33,7 @@ public class FireBurnAbsorbPower extends Power implements PowerActive {
 
     @Override
     public void onUse() {
-        activeTicks += 200;
-        if (activeTicks > 1200) {
-            activeTicks = 1200;
-        }
+        activeTicks = 20;
     }
 
     @Override

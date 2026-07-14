@@ -41,7 +41,7 @@ public class FireBurnAbsorbFeature {
 
     public void tickActive() {
         activeTicks++;
-        if (activeTicks > 40) activeTicks = 40;
+        if (activeTicks > 20) activeTicks = 20;
 
         BlockPos.Mutable mutable = new BlockPos.Mutable();
         var center = entity.getBlockPos();
