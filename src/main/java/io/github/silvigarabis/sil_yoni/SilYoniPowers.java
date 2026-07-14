@@ -11,6 +11,7 @@ import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
 import io.github.silvigarabis.sil_yoni.power.detection.TogglePower;
 import io.github.silvigarabis.sil_yoni.power.misc.*;
 import io.github.silvigarabis.sil_yoni.power.modify.ModifyFoodEatTimePower;
+import io.github.silvigarabis.sil_yoni.power.origin_spec.guxi.FireBurnAbsorbPower;
 import net.minecraft.registry.Registry;
 
 public class SilYoniPowers {
@@ -36,5 +37,6 @@ public class SilYoniPowers {
       register(NoSleepPower::createFactory);
       register(NoActualSleepPower::createFactory);
       register(DeformExhaustionOverTimePower::createFactory);
+      register(FireBurnAbsorbPower::createFactory);
    }
 }
