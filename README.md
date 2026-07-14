@@ -1,5 +1,5 @@
 # sil_yoni
 
-just a simple origin mod for me, plz don't share to anyone else.
+> just a simple origin mod for me, plz don't share to anyone else. Silvigarabis said.
 
-if you want to compile it, you have to download both nodejs and gradle, and install java 17
+a minecraft mod introducing an origin named "guxi", injecting it into minecraft
