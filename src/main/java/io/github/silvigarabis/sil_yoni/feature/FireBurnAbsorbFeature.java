@@ -79,7 +79,7 @@ public class FireBurnAbsorbFeature {
             // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
 
-            ((World)this).setBlockState(targetPos, ((FireBlockInvoker)fireBlock).silYoni$getStateForPosition(targetPos), FireBlock.NOTIFY_ALL);
+            ((World)this).setBlockState(targetPos, ((FireBlockInvoker)fireBlock).silYoni$getStateForPosition((World)this, targetPos), FireBlock.NOTIFY_ALL);
             silYoni$setGuxiFireOwner(targetPos, sourceOwner);
         }
 
