@@ -9,6 +9,7 @@ import io.github.silvigarabis.sil_yoni.SilYoniMod;
 import io.github.silvigarabis.sil_yoni.data.DataTypes;
 import io.github.silvigarabis.sil_yoni.data.PehkuiScaleValueInfo;
 import io.github.silvigarabis.sil_yoni.util.ReflectionUtil;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -101,5 +102,19 @@ public class PehkuiValuePower extends Power {
                         data.get("set")
                 )
         );
+    }
+
+    public static void init(){
+        if (!ReflectionUtil.hasPehkui()) return;
+
+        ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.register(
+                (_oldEntity, newEntity, _from, _to) -> {
+                    PehkuiValuePower.applyAfterDimensionChanged(newEntity);
+                });
+
+        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(
+                (player, _from, _to) -> {
+                    PehkuiValuePower.applyAfterDimensionChanged(player);
+                });
     }
 }

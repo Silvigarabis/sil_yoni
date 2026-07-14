@@ -7,7 +7,6 @@ import io.github.apace100.apoli.power.factory.PowerFactorySupplier;
 import io.github.apace100.apoli.registry.ApoliRegistries;
 import io.github.silvigarabis.sil_yoni.power.BeeRiderPower;
 import io.github.silvigarabis.sil_yoni.power.origin_spec.guxi.DeformExhaustionOverTimePower;
-import io.github.silvigarabis.sil_yoni.power.FlightAbilityPower;
 import io.github.silvigarabis.sil_yoni.power.detection.ActiveCooldownPower;
 import io.github.silvigarabis.sil_yoni.power.detection.TogglePower;
 import io.github.silvigarabis.sil_yoni.power.misc.*;
@@ -15,8 +14,6 @@ import io.github.silvigarabis.sil_yoni.power.modify.ModifyFoodEatTimePower;
 import net.minecraft.registry.Registry;
 
 public class SilYoniPowers {
-   public static final PowerType<?> NO_BREATH = new PowerTypeReference<>(NoBreathPower.ID);
-   public static final PowerType<?> FLIGHT_ABILITY = new PowerTypeReference<>(FlightAbilityPower.ID);
    public static final PowerType<?> BEE_RIDER = new PowerTypeReference<>(BeeRiderPower.ID);
 
    private static void register(PowerFactory<?> powerFactory) {
@@ -27,7 +24,6 @@ public class SilYoniPowers {
    }
    public static void register(){
       register(NoBreathPower::createFactory);
-      register(FlightAbilityPower::createFactory);
       register(BeeRiderPower::createFactory);
       register(ConvertFoodToResourcePower::createFactory);
       register(StaticHungerPower::createFactory);
