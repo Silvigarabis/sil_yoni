@@ -35,6 +35,14 @@ public abstract class FireBlockMixin {
         return original & !FireBurnAbsorbFeature.callGuxiRemovingFireRemoved(world, pos) & !FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos);
     }
 //                world.removeBlock(pos, false);
+    @Inject(
+            method = "scheduledTick",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z", shift = At.Shift.AFTER)
+    )
+    void silYoni$guxiRemovedFire(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci){
+        ((FireBurnAbsorbFeature.DataGuxiFireTracking)world).sil_yoni$leavingFireTracking().remove(pos);
+        ((FireBurnAbsorbFeature.DataGuxiFireTracking)world).sil_yoni$guxiFireTracking().remove(pos);
+    }
 //            }
 //
 //            BlockState blockState = world.getBlockState(pos.down());
