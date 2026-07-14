@@ -52,7 +52,7 @@ public class FireBurnAbsorbFeature {
 
                     BlockState state = entity.getWorld().getBlockState(mutable);
                     if (state.isOf(Blocks.FIRE)){
-                        setGuxiFireOwner(world, mutable, this);
+                        setGuxiFireOwner(world, mutable.toImmutable(), this);
                     }
                 }
             }
