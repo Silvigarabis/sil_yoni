@@ -39,7 +39,7 @@ public abstract class BeeRideableMixin extends AnimalEntity {
             player.setPitch(this.getPitch());
             player.startRiding(this);
 
-            player.sendMessage(Text.literal("riding bee!"), false);
+            player.sendMessage(Text.translatable("sil_yoni.bee_rider.start"), false);
          }
          return ActionResult.success(this.getWorld().isClient);
       }
@@ -49,8 +49,8 @@ public abstract class BeeRideableMixin extends AnimalEntity {
    @Override
    public LivingEntity getControllingPassenger(){
       var passenger = this.getFirstPassenger();
-      if (passenger instanceof LivingEntity){
-         return (LivingEntity)passenger;
+      if (passenger instanceof LivingEntity passLiving){
+         return passLiving;
       }
       return super.getControllingPassenger();
    }
@@ -61,14 +61,14 @@ public abstract class BeeRideableMixin extends AnimalEntity {
       this.setRotation(controllingPlayer.getYaw(), controllingPlayer.getPitch() * 0.5f);
       this.bodyYaw = this.headYaw = this.getYaw();
       this.prevYaw = this.headYaw;
-      LOGGER.info("manually travel for BeeEntity.tickControlled() and mob {}, actual movement speed: {}, fake speed: 0.02", this, this.getMovementSpeed());
+      LOGGER.trace("manually travel for BeeEntity.tickControlled() and mob {}, actual movement speed: {}, fake speed: 0.02", this, this.getMovementSpeed());
       this.updateVelocity(0.02f, this.getControlledMovementInput(controllingPlayer, movementInput));
       this.getWorld().getProfiler().pop();
    }
 
    @Override
    protected Vec3d getControlledMovementInput(PlayerEntity controllingPlayer, Vec3d movementInput) {
-      LOGGER.info("controllingPlayer.forwardSpeed: {}", controllingPlayer.forwardSpeed);
+      LOGGER.trace("controllingPlayer.forwardSpeed: {}", controllingPlayer.forwardSpeed);
 
       double upwardSpeed = 0.0;
       double forwardSpeed = Math.signum(controllingPlayer.forwardSpeed);
