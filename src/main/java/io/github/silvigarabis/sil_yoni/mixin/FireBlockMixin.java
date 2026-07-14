@@ -32,7 +32,7 @@ public abstract class FireBlockMixin {
             )
     )
     private boolean silYoni$guxiRemovingFire(boolean original, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        return original || FireBurnAbsorbFeature.isGuxiRemovingFire(world, pos);
+        return original || FireBurnAbsorbFeature.callGuxiRemovingFireRemoved(world, pos) || FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos);
     }
 //                world.removeBlock(pos, false);
 //            }
@@ -56,27 +56,6 @@ public abstract class FireBlockMixin {
     )
     private boolean silYoni$guxiInfiniteFire(boolean original, BlockState state, ServerWorld world, BlockPos pos, Random random) {
         return original || FireBurnAbsorbFeature.isGuxiActiveFire(world, pos);
-    }
-
-    @Inject(
-            method = "scheduledTick",
-            cancellable = true,
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z"
-            ),
-            slice = @Slice(
-                    from = @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/world/dimension/DimensionType;infiniburn()Lnet/minecraft/registry/tag/TagKey;"
-                    )
-            )
-    )
-    private void silYoni$guxiFireDoInactive(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos)) {
-            world.removeBlock(pos, false);
-            ci.cancel();
-        }
     }
 
 //            int i = state.get(AGE);
