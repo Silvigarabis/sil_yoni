@@ -52,3 +52,37 @@ dense_energy_damage:
          type: apoli:feed
          food: 2
          saturation: 0
+
+temp_eat_lava_bucket:
+   type: sil_yoni:detection/mutable_active_self
+   key:
+      key: key.origins.secondary_active
+      trigger: SINGLE_CLICK_INTERVAL
+   entity_action:
+      type: apoli:if_else
+      condition:
+         type: apoli:equipped_item
+         equipment_slot: mainhand
+         item_condition:
+            type: apoli:ingredient
+            ingredient:
+               item: minecraft:lava_bucket
+      if_action:
+         type: apoli:and
+         actions:
+            -
+               type: apoli:equipped_item_action
+               equipment_slot: mainhand
+               action:
+                  type: apoli:consume
+                  amount: 1
+            -
+               type: apoli:give
+               stack:
+                  item: minecraft:bucket
+                  amount: 1
+            -
+               type: apoli:feed
+               food: 680
+            - type: apoli:play_sound
+              sound: minecraft:block.lava.pop
