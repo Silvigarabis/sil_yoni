@@ -51,7 +51,17 @@ public class FireBurnAbsorbPower extends Power implements PowerActive {
 
     @Override
     public void onLost() {
-        this.feat.inactiveImmediate();
+        this.feat.onLost();
+    }
+
+    @Override
+    public void onRemoved() {
+        this.feat.onRemoved();
+    }
+
+    @Override
+    public void onAdded() {
+        this.feat.onAdd();
     }
 
     @Override

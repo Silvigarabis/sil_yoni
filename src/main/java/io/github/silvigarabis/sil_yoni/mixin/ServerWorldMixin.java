@@ -7,14 +7,24 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Mixin(ServerWorld.class)
-public abstract class ServerWorldMixin implements FireBurnAbsorbFeature.DataGuxiFireTracking {
+public class ServerWorldMixin implements FireBurnAbsorbFeature.DataGuxiFireTracking {
+    @Unique
+    private final Set<BlockPos> sil_yoni$leavingFireTracking = new HashSet<>();
+
     @Unique
     private final Map<BlockPos, FireBurnAbsorbFeature> sil_yoni$guxiFireTracking = new HashMap<>();
 
     public Map<BlockPos, FireBurnAbsorbFeature> sil_yoni$guxiFireTracking() {
         return sil_yoni$guxiFireTracking;
+    }
+
+    @Override
+    public Set<BlockPos> sil_yoni$leavingFireTracking() {
+        return sil_yoni$leavingFireTracking;
     }
 }

@@ -1,5 +1,6 @@
 package io.github.silvigarabis.sil_yoni;
 
+import io.github.silvigarabis.sil_yoni.feature.FireBurnAbsorbFeature;
 import io.github.silvigarabis.sil_yoni.networking.ModC2SPackets;
 import io.github.silvigarabis.sil_yoni.power.misc.PehkuiValuePower;
 import net.fabricmc.api.ModInitializer;
@@ -30,7 +31,7 @@ public class SilYoniMod implements ModInitializer {
         SilYoniSounds.register();
         SilYoniPowers.register();
         ModC2SPackets.register();
-
+        FireBurnAbsorbFeature.init();
 
         PehkuiValuePower.init();
 
