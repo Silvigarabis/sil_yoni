@@ -32,7 +32,7 @@ public abstract class FireBlockMixin {
             )
     )
     private boolean silYoni$guxiRemovingFire(boolean original, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        return original || FireBurnAbsorbFeature.callGuxiRemovingFireRemoved(world, pos) || FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos);
+        return original & !FireBurnAbsorbFeature.callGuxiRemovingFireRemoved(world, pos) & !FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos);
     }
 //                world.removeBlock(pos, false);
 //            }
