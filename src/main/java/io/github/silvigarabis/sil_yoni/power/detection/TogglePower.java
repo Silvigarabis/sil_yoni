@@ -6,9 +6,12 @@ import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.factory.PowerFactory;
 import io.github.apace100.calio.data.SerializableData;
 import io.github.apace100.calio.data.SerializableDataTypes;
+import io.github.apace100.origins.Origins;
 import io.github.silvigarabis.sil_yoni.SilYoniMod;
 import io.github.silvigarabis.sil_yoni.data.DataTypes;
 import io.github.silvigarabis.sil_yoni.data.Key;
+import io.github.silvigarabis.sil_yoni.detection.PowerActive;
+import io.github.silvigarabis.sil_yoni.keybinding.TriggerPattern;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtElement;
@@ -18,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public class TogglePower extends Power implements Active {
+public class TogglePower extends Power implements PowerActive {
     public static final Identifier ID = SilYoniMod.identifier("detection/mutable_toggle");
     private final List<Key> keys;
 
@@ -75,6 +78,16 @@ public class TogglePower extends Power implements Active {
     @Override
     public void fromTag(NbtElement tag) {
         isActive = ((NbtByte)tag).byteValue() > 0;
+    }
+
+    @Override
+    public Identifier getBadgeSpriteFor(TriggerPattern pattern) {
+        return Origins.identifier("textures/gui/badge/toggle.png");
+    }
+
+    @Override
+    public String getTranslateFor(TriggerPattern pattern) {
+        return pattern.toggleTranslationKey();
     }
 
     public static PowerFactory createFactory() {

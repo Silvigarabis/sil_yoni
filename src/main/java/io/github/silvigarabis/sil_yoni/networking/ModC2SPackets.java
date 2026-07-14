@@ -5,7 +5,7 @@ import io.github.apace100.apoli.power.Power;
 import io.github.apace100.apoli.power.PowerType;
 import io.github.apace100.apoli.power.PowerTypeRegistry;
 import io.github.silvigarabis.sil_yoni.SilYoniMod;
-import io.github.silvigarabis.sil_yoni.power.detection.Active;
+import io.github.silvigarabis.sil_yoni.detection.Active;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
