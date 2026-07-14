@@ -12,7 +12,7 @@ import io.github.silvigarabis.sil_yoni.SilYoniMod;
 
 public class BeeRiderPower extends Power {
 
-   public static final Identifier ID = new Identifier(SilYoniMod.MOD_ID, "bee_rider");
+   public static final Identifier ID = SilYoniMod.identifier("bee_rider");
 
    public BeeRiderPower(PowerType<?> type, LivingEntity entity){
       super(type, entity);
@@ -22,7 +22,7 @@ public class BeeRiderPower extends Power {
       return new PowerFactory<>(
          ID,
          new SerializableData(),
-         data -> (type, entity) -> new BeeRiderPower(type, entity)
+         data -> BeeRiderPower::new
       ).allowCondition();
    }
 }
