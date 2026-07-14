@@ -9,11 +9,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 import java.util.Set;
 
 public class FireBurnAbsorbFeature {
+
+    static final Logger LOGGER = LogManager.getLogger("silYoniGuxiFire");
+
     private final LivingEntity entity;
     private int activeTicks = 0;
 
@@ -52,7 +57,8 @@ public class FireBurnAbsorbFeature {
 
                     BlockState state = entity.getWorld().getBlockState(mutable);
                     if (state.isOf(Blocks.FIRE)){
-                        setGuxiFireOwner(world, mutable.toImmutable(), this);
+                        LOGGER.info("[ACTIVE]: {}", mutable);
+                        tryAcquireGuxiFireOwner(world, mutable, this);
                     }
                 }
             }
@@ -79,8 +85,8 @@ public class FireBurnAbsorbFeature {
         this.inactiveImmediate();
     }
 
-    public static void setGuxiFireOwner(World world, BlockPos pos, FireBurnAbsorbFeature owner){
-        ((DataGuxiFireTracking)world).silYoni$setGuxiFireOwner(pos, owner);
+    public static void tryAcquireGuxiFireOwner(World world, BlockPos pos, FireBurnAbsorbFeature owner){
+        ((DataGuxiFireTracking)world).silYoni$tryAcquireGuxiFireOwner(pos, owner);
     }
 
     public static boolean isGuxiActiveFire(ServerWorld world, BlockPos pos){
@@ -99,8 +105,8 @@ public class FireBurnAbsorbFeature {
     public interface DataGuxiFireTracking {
         Map<BlockPos, FireBurnAbsorbFeature> sil_yoni$guxiFireTracking();
         Set<BlockPos> sil_yoni$leavingFireTracking();
-        default void silYoni$setGuxiFireOwner(BlockPos pos, FireBurnAbsorbFeature owner){
-            sil_yoni$guxiFireTracking().put(pos, owner);
+        default void silYoni$tryAcquireGuxiFireOwner(BlockPos pos, FireBurnAbsorbFeature owner){
+            sil_yoni$guxiFireTracking().computeIfAbsent(pos.toImmutable(), _o -> owner);
         }
         default boolean silYoni$isGuxiActiveFire(BlockPos pos){
             var owner = sil_yoni$guxiFireTracking().get(pos);
@@ -121,20 +127,31 @@ public class FireBurnAbsorbFeature {
             // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
 
+            LOGGER.info("[SPREAD]: {}", targetPos);
+
             ((World)this).setBlockState(targetPos, ((FireBlockInvoker)fireBlock).silYoni$getStateForPosition((World)this, targetPos), FireBlock.NOTIFY_ALL);
-            silYoni$setGuxiFireOwner(targetPos, sourceOwner);
+            silYoni$tryAcquireGuxiFireOwner(targetPos, sourceOwner);
         }
 
         default boolean silYoni$callGuxiInactiveFireRemoved(BlockPos pos){
             var owner = silYoni$getGuxiFireOwner(pos);
             if (owner != null && !owner.isActive()){
-                return sil_yoni$guxiFireTracking().remove(pos) != null;
+                var removed = sil_yoni$guxiFireTracking().remove(pos) != null;
+
+                if (removed)
+                    LOGGER.info("[INACTIVE]: {}", pos);
+
+                return removed;
             }
             return false;
         }
 
         default boolean silYoni$callGuxiLeavingFireRemoved(BlockPos pos){
-            return sil_yoni$leavingFireTracking().remove(pos);
+            var removed = sil_yoni$leavingFireTracking().remove(pos);
+            if (removed){
+                LOGGER.info("[LEAVING]: {}", pos);
+            }
+            return removed;
         }
 
         default void silYoni$removeFireOfOwner(LivingEntity entity){
