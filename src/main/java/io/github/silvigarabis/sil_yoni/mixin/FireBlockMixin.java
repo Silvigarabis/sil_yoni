@@ -63,7 +63,7 @@ public abstract class FireBlockMixin {
             )
     )
     private boolean silYoni$guxiInfiniteFire(boolean original, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        return original || FireBurnAbsorbFeature.isGuxiActiveFire(world, pos);
+        return original || FireBurnAbsorbFeature.isGuxiFire(world, pos);
     }
 
 //            int i = state.get(AGE);

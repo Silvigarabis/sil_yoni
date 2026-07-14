@@ -38,6 +38,11 @@ public class FireBurnAbsorbFeature {
         return ((DataGuxiFireTracking)world).silYoni$callGuxiLeavingFireRemoved(pos);
     }
 
+    public static boolean isGuxiFire(ServerWorld world, BlockPos pos) {
+        return ((DataGuxiFireTracking)world).sil_yoni$guxiFireTracking().containsKey(pos)
+                || ((DataGuxiFireTracking)world).sil_yoni$leavingFireTracking().contains(pos);
+    }
+
     private boolean isActive() {
         return activeTicks > 0;
     }
