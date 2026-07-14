@@ -16,7 +16,7 @@ public class SilYoniMod implements ModInitializer {
     public static final String MOD_ID = "sil_yoni";
 
     public static Identifier identifier(String id) {
-        return new Identifier(MOD_ID, id);
+        return Identifier.of(MOD_ID, id);
     }
 
     @Override
@@ -31,15 +31,10 @@ public class SilYoniMod implements ModInitializer {
         SilYoniPowers.register();
         ModC2SPackets.register();
 
-        ServerEntityWorldChangeEvents.AFTER_ENTITY_CHANGE_WORLD.register(
-                (_oldEntity, newEntity, _from, _to) -> {
-                    PehkuiValuePower.applyAfterDimensionChanged(newEntity);
-                });
 
-        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register(
-                (player, _from, _to) -> {
-                   PehkuiValuePower.applyAfterDimensionChanged(player);
-                });
+        PehkuiValuePower.init();
+
+
 
         LOGGER.info("Done. Have a nice day.");
         
