@@ -22,17 +22,15 @@ public class FireBurnAbsorbFeature {
     }
 
     public static boolean callGuxiInactiveFireRemoved(BlockState state, ServerWorld world, BlockPos pos) {
-        return world instanceof DataGuxiFireTracking data && data.silYoni$callGuxiInactiveFireRemoved(pos);
+        return ((DataGuxiFireTracking)world).silYoni$callGuxiInactiveFireRemoved(pos);
     }
 
     public static void trySpreadGuxiFire(FireBlock fireBlock, World world, BlockPos sourcePos, BlockPos targetPos) {
-        if (world instanceof DataGuxiFireTracking data) {
-            data.silYoni$trySpreadGuxiFire(fireBlock, sourcePos, targetPos);
-        }
+        ((DataGuxiFireTracking)world).silYoni$trySpreadGuxiFire(fireBlock, sourcePos, targetPos);
     }
 
-    public static boolean isGuxiRemovingFire(ServerWorld world, BlockPos pos) {
-        return world instanceof DataGuxiFireTracking data && data.silYoni$callGuxiLeavingFireRemoved(pos);
+    public static boolean callGuxiRemovingFireRemoved(ServerWorld world, BlockPos pos) {
+        return ((DataGuxiFireTracking)world).silYoni$callGuxiLeavingFireRemoved(pos);
     }
 
     private boolean isActive() {
@@ -82,21 +80,18 @@ public class FireBurnAbsorbFeature {
     }
 
     public static void setGuxiFireOwner(World world, BlockPos pos, FireBurnAbsorbFeature owner){
-        if (world instanceof DataGuxiFireTracking data) {
-            data.silYoni$setGuxiFireOwner(pos, owner);
-        }
+        ((DataGuxiFireTracking)world).silYoni$setGuxiFireOwner(pos, owner);
     }
 
     public static boolean isGuxiActiveFire(ServerWorld world, BlockPos pos){
-        return world instanceof DataGuxiFireTracking data && data.silYoni$isGuxiActiveFire(pos);
+        return ((DataGuxiFireTracking)world).silYoni$isGuxiActiveFire(pos);
     }
 
     public static void init(){
         ServerLivingEntityEvents.AFTER_DEATH.register(
                 (entity, source) -> {
-                    if (entity.getWorld() instanceof DataGuxiFireTracking data){
-                        data.silYoni$removeFireOfOwner(entity);
-                    }
+                    if (!entity.getWorld().isClient)
+                        ((DataGuxiFireTracking)entity.getWorld()).silYoni$removeFireOfOwner(entity);
                 }
         );
     }
