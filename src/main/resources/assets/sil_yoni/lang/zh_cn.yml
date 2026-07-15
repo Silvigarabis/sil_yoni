@@ -185,6 +185,9 @@ sil_yoni.gui.badge.active.single-press-hold: 主动能力，长按%s键触发
 sil_yoni.gui.badge.active.long-press-3s: 主动能力，长按3秒%s键触发
 sil_yoni.gui.badge.active.long-press-10s: 主动能力，长按10秒%s键触发
 
+sil_yoni.gui.badge.active.long-press-3s-always-continuous: 主动能力，长按%s键3秒后持续生效
+sil_yoni.gui.badge.active.long-press-10s-always-continuous: 主动能力，长按%s键3秒后持续生效
+
 sil_yoni.gui.badge.toggle.single-click-interval: 单击%s键后开关
 sil_yoni.gui.badge.toggle.double-click-interval: 双击（间隔检测）%s键后开关
 sil_yoni.gui.badge.toggle.triple-click-interval: 三击%s键后开关
@@ -202,5 +205,8 @@ sil_yoni.gui.badge.toggle.single-press-hold: 长按%s键开关
 
 sil_yoni.gui.badge.toggle.long-press-3s: 长按3秒%s键开关
 sil_yoni.gui.badge.toggle.long-press-10s: 长按10秒%s键开关
+
+sil_yoni.gui.badge.toggle.long-press-3s-always-continuous: 主动能力，长按%s键3秒后持续生效
+sil_yoni.gui.badge.toggle.long-press-10s-always-continuous: 主动能力，长按%s键3秒后持续生效
 
 sil_yoni.bee_rider.start: "riding bee!"
