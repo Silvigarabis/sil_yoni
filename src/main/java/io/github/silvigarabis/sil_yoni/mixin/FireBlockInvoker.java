@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FireBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
@@ -15,4 +16,7 @@ public interface FireBlockInvoker {
 
     @Invoker("getStateForPosition")
     BlockState silYoni$getStateForPosition(BlockView world, BlockPos pos);
+
+    @Invoker("getBurnChance")
+    int silYoni$getBurnChance(WorldView view, BlockPos pos);
 }

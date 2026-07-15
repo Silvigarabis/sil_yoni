@@ -11,8 +11,7 @@
     "LivingEntityAccessor",
     "PlayerEntityMixin",
     "ServerWorldMixin",
-    "SleepManagerMixin",
-    "WorldMixin"
+    "SleepManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
