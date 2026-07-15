@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -142,14 +143,14 @@ public class FireBurnAbsorbFeature {
             assert sourceOwner != null;
             if (targetOwner != null) return;
 
-            // TODO: 尝试传播 guxi fire
             // TODO: 尝试限制传播范围 guxi fire
 
-            // 我们也许会使用传播几率作为要添加到GUXI上的能量
+            // 我们会使用传播几率作为要添加到GUXI上的能量
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
             if (spreadChance > 0 && silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner)) {
                 ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
                 LOGGER.info("[SPREAD]: {}", targetPos);
+                sourceOwner.onFireSpread(spreadChance, sourcePos, targetPos);
             }
         }
 
@@ -187,6 +188,12 @@ public class FireBurnAbsorbFeature {
                 return true;
             }
             return false;
+        }
+    }
+
+    private void onFireSpread(int spreadChance, BlockPos sourcePos, BlockPos targetPos) {
+        if (this.entity instanceof PlayerEntity player){
+            player.getHungerManager().add(spreadChance * 100, 0);
         }
     }
 
