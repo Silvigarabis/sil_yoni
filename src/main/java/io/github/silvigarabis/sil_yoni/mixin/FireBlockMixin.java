@@ -22,18 +22,24 @@ public abstract class FireBlockMixin {
 //    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 //        world.scheduleBlockTick(pos, this, getFireTickDelay(world.random));
 //        if (world.getGameRules().getBoolean(GameRules.DO_FIRE_TICK)) {
-//            if (!state.canPlaceAt(world, pos)) {
-    @ModifyExpressionValue(
+    @Inject(
             method = "scheduledTick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/BlockState;canPlaceAt(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z",
                     ordinal = 0
-            )
+            ),
+            cancellable = true
     )
-    private boolean silYoni$guxiRemovingFire(boolean original, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        return original & !FireBurnAbsorbFeature.callGuxiRemovingFireRemoved(world, pos) & !FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos);
+    private void silYoni$guxiRemovingFire(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
+        if (FireBurnAbsorbFeature.callGuxiRemovingFireRemoved(world, pos)
+                | FireBurnAbsorbFeature.callGuxiInactiveFireRemoved(state, world, pos)){
+
+            world.removeBlock(pos, false);
+            ci.cancel();
+        }
     }
+//            if (!state.canPlaceAt(world, pos)) {
 //                world.removeBlock(pos, false);
     @Inject(
             method = "scheduledTick",
