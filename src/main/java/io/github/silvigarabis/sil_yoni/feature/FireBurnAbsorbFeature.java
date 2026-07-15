@@ -62,8 +62,9 @@ public class FireBurnAbsorbFeature {
 
                     BlockState state = entity.getWorld().getBlockState(mutable);
                     if (state.isOf(Blocks.FIRE)){
-                        LOGGER.info("[ACTIVE]: {}", mutable);
-                        tryAcquireGuxiFireOwner(world, mutable, this);
+                        if (tryBecameNewGuxiFireOwner(world, mutable, this)){
+                            LOGGER.info("[ACTIVE]: {}", mutable);
+                        }
                     }
                 }
             }
@@ -90,8 +91,8 @@ public class FireBurnAbsorbFeature {
         this.inactiveImmediate();
     }
 
-    public static void tryAcquireGuxiFireOwner(World world, BlockPos pos, FireBurnAbsorbFeature owner){
-        ((DataGuxiFireTracking)world).silYoni$tryAcquireGuxiFireOwner(pos, owner);
+    public static boolean tryBecameNewGuxiFireOwner(World world, BlockPos pos, FireBurnAbsorbFeature owner){
+        return ((DataGuxiFireTracking)world).silYoni$tryBecameNewGuxiFireOwner(pos, owner);
     }
 
     public static boolean isGuxiActiveFire(ServerWorld world, BlockPos pos){
@@ -110,8 +111,8 @@ public class FireBurnAbsorbFeature {
     public interface DataGuxiFireTracking {
         Map<BlockPos, FireBurnAbsorbFeature> sil_yoni$guxiFireTracking();
         Set<BlockPos> sil_yoni$leavingFireTracking();
-        default void silYoni$tryAcquireGuxiFireOwner(BlockPos pos, FireBurnAbsorbFeature owner){
-            sil_yoni$guxiFireTracking().computeIfAbsent(pos.toImmutable(), _o -> owner);
+        default boolean silYoni$tryBecameNewGuxiFireOwner(BlockPos pos, FireBurnAbsorbFeature owner){
+            return null == sil_yoni$guxiFireTracking().putIfAbsent(pos.toImmutable(), owner);
         }
         default boolean silYoni$isGuxiActiveFire(BlockPos pos){
             var owner = sil_yoni$guxiFireTracking().get(pos);
@@ -131,11 +132,12 @@ public class FireBurnAbsorbFeature {
 
             // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
+            if (spreadChance > 0) {
+                LOGGER.info("[SPREAD]: {}", targetPos);
 
-            LOGGER.info("[SPREAD]: {}", targetPos);
-
-            ((World)this).setBlockState(targetPos, ((FireBlockInvoker)fireBlock).silYoni$getStateForPosition((World)this, targetPos), FireBlock.NOTIFY_ALL);
-            silYoni$tryAcquireGuxiFireOwner(targetPos, sourceOwner);
+                ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
+                silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner);
+            }
         }
 
         default boolean silYoni$callGuxiInactiveFireRemoved(BlockPos pos){
