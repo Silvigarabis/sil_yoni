@@ -1,6 +1,7 @@
 package io.github.silvigarabis.sil_yoni.feature;
 
 import io.github.silvigarabis.sil_yoni.mixin.FireBlockInvoker;
+import io.github.silvigarabis.sil_yoni.power.origin_spec.guxi.FireBurnAbsorbPower;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
@@ -146,11 +147,12 @@ public class FireBurnAbsorbFeature {
             // TODO: 尝试限制传播范围 guxi fire
 
             // 我们会使用传播几率作为要添加到GUXI上的能量
-            int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
-            if (spreadChance > 0 && silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner)) {
+            BlockState state = ((World)this).getBlockState(targetPos);
+            int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(state);
+            if (sourceOwner.startFireSpread(spreadChance, sourcePos, targetPos, state)){
+                silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner);
                 ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
                 LOGGER.info("[SPREAD]: {}", targetPos);
-                sourceOwner.onFireSpread(spreadChance, sourcePos, targetPos);
             }
         }
 
@@ -180,7 +182,6 @@ public class FireBurnAbsorbFeature {
         }
 
         default boolean silYoni$tryLintGuxiFire(FireBlock fireBlock, BlockPos pos, FireBurnAbsorbFeature owner){
-            // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int burnChance = ((FireBlockInvoker)fireBlock).silYoni$getBurnChance((World)this, pos);
             if (burnChance > 0 && silYoni$tryBecameNewGuxiFireOwner(pos, owner)){
                 LOGGER.info("[BURN]: {}", pos);
@@ -191,10 +192,17 @@ public class FireBurnAbsorbFeature {
         }
     }
 
-    private void onFireSpread(int spreadChance, BlockPos sourcePos, BlockPos targetPos) {
+    private boolean startFireSpread(int spreadChance, BlockPos sourcePos, BlockPos targetPos, BlockState state) {
         if (this.entity instanceof PlayerEntity player){
-            player.getHungerManager().add(spreadChance * 100, 0);
+            int fuelValue = FireBurnAbsorbPower.getSpreadEnergy(state);
+            if (spreadChance > 0 && fuelValue > 0){
+                player.getHungerManager().add(fuelValue, 0);
+                return true;
+            }
+        } else {
+            return spreadChance > 0;
         }
+        return false;
     }
 
     private boolean isOwned(LivingEntity entity) {
