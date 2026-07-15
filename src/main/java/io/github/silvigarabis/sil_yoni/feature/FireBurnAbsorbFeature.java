@@ -150,8 +150,8 @@ public class FireBurnAbsorbFeature {
             if (spreadChance > 0) {
                 LOGGER.info("[SPREAD]: {}", targetPos);
 
-                ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
                 silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner);
+                ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
             }
         }
 
