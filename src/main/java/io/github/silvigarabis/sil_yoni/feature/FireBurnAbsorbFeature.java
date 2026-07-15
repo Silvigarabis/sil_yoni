@@ -2,12 +2,14 @@ package io.github.silvigarabis.sil_yoni.feature;
 
 import io.github.silvigarabis.sil_yoni.mixin.FireBlockInvoker;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,6 +71,14 @@ public class FireBurnAbsorbFeature {
                 }
             }
         }
+
+        for (var pos : BlockPos.iterateInSquare(center, 8, Direction.UP, Direction.EAST)) {
+            BlockState state = world.getBlockState(pos);
+            if (!state.isOf(Blocks.FIRE)) {
+                if (tryLintGuxiFire((FireBlock) Blocks.FIRE, world, pos, this))
+                    break;
+            }
+        }
     }
 
     public void tickInactive() {
@@ -95,6 +105,10 @@ public class FireBurnAbsorbFeature {
         return ((DataGuxiFireTracking)world).silYoni$tryBecameNewGuxiFireOwner(pos, owner);
     }
 
+    public static boolean tryLintGuxiFire(FireBlock fireBlock, World world, BlockPos pos, FireBurnAbsorbFeature owner) {
+        return ((DataGuxiFireTracking)world).silYoni$tryLintGuxiFire(fireBlock, pos, owner);
+    }
+
     public static boolean isGuxiActiveFire(ServerWorld world, BlockPos pos){
         return ((DataGuxiFireTracking)world).silYoni$isGuxiActiveFire(pos);
     }
@@ -106,6 +120,7 @@ public class FireBurnAbsorbFeature {
                         ((DataGuxiFireTracking)entity.getWorld()).silYoni$removeFireOfOwner(entity);
                 }
         );
+        ServerTickEvents.END_WORLD_TICK.register(FireBurnAbsorbFeature::guxiRemovedFire);
     }
 
     public interface DataGuxiFireTracking {
@@ -143,18 +158,14 @@ public class FireBurnAbsorbFeature {
         default boolean silYoni$callGuxiInactiveFireRemoved(BlockPos pos){
             var owner = silYoni$getGuxiFireOwner(pos);
             if (owner != null && !owner.isActive()){
-                var removed = sil_yoni$guxiFireTracking().remove(pos) != null;
-
-                if (removed)
-                    LOGGER.info("[INACTIVE]: {}", pos);
-
-                return removed;
+                LOGGER.info("[INACTIVE]: {}", pos);
+                return true;
             }
             return false;
         }
 
         default boolean silYoni$callGuxiLeavingFireRemoved(BlockPos pos){
-            var removed = sil_yoni$leavingFireTracking().remove(pos);
+            var removed = sil_yoni$leavingFireTracking().contains(pos);
             if (removed){
                 LOGGER.info("[LEAVING]: {}", pos);
             }
@@ -168,9 +179,42 @@ public class FireBurnAbsorbFeature {
                 }
             }
         }
+
+        default boolean silYoni$tryLintGuxiFire(FireBlock fireBlock, BlockPos pos, FireBurnAbsorbFeature owner){
+            // 我们也许会使用传播几率作为要添加到GUXI上的能量
+            int burnChance = ((FireBlockInvoker)fireBlock).silYoni$getBurnChance((World)this, pos);
+            if (burnChance > 0) {
+                LOGGER.info("[BURN]: {}", pos);
+
+                ((World) this).setBlockState(pos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, pos), FireBlock.NOTIFY_ALL);
+                return silYoni$tryBecameNewGuxiFireOwner(pos, owner);
+            }
+            return false;
+        }
     }
 
     private boolean isOwned(LivingEntity entity) {
         return this.entity.equals(entity);
+    }
+
+    static void guxiRemovedFire(ServerWorld world){
+        var data = (DataGuxiFireTracking)world;
+        int allowedCounts = 300;
+
+        var it1 = data.sil_yoni$guxiFireTracking().keySet().iterator();
+        for (; allowedCounts > 0 && it1.hasNext(); allowedCounts--) {
+            var pos = it1.next();
+            if (!world.getBlockState(pos).isOf(Blocks.FIRE)) {
+                it1.remove();
+            }
+        }
+
+        var it2 = data.sil_yoni$leavingFireTracking().iterator();
+        for (; allowedCounts > 0 && it2.hasNext(); allowedCounts--) {
+            var pos = it2.next();
+            if (!world.getBlockState(pos).isOf(Blocks.FIRE)) {
+                it2.remove();
+            }
+        }
     }
 }
