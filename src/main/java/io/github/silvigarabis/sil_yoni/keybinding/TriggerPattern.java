@@ -133,6 +133,14 @@ public enum TriggerPattern {
             ActiveOnce.use()
     ),
 
+    LONG_PRESS_3s_ALWAYS_CONTINUOUS(
+            "sil_yoni.gui.badge.active.long-press-3s-always-continuous",
+            "sil_yoni.gui.badge.toggle.long-press-3s-always-continuous",
+            WaitPress.withInf(),
+            PressHold.with(20 * 3),
+            ActiveContinuousWhenHold.use(),
+            Reset.use()
+    ),
     LONG_PRESS_10s_ALWAYS_CONTINUOUS(
             "sil_yoni.gui.badge.active.long-press-10s-always-continuous",
             "sil_yoni.gui.badge.toggle.long-press-10s-always-continuous",

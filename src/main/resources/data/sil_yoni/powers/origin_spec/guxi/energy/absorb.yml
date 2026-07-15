@@ -91,4 +91,4 @@ absorb_fire_burn:
    type: sil_yoni:origin_spec/guxi/energy/absorb_fire_burn
    trigger:
       key: key.origins.secondary_active
-      trigger: LONG_PRESS_10s_ALWAYS_CONTINUOUS
+      trigger: LONG_PRESS_3s_ALWAYS_CONTINUOUS
