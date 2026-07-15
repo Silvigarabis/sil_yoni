@@ -37,7 +37,8 @@ public abstract class FireBlockMixin {
 //                world.removeBlock(pos, false);
     @Inject(
             method = "scheduledTick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z", shift = At.Shift.AFTER)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z", shift = At.Shift.AFTER),
+            require = 4
     )
     void silYoni$guxiRemovedFire(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci){
         ((FireBurnAbsorbFeature.DataGuxiFireTracking)world).sil_yoni$leavingFireTracking().remove(pos);
@@ -118,12 +119,11 @@ public abstract class FireBlockMixin {
             BlockPos $method_pos,
             Random $method_random
     ) {
-        if (!FireBurnAbsorbFeature.isGuxiActiveFire($method_world, $method_pos)) {
+        if (FireBurnAbsorbFeature.isGuxiActiveFire($method_world, $method_pos)) {
+            FireBurnAbsorbFeature.trySpreadGuxiFire($instance, $instance$world, $method_pos, $instance$pos);
+        } else if (!FireBurnAbsorbFeature.isGuxiFire($method_world, $method_pos)) {
             original.call($instance, $instance$world, $instance$pos, $instance$_factor, $instance$_random, $instance$_age);
-            return;
         }
-
-        FireBurnAbsorbFeature.trySpreadGuxiFire($instance, $instance$world, $method_pos, $instance$pos);
     }
 //                this.trySpreadingFire(world, pos.east(), 300 + k, random, i);
 //                this.trySpreadingFire(world, pos.west(), 300 + k, random, i);
@@ -146,7 +146,7 @@ public abstract class FireBlockMixin {
             Random random,
             CallbackInfo ci
     ) {
-        if (FireBurnAbsorbFeature.isGuxiActiveFire(world, pos)) {
+        if (FireBurnAbsorbFeature.isGuxiFire(world, pos)) {
             ci.cancel();
         }
     }
