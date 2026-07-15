@@ -147,11 +147,9 @@ public class FireBurnAbsorbFeature {
 
             // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(((World)this).getBlockState(targetPos));
-            if (spreadChance > 0) {
-                LOGGER.info("[SPREAD]: {}", targetPos);
-
-                silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner);
+            if (spreadChance > 0 && silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner)) {
                 ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
+                LOGGER.info("[SPREAD]: {}", targetPos);
             }
         }
 
@@ -183,11 +181,10 @@ public class FireBurnAbsorbFeature {
         default boolean silYoni$tryLintGuxiFire(FireBlock fireBlock, BlockPos pos, FireBurnAbsorbFeature owner){
             // 我们也许会使用传播几率作为要添加到GUXI上的能量
             int burnChance = ((FireBlockInvoker)fireBlock).silYoni$getBurnChance((World)this, pos);
-            if (burnChance > 0) {
+            if (burnChance > 0 && silYoni$tryBecameNewGuxiFireOwner(pos, owner)){
                 LOGGER.info("[BURN]: {}", pos);
-
                 ((World) this).setBlockState(pos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, pos), FireBlock.NOTIFY_ALL);
-                return silYoni$tryBecameNewGuxiFireOwner(pos, owner);
+                return true;
             }
             return false;
         }
