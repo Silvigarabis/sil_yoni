@@ -73,7 +73,7 @@ public class FireBurnAbsorbFeature {
                         BlockState state = entity.getWorld().getBlockState(mutable);
                         if (state.isOf(Blocks.FIRE)) {
                             if (tryBecameNewGuxiFireOwner(world, mutable, this)) {
-                                LOGGER.info("[ACTIVE]: {}", mutable);
+                                LOGGER.trace("[ACTIVE]: {}", mutable);
                             }
                         }
                     }
@@ -163,14 +163,14 @@ public class FireBurnAbsorbFeature {
             if (sourceOwner.startFireSpread(spreadChance, sourcePos, targetPos, state, random)){
                 silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner);
                 ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
-                LOGGER.info("[SPREAD]: {}", targetPos);
+                LOGGER.trace("[SPREAD]: {}", targetPos);
             }
         }
 
         default boolean silYoni$callGuxiInactiveFireRemoved(BlockPos pos){
             var owner = silYoni$getGuxiFireOwner(pos);
             if (owner != null && !owner.isActive()){
-                LOGGER.info("[INACTIVE]: {}", pos);
+                LOGGER.trace("[INACTIVE]: {}", pos);
                 return true;
             }
             return false;
@@ -179,7 +179,7 @@ public class FireBurnAbsorbFeature {
         default boolean silYoni$callGuxiLeavingFireRemoved(BlockPos pos){
             var removed = sil_yoni$leavingFireTracking().contains(pos);
             if (removed){
-                LOGGER.info("[LEAVING]: {}", pos);
+                LOGGER.trace("[LEAVING]: {}", pos);
             }
             return removed;
         }
@@ -195,7 +195,7 @@ public class FireBurnAbsorbFeature {
         default boolean silYoni$tryLintGuxiFire(FireBlock fireBlock, BlockPos pos, FireBurnAbsorbFeature owner){
             int burnChance = ((FireBlockInvoker)fireBlock).silYoni$getBurnChance((World)this, pos);
             if (burnChance > 0 && silYoni$tryBecameNewGuxiFireOwner(pos, owner)){
-                LOGGER.info("[BURN]: {}", pos);
+                LOGGER.trace("[BURN]: {}", pos);
                 ((World) this).setBlockState(pos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, pos), FireBlock.NOTIFY_ALL);
                 return true;
             }
