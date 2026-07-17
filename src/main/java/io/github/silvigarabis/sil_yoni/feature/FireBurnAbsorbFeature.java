@@ -206,7 +206,7 @@ public class FireBurnAbsorbFeature {
     private boolean startFireSpread(int spreadChance, BlockPos sourcePos, BlockPos targetPos, BlockState state, Random random) {
         if (this.entity instanceof PlayerEntity player){
             int fuelValue = FireBurnAbsorbPower.getSpreadEnergy(state);
-            if (spreadChance > 0 && fuelValue > 0 && random.nextInt(40 + fuelValue) < 40){
+            if (spreadChance > 0 && fuelValue > 0 && random.nextInt(10 + fuelValue) < 10){
                 player.getHungerManager().add(fuelValue, 0);
                 return true;
             }
