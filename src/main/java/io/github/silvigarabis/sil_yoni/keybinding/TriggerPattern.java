@@ -69,6 +69,20 @@ public enum TriggerPattern {
             Reset.use()
     ),
 
+    TRIPLE_CLICK_IMMEDIATE_RELEASE_CONTINUOUS(
+            "sil_yoni.gui.badge.active.triple-click-immediate-release-continuous",
+            "sil_yoni.gui.badge.toggle.triple-click-immediate-release-continuous",
+            WaitPress.withInf(),
+            WaitRelease.withDef(),
+            WaitPress.withDef(),
+            WaitRelease.withDef(),
+            WaitPress.withDef(),
+            WaitRelease.withDef(),
+            ActiveContinuousWhenRelease.use(),
+            WaitPress.withInf(),
+            Reset.use()
+    ),
+
     SINGLE_PRESS_CLICK(
             "sil_yoni.gui.badge.active.single-press-click",
             "sil_yoni.gui.badge.toggle.single-press-click",

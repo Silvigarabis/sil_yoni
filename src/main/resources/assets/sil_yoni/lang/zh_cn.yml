@@ -175,6 +175,8 @@ sil_yoni.gui.badge.active.single-click-immediate: 主动能力，单击%s立即�
 sil_yoni.gui.badge.active.double-click-immediate: 主动能力，双击%s立即触发
 sil_yoni.gui.badge.active.triple-click-immediate: 主动能力，三击%s立即触发
 
+sil_yoni.gui.badge.active.triple-click-immediate-release-continuous: 三击%s后立即持续激活，再次单按重置
+
 sil_yoni.gui.badge.active.single-press-click: 主动能力，按下%s键瞬间触发
 sil_yoni.gui.badge.active.double-press-click: 主动能力，二次按下%s键瞬间触发
 sil_yoni.gui.badge.active.triple-press-click: 主动能力，三次按下%s键瞬间触发
@@ -195,6 +197,8 @@ sil_yoni.gui.badge.toggle.triple-click-interval: 三击%s键后开关
 sil_yoni.gui.badge.toggle.single-click-immediate: 单击%s立即开关
 sil_yoni.gui.badge.toggle.double-click-immediate: 双击%s立即开关
 sil_yoni.gui.badge.toggle.triple-click-immediate: 三击%s立即开关
+
+sil_yoni.gui.badge.toggle.triple-click-immediate-release-continuous: 三击%s后立即持续开关，再次单按重置
 
 sil_yoni.gui.badge.toggle.single-press-click: 按下%s键瞬间开关
 sil_yoni.gui.badge.toggle.double-press-click: 二次按下%s键瞬间开关
