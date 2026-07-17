@@ -57,7 +57,7 @@ temp_eat_lava_bucket:
    type: sil_yoni:detection/mutable_active_self
    key:
       key: key.origins.secondary_active
-      trigger: SINGLE_CLICK_INTERVAL
+      trigger: LONG_PRESS_3s
    entity_action:
       type: apoli:if_else
       condition:
@@ -92,4 +92,4 @@ absorb_fire_burn:
    type: sil_yoni:origin_spec/guxi/energy/absorb_fire_burn
    trigger:
       key: key.origins.secondary_active
-      trigger: LONG_PRESS_3s_ALWAYS_CONTINUOUS
+      trigger: TRIPLE_CLICK_IMMEDIATE_RELEASE_CONTINUOUS
