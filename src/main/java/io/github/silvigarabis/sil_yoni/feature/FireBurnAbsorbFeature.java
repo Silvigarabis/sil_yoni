@@ -2,6 +2,7 @@ package io.github.silvigarabis.sil_yoni.feature;
 
 import io.github.silvigarabis.sil_yoni.mixin.FireBlockInvoker;
 import io.github.silvigarabis.sil_yoni.power.origin_spec.guxi.FireBurnAbsorbPower;
+import io.github.silvigarabis.sil_yoni.util.TwoDimRotateUpDownScanner;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
@@ -74,7 +75,8 @@ public class FireBurnAbsorbFeature {
             }
         }
 
-        for (var pos : BlockPos.iterateInSquare(center, 8, Direction.UP, Direction.EAST)) {
+
+        for (var pos : TwoDimRotateUpDownScanner.with(center, 8)){
             BlockState state = world.getBlockState(pos);
             if (!state.isOf(Blocks.FIRE)) {
                 if (tryLintGuxiFire((FireBlock) Blocks.FIRE, world, pos, this))
