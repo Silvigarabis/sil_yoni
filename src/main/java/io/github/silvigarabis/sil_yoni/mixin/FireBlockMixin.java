@@ -114,7 +114,7 @@ public abstract class FireBlockMixin {
             World $instance$world,
             BlockPos $instance$pos,
             int $instance$_factor,
-            Random $instance$_random,
+            Random $instance$random,
             int $instance$_age,
 
             Operation<Void> original,
@@ -126,9 +126,9 @@ public abstract class FireBlockMixin {
             Random $method_random
     ) {
         if (FireBurnAbsorbFeature.isGuxiActiveFire($method_world, $method_pos)) {
-            FireBurnAbsorbFeature.trySpreadGuxiFire($instance, $instance$world, $method_pos, $instance$pos);
+            FireBurnAbsorbFeature.trySpreadGuxiFire($instance, $instance$world, $method_pos, $instance$pos, $instance$random);
         } else if (!FireBurnAbsorbFeature.isGuxiFire($method_world, $method_pos)) {
-            original.call($instance, $instance$world, $instance$pos, $instance$_factor, $instance$_random, $instance$_age);
+            original.call($instance, $instance$world, $instance$pos, $instance$_factor, $instance$random, $instance$_age);
         }
     }
 //                this.trySpreadingFire(world, pos.east(), 300 + k, random, i);

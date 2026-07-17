@@ -12,7 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +26,8 @@ public class FireBurnAbsorbFeature {
 
     private final LivingEntity entity;
     private int activeTicks = 0;
+    private int activeTicksTimer = 0;
+
 
     public FireBurnAbsorbFeature(LivingEntity entity) {
         this.entity = entity;
@@ -35,8 +37,8 @@ public class FireBurnAbsorbFeature {
         return ((DataGuxiFireTracking)world).silYoni$callGuxiInactiveFireRemoved(pos);
     }
 
-    public static void trySpreadGuxiFire(FireBlock fireBlock, World world, BlockPos sourcePos, BlockPos targetPos) {
-        ((DataGuxiFireTracking)world).silYoni$trySpreadGuxiFire(fireBlock, sourcePos, targetPos);
+    public static void trySpreadGuxiFire(FireBlock fireBlock, World world, BlockPos sourcePos, BlockPos targetPos, Random random) {
+        ((DataGuxiFireTracking)world).silYoni$trySpreadGuxiFire(fireBlock, sourcePos, targetPos, random);
     }
 
     public static boolean callGuxiRemovingFireRemoved(ServerWorld world, BlockPos pos) {
@@ -54,39 +56,46 @@ public class FireBurnAbsorbFeature {
 
     public void tickActive() {
         activeTicks++;
+        activeTicksTimer++;
+
         if (activeTicks > 20) activeTicks = 20;
 
-        BlockPos.Mutable mutable = new BlockPos.Mutable();
-        var center = entity.getBlockPos();
         var world = entity.getWorld();
+        var center = entity.getBlockPos();
 
-        for (int x = -4; x <= 4; x++) {
-            for (int y = -4; y <= 4; y++) {
-                for (int z = -4; z <= 4; z++) {
-                    mutable.set(center, x, y, z);
+        if (activeTicksTimer % 20 == 1) {
+            BlockPos.Mutable mutable = new BlockPos.Mutable();
+            for (int x = -4; x <= 4; x++) {
+                for (int y = -4; y <= 4; y++) {
+                    for (int z = -4; z <= 4; z++) {
+                        mutable.set(center, x, y, z);
 
-                    BlockState state = entity.getWorld().getBlockState(mutable);
-                    if (state.isOf(Blocks.FIRE)){
-                        if (tryBecameNewGuxiFireOwner(world, mutable, this)){
-                            LOGGER.info("[ACTIVE]: {}", mutable);
+                        BlockState state = entity.getWorld().getBlockState(mutable);
+                        if (state.isOf(Blocks.FIRE)) {
+                            if (tryBecameNewGuxiFireOwner(world, mutable, this)) {
+                                LOGGER.info("[ACTIVE]: {}", mutable);
+                            }
                         }
                     }
                 }
             }
         }
 
-
-        for (var pos : TwoDimRotateUpDownScanner.with(center, 8)){
-            BlockState state = world.getBlockState(pos);
-            if (!state.isOf(Blocks.FIRE)) {
-                if (tryLintGuxiFire((FireBlock) Blocks.FIRE, world, pos, this))
-                    break;
+        if (activeTicksTimer % 5 == 1) {
+            for (var pos : TwoDimRotateUpDownScanner.with(center, 8)) {
+                BlockState state = world.getBlockState(pos);
+                if (!state.isOf(Blocks.FIRE)) {
+                    if (tryLintGuxiFire((FireBlock) Blocks.FIRE, world, pos, this)) {
+                        break;
+                    }
+                }
             }
         }
     }
 
     public void tickInactive() {
         if (activeTicks > 0) activeTicks--;
+        activeTicksTimer = 0;
     }
 
     public void inactiveImmediate() {
@@ -140,7 +149,7 @@ public class FireBurnAbsorbFeature {
         default FireBurnAbsorbFeature silYoni$getGuxiFireOwner(BlockPos pos){
             return sil_yoni$guxiFireTracking().get(pos);
         }
-        default void silYoni$trySpreadGuxiFire(FireBlock fireBlock, BlockPos sourcePos, BlockPos targetPos) {
+        default void silYoni$trySpreadGuxiFire(FireBlock fireBlock, BlockPos sourcePos, BlockPos targetPos, Random random) {
             var sourceOwner = silYoni$getGuxiFireOwner(sourcePos);
             var targetOwner = silYoni$getGuxiFireOwner(targetPos);
             assert sourceOwner != null;
@@ -151,7 +160,7 @@ public class FireBurnAbsorbFeature {
             // 我们会使用传播几率作为要添加到GUXI上的能量
             BlockState state = ((World)this).getBlockState(targetPos);
             int spreadChance = ((FireBlockInvoker)fireBlock).silYoni$getSpreadChance(state);
-            if (sourceOwner.startFireSpread(spreadChance, sourcePos, targetPos, state)){
+            if (sourceOwner.startFireSpread(spreadChance, sourcePos, targetPos, state, random)){
                 silYoni$tryBecameNewGuxiFireOwner(targetPos, sourceOwner);
                 ((World) this).setBlockState(targetPos, ((FireBlockInvoker) fireBlock).silYoni$getStateForPosition((World) this, targetPos), FireBlock.NOTIFY_ALL);
                 LOGGER.info("[SPREAD]: {}", targetPos);
@@ -194,10 +203,10 @@ public class FireBurnAbsorbFeature {
         }
     }
 
-    private boolean startFireSpread(int spreadChance, BlockPos sourcePos, BlockPos targetPos, BlockState state) {
+    private boolean startFireSpread(int spreadChance, BlockPos sourcePos, BlockPos targetPos, BlockState state, Random random) {
         if (this.entity instanceof PlayerEntity player){
             int fuelValue = FireBurnAbsorbPower.getSpreadEnergy(state);
-            if (spreadChance > 0 && fuelValue > 0){
+            if (spreadChance > 0 && fuelValue > 0 && random.nextInt(40 + fuelValue) < 40){
                 player.getHungerManager().add(fuelValue, 0);
                 return true;
             }
