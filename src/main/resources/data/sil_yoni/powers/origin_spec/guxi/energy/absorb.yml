@@ -84,6 +84,7 @@ temp_eat_lava_bucket:
             -
                type: apoli:feed
                food: 680
+               saturation: 0
             - type: apoli:play_sound
               sound: minecraft:block.lava.pop
 
