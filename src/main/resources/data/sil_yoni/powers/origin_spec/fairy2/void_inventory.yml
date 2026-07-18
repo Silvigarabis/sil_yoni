@@ -1,7 +1,6 @@
 type: origins:multiple
-# 这逻辑太乱了，可能的话我会重写一次
 badges:
--  sil_yoni:long_press_active
+-  sil_yoni:triple_click_active
 -  sil_yoni:only_usable_in_void_space
 container_data:
    type: origins:inventory
@@ -11,7 +10,6 @@ container_data:
    container_type: double_chest
    key:
       key: key.origins.secondary_active
-      continuous: true
    condition:
       type: origins:and
       conditions:
@@ -19,3 +17,25 @@ container_data:
          resource: sil_yoni:extra/void_space/in_void_space
          comparison: '=='
          compare_to: 1
+      -  type: origins:resource
+         resource: "*:*/trigger"
+         comparison: '>'
+         compare_to: 0
+
+callbacks:
+   type: origins:action_on_callback
+   execute_chosen_when_orb: true
+   entity_action_gained:
+      type: apoli:and
+      actions:
+         -
+            type: apoli:grant_power
+            power: "*:*/trigger"
+            source: "*:*"
+   entity_action_lost:
+      type: apoli:and
+      actions:
+         -
+            type: apoli:revoke_power
+            power: "*:*/trigger"
+            source: "*:*"
