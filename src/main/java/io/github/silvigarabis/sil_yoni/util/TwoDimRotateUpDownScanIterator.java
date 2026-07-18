@@ -2,13 +2,13 @@ package io.github.silvigarabis.sil_yoni.util;
 
 import java.util.Iterator;
 
-public class TwoDimRotateUpDownScanIterator implements Iterator<Integer[]>, Iterable<Integer[]> {
-    private final Integer[] result = new Integer[3];
+public class TwoDimRotateUpDownScanIterator implements Iterator<int[]>, Iterable<int[]> {
+    private final int[] result = new int[3];
 
     private final int[] center;
     private final int[] yList;
-    private final Iterator<Integer[]> twoDimRotateIterator;
-    private Integer[] twoDimPos = null;
+    private final Iterator<int[]> twoDimRotateIterator;
+    private int[] twoDimPos = null;
     private int yListIterIndex = 0;
 
     TwoDimRotateUpDownScanIterator(int[] center, int radius, int hRadius){
@@ -46,7 +46,7 @@ public class TwoDimRotateUpDownScanIterator implements Iterator<Integer[]>, Iter
     }
 
     @Override
-    public Integer[] next() {
+    public int[] next() {
         if (yListIterIndex >= yList.length) {
             twoDimPos = null;
         }
@@ -65,7 +65,7 @@ public class TwoDimRotateUpDownScanIterator implements Iterator<Integer[]>, Iter
     }
 
     @Override
-    public Iterator<Integer[]> iterator() {
+    public Iterator<int[]> iterator() {
         return this;
     }
 

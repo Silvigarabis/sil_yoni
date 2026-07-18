@@ -3,11 +3,11 @@ package io.github.silvigarabis.sil_yoni.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class TwoDimRotateScanIterator implements Iterator<Integer[]>, Iterable<Integer[]> {
+public class TwoDimRotateScanIterator implements Iterator<int[]>, Iterable<int[]> {
     private int side = 4;
     private int rotateStep = 1;
     private Direction2D direction = Direction2D.EAST;
-    private final Integer[] result = new Integer[2];
+    private final int[] result = new int[2];
 
     public TwoDimRotateScanIterator(int side, Direction2D direction, int rotateStep) {
         this.side = side;
@@ -37,7 +37,7 @@ public class TwoDimRotateScanIterator implements Iterator<Integer[]>, Iterable<I
      * @implNote 注意：next() 返回的是同一个可复用数组。
      */
     @Override
-    public Integer[] next() {
+    public int[] next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
@@ -67,7 +67,7 @@ public class TwoDimRotateScanIterator implements Iterator<Integer[]>, Iterable<I
     }
 
     @Override
-    public Iterator<Integer[]> iterator() {
+    public Iterator<int[]> iterator() {
         return this;
     }
 }

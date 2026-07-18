@@ -87,6 +87,7 @@ public class BadgeManager {
     public static final BadgeFactory KEYBIND = new BadgeFactory(SilYoniMod.identifier("keybind"),
             new SerializableData()
                     .add("sprite", SerializableDataTypes.IDENTIFIER)
-                    .add("translation", SerializableDataTypes.STRING),
+                    .add("translation", SerializableDataTypes.STRING)
+                    .add("keybind", SerializableDataTypes.STRING),
             KeybindBadge::new);
 }
