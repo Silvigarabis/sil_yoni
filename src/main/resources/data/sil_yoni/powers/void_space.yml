@@ -1,6 +1,4 @@
 type: apoli:multiple
-badges:
-    - sil_yoni:hold_on_active
 
 switch_cooldown:
     type: apoli:cooldown
@@ -57,10 +55,6 @@ callbacks:
             type: apoli:grant_power
             power: "*:extra/*/in_void_space"
             source: "*:*"
-        -
-            type: apoli:grant_power
-            power: sil_yoni:detection/active_actions/secondary_active
-            source: "*:*"
     entity_action_lost:
         type: apoli:and
         actions:
@@ -71,10 +65,6 @@ callbacks:
         -
             type: apoli:revoke_power
             power: "*:extra/*/in_void_space"
-            source: "*:*"
-        -
-            type: apoli:revoke_power
-            power: sil_yoni:detection/active_actions/secondary_active
             source: "*:*"
 
 death_callback:
