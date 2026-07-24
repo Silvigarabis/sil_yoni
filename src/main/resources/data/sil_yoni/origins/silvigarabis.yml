@@ -19,5 +19,5 @@ powers:
 
 icon:
   item: minecraft:dragon_head
-unchoosable: false
+unchoosable: true
 impact: 3
