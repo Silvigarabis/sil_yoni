@@ -20,5 +20,5 @@ powers:
   - sil_yoni:misc/normalized_air_mining_speed
 icon:
   item: minecraft:music_disc_13
-unchoosable: false
+unchoosable: true
 impact: 3
