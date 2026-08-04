@@ -1,0 +1,7 @@
+type: apoli:multiple
+mining_modifier:
+  type: apoli:modify_break_speed
+  modifier:
+    operation: multiply_base_multiplicative
+    value: -0.6
+    name: sil_yoni:origin_spec/fairy/fairy_physique

@@ -1,0 +1,91 @@
+# 一种飞行能力
+type: apoli:multiple
+
+is_flying:
+   type: apoli:resource
+   min: 0
+   max: 1
+   start_value: 0
+   min_action:
+      type: apoli:revoke_power
+      power: "*:extra/*"
+      source: "*:*"
+   max_action:
+      type: apoli:grant_power
+      power: "*:extra/*"
+      source: "*:*"
+
+callbacks:
+   type: apoli:action_on_callback
+   entity_action_lost:
+      type: apoli:revoke_power
+      power: "*:extra/*"
+      source: "*:*"
+
+elytra:
+   type: apoli:elytra_flight
+   render_elytra: false
+
+armor:
+   type: apoli:restrict_armor
+   chest:
+      type: apoli:ingredient
+      ingredient:
+         item: minecraft:elytra
+
+loop:
+ type: apoli:action_over_time
+ interval: 1
+ entity_action:
+  type: apoli:if_else_list
+  actions:
+   -
+      condition:
+         type: apoli:and
+         conditions:
+         -
+            type: apoli:resource
+            resource: "*:*_is_flying"
+            comparison: "=="
+            compare_to: 0
+         -
+            type: apoli:fall_flying
+      action:
+         type: apoli:change_resource
+         resource: "*:*_is_flying"
+         operation: set
+         change: 1
+   -
+      condition:
+         type: apoli:and
+         conditions:
+         -
+            type: apoli:resource
+            resource: "*:*_is_flying"
+            comparison: "=="
+            compare_to: 1
+         -
+            type: apoli:fall_flying
+            inverted: true
+      action:
+         # 延迟一下关闭时间
+         type: apoli:delay
+         ticks: 12
+         action:
+            type: apoli:if_else
+            condition:
+               type: apoli:and
+               conditions:
+               -
+                  type: apoli:resource
+                  resource: "*:*_is_flying"
+                  comparison: "=="
+                  compare_to: 1
+               -
+                  type: apoli:fall_flying
+                  inverted: true
+            if_action:
+               type: apoli:change_resource
+               resource: "*:*_is_flying"
+               operation: set
+               change: 0

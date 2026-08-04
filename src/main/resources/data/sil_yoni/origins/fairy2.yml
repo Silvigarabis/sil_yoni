@@ -1,0 +1,22 @@
+powers:
+  - sil_yoni:void_space
+  - sil_yoni:origin_spec/fairy2/void_inventory
+  - sil_yoni:origin_spec/fairy/heal_magic
+  - sil_yoni:origin_spec/fairy2/fairy_wings
+  
+  - sil_yoni:origin_spec/fairy2/general
+  - sil_yoni:misc/hardest_armor
+  - sil_yoni:physique/powerless_arms
+  - sil_yoni:physique/tiny_body
+  - sil_yoni:physique/fragile_body
+  
+  - sil_yoni:vision/night_vision
+  - sil_yoni:effect/firefly_lighter
+  
+  - sil_yoni:origin_spec/fairy2/no_enouth_inventory
+  - sil_yoni:misc/general_climbable
+  - sil_yoni:misc/normalized_air_mining_speed
+icon:
+  item: minecraft:golden_apple
+unchoosable: false
+impact: 3

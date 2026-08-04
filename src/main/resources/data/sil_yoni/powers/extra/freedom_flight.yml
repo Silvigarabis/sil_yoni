@@ -1,0 +1,306 @@
+type: apoli:multiple
+no_elytra:
+   type: apoli:prevent_elytra_flight
+
+# no_fall_damage:
+   # type: apoli:invulnerability
+   # damage_condition:
+      # type: apoli:in_tag
+      # tag: is_fall
+
+# 这里给一个起步速度
+on_start_fly:
+    type: apoli:action_on_callback
+    execute_chosen_when_orb: true
+    entity_action_gained:
+       type: apoli:add_velocity
+       space: local
+       y: 0.2
+
+# 一些属性
+no_fall:
+    type: apoli:modify_falling
+    take_fall_damage: false
+    velocity: 0
+fly_lasting_time:
+   type: apoli:resource
+   min: 0
+   max: 500
+   start_value: 0
+   hud_render:
+      should_render: true
+      bar_index: 4
+move_lasting_time:
+   type: apoli:resource
+   min: 0
+   max: 3
+   start_value: 0
+   max_action: # 这里在停下来后把速度设置为0
+      type: apoli:add_velocity
+      scope: world
+      set: true
+      x: 0
+      y: 0
+      z: 0
+# 暂时无用
+action_lasting_time:
+   type: apoli:resource
+   min: 0
+   max: 2
+   start_value: 0
+
+event_loop:
+   type: apoli:action_over_time
+   interval: 1
+   entity_action:
+      type: apoli:and
+      actions:
+      # 计时器 action_lasting_time
+      -  type: apoli:change_resource
+         resource: "*:*_action_lasting_time"
+         operation: add
+         change: 1
+      # 计时器 move_lasting_time
+      -  type: apoli:change_resource
+         resource: "*:*_move_lasting_time"
+         operation: add
+         change: 1
+      # 计时器 fly_lasting_time
+      -
+         type: apoli:if_else_list
+         actions:
+         -
+            condition:
+               type: apoli:and
+               conditions:
+               -  type: apoli:moving
+               -  type: apoli:on_block
+                  inverted: true
+            action:
+               type: apoli:change_resource
+               resource: "*:*_fly_lasting_time"
+               operation: set
+               change: 0
+         -
+            condition:
+               type: apoli:on_block
+               inverted: true
+            action:
+               type: apoli:change_resource
+               resource: "*:*_fly_lasting_time"
+               operation: add
+               change: 1
+         -
+            condition:
+               type: apoli:on_block
+            action:
+               type: apoli:change_resource
+               resource: "*:*_fly_lasting_time"
+               operation: add
+               change: 3
+      # 情景：停止飞行操作
+      -
+         type: apoli:if_else_list
+         actions:
+         -
+            condition:
+               type: apoli:and
+               conditions:
+               -  type: apoli:on_block
+               -  type: apoli:resource
+                  resource: "*:*_fly_lasting_time"
+                  comparison: ">="
+                  compare_to: 500
+            action:
+               type: apoli:and
+               actions:
+               -
+                  type: apoli:execute_command
+                  command: say 降落！
+               -
+                  type: apoli:change_resource
+                  resource: sil_yoni:freedom_flight_is_flying
+                  operation: set
+                  change: 0
+         -
+            condition:
+               type: apoli:resource
+               resource: "*:*_fly_lasting_time"
+               comparison: ">="
+               compare_to: 500
+            action:
+               type: apoli:add_velocity
+               space: world
+               y: -0.08
+         -
+            condition:
+               type: apoli:resource
+               resource: "*:*_fly_lasting_time"
+               comparison: ">="
+               compare_to: 250
+            action:
+               type: apoli:add_velocity
+               space: world
+               y: -0.02
+
+trigger_boost_forward:
+   type: apoli:active_self
+   key: { key: key.forward, continuous: true }
+   entity_action:
+      type: apoli:and
+      actions:
+      # -  type: apoli:change_resource
+         # resource: "*:*_action_lasting_time"
+         # operation: set
+         # change: 0
+      -  type: apoli:change_resource
+         resource: "*:*_move_lasting_time"
+         operation: set
+         change: 0
+
+# gravity_againstment:
+   # type: apoli:active_self
+   # key: { key: key.forward, continuous: true }
+   # condition: { type: apoli:on_block, inverted: true }
+   # entity_action:
+      # type: apoli:add_velocity
+      # space: world
+      # y: 0.08
+
+boost_forward:
+   type: apoli:active_self
+   key:
+      key: key.forward
+      continuous: true
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:if_else
+         condition:
+            type: apoli:sprinting
+         if_action:
+            type: apoli:and
+            actions:
+            -
+               type: apoli:add_velocity
+               space: local
+               z: 0.6
+         else_action:
+            type: apoli:and
+            actions:
+            -
+               type: apoli:add_velocity
+               space: local
+               z: 0.025
+
+go_back:
+   type: apoli:active_self
+   key:
+      key: key.back
+      continuous: true
+   entity_action:
+      type: apoli:and
+      actions:
+      # -  type: apoli:change_resource
+         # resource: "*:*_action_lasting_time"
+         # operation: set
+         # change: 0
+      -  type: apoli:change_resource
+         resource: "*:*_move_lasting_time"
+         operation: set
+         change: 0
+      -
+         type: apoli:add_velocity
+         space: local_horizontal
+         z: -0.025
+
+down_static:
+   type: apoli:active_self
+   key:
+      key: key.sneak
+      continuous: false
+   condition:
+      type: apoli:moving
+      inverted: true
+   entity_action:
+      type: apoli:and
+      actions:
+      # -  type: apoli:change_resource
+         # resource: "*:*_action_lasting_time"
+         # operation: set
+         # change: 0
+      -
+         type: apoli:change_resource
+         resource: "*:*_fly_lasting_time"
+         operation: add
+         change: 200
+
+down_dynamic:
+   type: apoli:active_self
+   key:
+      key: key.sneak
+      continuous: false
+   condition:
+      type: apoli:moving
+   entity_action:
+      type: apoli:and
+      actions:
+      -
+         type: apoli:change_resource
+         resource: "*:*_fly_lasting_time"
+         operation: set
+         change: 0
+      -
+         type: apoli:add_velocity
+         space: world
+         y: -0.02
+
+up_static:
+   type: apoli:active_self
+   key:
+      key: key.jump
+      continuous: true
+   condition:
+      type: apoli:moving
+      inverted: true
+   entity_action:
+      type: apoli:and
+      actions:
+      # -  type: apoli:change_resource
+         # resource: "*:*_action_lasting_time"
+         # operation: set
+         # change: 0
+      -
+         type: apoli:change_resource
+         resource: "*:*_fly_lasting_time"
+         operation: set
+         change: 0
+      -
+         type: apoli:add_velocity
+         space: world
+         y: 0.09
+
+up_dynamic:
+   type: apoli:active_self
+   key:
+      key: key.jump
+      continuous: true
+   condition:
+      type: apoli:moving
+   entity_action:
+      type: apoli:and
+      actions:
+      # -  type: apoli:change_resource
+         # resource: "*:*_action_lasting_time"
+         # operation: set
+         # change: 0
+      -
+         type: apoli:change_resource
+         resource: "*:*_fly_lasting_time"
+         operation: set
+         change: 0
+      -
+         type: apoli:add_velocity
+         space: world
+         y: 0.2

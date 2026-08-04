@@ -1,0 +1,38 @@
+type: apoli:multiple
+
+badges:
+  - origins:toggle
+useless_flag_to_show_badge:
+  type: apoli:toggle
+  active_by_default: false
+  key:
+    key: key.origins.secondary_active
+
+trigger:
+  type: apoli:active_self
+  key:
+    key: key.origins.secondary_active
+  entity_action:
+    type: apoli:if_else
+    condition:
+      type: apoli:power
+      power: "*:extra/*"
+      source: "*:*"
+    if_action:
+      type: apoli:revoke_power
+      power: "*:extra/*"
+      source: "*:*"
+    else_action:
+      type: apoli:grant_power
+      power: "*:extra/*"
+      source: "*:*"
+
+auto_remove_triggers:
+  type: apoli:action_on_callback
+  execute_chosen_when_orb: true
+  entity_action_lost:
+    type: apoli:and
+    actions:
+      - type: apoli:revoke_power
+        power: "*:extra/*"
+        source: "*:*"

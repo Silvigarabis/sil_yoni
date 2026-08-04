@@ -1,0 +1,116 @@
+type: apoli:multiple
+badges:
+    - sil_yoni:hold_on_active
+key0:
+    type: apoli:active_self
+    key:
+        key: key.origins.secondary_active
+    entity_action:
+        type: apoli:nothing
+
+switch_cooldown:
+    type: apoli:cooldown
+    cooldown: 6000 # 300sec or 5min (max, usually set to 20sec or 400tick (-5600))
+    hud_render:
+        should_render: true
+        bar_index: 1
+        inverted: false
+
+wait_for_trigger:
+    type: apoli:action_over_time
+    interval: 1
+    condition:
+        type: apoli:resource
+        resource: sil_yoni:detection/active_actions/secondary_active_result
+        comparison: '=='
+        compare_to: -3
+    entity_action:
+        type: apoli:if_else
+        condition:
+            type: apoli:resource
+            resource: "*:*_switch_cooldown"
+            comparison: '>'
+            compare_to: 0
+        if_action:
+            type: apoli:execute_command
+            command: 'function sil_yoni:origin_power/void_space/cooldown_deny_switch'
+        else_action:
+            type: apoli:and
+            actions:
+            -  type: apoli:change_resource
+               resource: "*:*_switch_cooldown"
+               operation: set
+               change: 5600
+            -  type: apoli:if_else
+               condition:
+                  type: apoli:resource
+                  resource: "*:extra/*/in_void_space"
+                  comparison: '=='
+                  compare_to: 0
+               if_action:
+                  type: apoli:grant_power
+                  power: "*:extra/*/data"
+                  source: "*:*"
+               else_action:
+                  type: apoli:revoke_power
+                  power: "*:extra/*/data"
+                  source: "*:*"
+
+callbacks:
+    type: apoli:action_on_callback
+    execute_chosen_when_orb: true
+    entity_action_gained:
+        type: apoli:and
+        actions:
+        -
+            type: apoli:grant_power
+            power: "*:extra/*/in_void_space"
+            source: "*:*"
+        -
+            type: apoli:grant_power
+            power: sil_yoni:detection/active_actions/secondary_active
+            source: "*:*"
+    entity_action_lost:
+        type: apoli:and
+        actions:
+        -
+            type: apoli:revoke_power
+            power: "*:extra/*/data"
+            source: "*:*"
+        -
+            type: apoli:revoke_power
+            power: "*:extra/*/in_void_space"
+            source: "*:*"
+        -
+            type: apoli:revoke_power
+            power: sil_yoni:detection/active_actions/secondary_active
+            source: "*:*"
+death_callback:
+    type: apoli:prevent_death
+    condition:
+        type: apoli:resource
+        resource: "*:extra/*/in_void_space"
+        comparison: '=='
+        compare_to: 1
+    entity_action:
+        type: apoli:and
+        actions:
+        -
+            type: apoli:revoke_power
+            power: "*:extra/*/data"
+            source: "*:*"
+        -
+            type: apoli:trigger_cooldown
+            power: "*:*_switch_cooldown"
+        -
+            type: apoli:change_resource
+            resource: "*:extra/*/in_void_space"
+            operation: set
+            change: 0
+        -
+            type: apoli:clear_effect
+        -
+            type: apoli:extinguish
+        -
+            type: apoli:execute_command
+            command: 'function sil_yoni:origin_power/void_space/live_keep'

@@ -1,0 +1,35 @@
+type: apoli:multiple
+hidden: true
+immu_energy:
+  type: apoli:modify_damage_taken
+  damage_condition:
+    type: apoli:or
+    conditions:
+      - type: apoli:in_tag
+        tag: is_fire
+      - type: apoli:in_tag
+        tag: is_lightning
+  modifier:
+    operation: multiply_total_multiplicative
+    value: -1
+  self_action:
+    type: apoli:if_else
+    condition:
+      type: apoli:resource
+      resource: "*:*_immu_energy_heal_cooldown"
+      comparison: '=='
+      compare_to: 0
+    if_action:
+      type: apoli:and
+      actions:
+        - type: apoli:trigger_cooldown
+          power: "*:*_immu_energy_heal_cooldown"
+        - type: apoli:heal
+          amount: 2
+immu_energy_heal_cooldown:
+  type: apoli:cooldown
+  cooldown: 240
+  hud_render:
+    should_render: true
+    sprite_location: origins:textures/gui/community/spiderkolo/resource_bar_02.png
+    bar_index: 9
